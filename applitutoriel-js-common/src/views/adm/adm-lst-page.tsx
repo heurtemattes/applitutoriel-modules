@@ -1,3 +1,83 @@
+/**
+ * Copyright ou © ou Copr. Ministère de l'Europe et des Affaires étrangères (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
+ * Ce logiciel est un programme informatique servant à faciliter la création
+ * d'applications Web conformément aux référentiels généraux français : RGI, RGS et RGAA
+ * <p/>
+ * Ce logiciel est régi par la licence CeCILL soumise au droit français et
+ * respectant les principes de diffusion des logiciels libres. Vous pouvez
+ * utiliser, modifier et/ou redistribuer ce programme sous les conditions
+ * de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+ * sur le site "http://www.cecill.info".
+ * <p/>
+ * En contrepartie de l'accessibilité au code source et des droits de copie,
+ * de modification et de redistribution accordés par cette licence, il n'est
+ * offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+ * seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+ * titulaire des droits patrimoniaux et les concédants successifs.
+ * <p/>
+ * A cet égard  l'attention de l'utilisateur est attirée sur les risques
+ * associés au chargement,  à l'utilisation,  à la modification et/ou au
+ * développement et à la reproduction du logiciel par l'utilisateur étant
+ * donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+ * manipuler et qui le réserve donc à des développeurs et des professionnels
+ * avertis possédant  des  connaissances  informatiques approfondies.  Les
+ * utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+ * logiciel à leurs besoins dans des conditions permettant d'assurer la
+ * sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+ * à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+ * <p/>
+ * Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+ * pris connaissance de la licence CeCILL, et que vous en avez accepté les
+ * termes.
+ * <p/>
+ * <p/>
+ * Copyright or © or Copr. Ministry for Europe and Foreign Affairs (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
+ * This software is a computer program whose purpose is to facilitate creation of
+ * web application in accordance with french general repositories : RGI, RGS and RGAA.
+ * <p/>
+ * This software is governed by the CeCILL license under French law and
+ * abiding by the rules of distribution of free software.  You can  use,
+ * modify and/ or redistribute the software under the terms of the CeCILL
+ * license as circulated by CEA, CNRS and INRIA at the following URL
+ * "http://www.cecill.info".
+ * <p/>
+ * As a counterpart to the access to the source code and  rights to copy,
+ * modify and redistribute granted by the license, users are provided only
+ * with a limited warranty  and the software's author,  the holder of the
+ * economic rights,  and the successive licensors  have only  limited
+ * liability.
+ * <p/>
+ * In this respect, the user's attention is drawn to the risks associated
+ * with loading,  using,  modifying and/or developing or reproducing the
+ * software by the user in light of its specific status of free software,
+ * that may mean  that it is complicated to manipulate,  and  that  also
+ * therefore means  that it is reserved for developers  and  experienced
+ * professionals having in-depth computer knowledge. Users are therefore
+ * encouraged to load and test the software's suitability as regards their
+ * requirements in conditions enabling the security of their systems and/or
+ * data to be ensured and,  more generally, to use and operate it in the
+ * same conditions as regards security.
+ * <p/>
+ * The fact that you are presently reading this means that you have had
+ * knowledge of the CeCILL license and that you accept its terms.
+ *
+ */
+
+/**
+ * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
+ *
+ * @author MEAE - Ministère de l'Europe et des Affaires étrangères
+ * @version v5.1.1
+ * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
+ * @license CECILL-2.1
+ */
+
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-utils/src/logger";
 import * as React from "react";
@@ -60,8 +140,8 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
 
         this.refHeaderTable.bind(this);
 
-        let sort: DefaultSort = new DefaultSort([new SortData("dateCreat"), new SortData("auteurCreat", SortDirection.ASC)]);
-        this.dataSource = new DataSource<SecteurMetier>([], {}, [sort]);
+        let sort: DefaultSort = new DefaultSort([ new SortData("dateCreat"), new SortData("auteurCreat", SortDirection.ASC) ]);
+        this.dataSource = new DataSource<SecteurMetier>([], {}, [ sort ]);
     }
 
     /**
@@ -101,52 +181,52 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         return (
             <div>
                 <h2>{this.i18n("administration.secteurs.titreSecteur")}</h2>
-                <Notification id="notif2"/>
+                <Notification id="notif2" />
 
                 <Table id="liste-secteurs">
                     <Header title={this.i18n("administration.secteurs").table.tableTitle} ref={this.refHeaderTable}>
-                        <ToggleColumnsButton hiddenColumns={{desc: true, nom: false}}
-                                             onChange={this.onChangeToggleColumns}
-                                             selectAllItem={false}/>
+                        <ToggleColumnsButton hiddenColumns={{ desc: true, nom: false }}
+                            onChange={this.onChangeToggleColumns}
+                            selectAllItem={false} />
                         <MenuActions>
                             <ActionButton title={this.i18n("administration.secteurs.table.addTitle")}
-                                          srcImg={Picto.white.add}
-                                          action={this.ajouterSecteur} priority={true}/>
+                                srcImg={Picto.white.add}
+                                action={this.ajouterSecteur} priority={true} />
                             <ActionButton title={this.i18n("administration.secteurs.table.sortMultiTitle")}
-                                          srcImg={Picto.white.consulter}
-                                          action={this.sortMulti} priority={true}/>
+                                srcImg={Picto.white.consulter}
+                                action={this.sortMulti} priority={true} />
                         </MenuActions>
                     </Header>
-                    <Content dataSource={this.dataSource} onSubmit={this.submitLineForm} schema={schemaEditionTable} 
-                             notifId="notif2">
+                    <Content dataSource={this.dataSource} onSubmit={this.submitLineForm} schema={schemaEditionTable} idForm={"secteurPageForm"}
+                        notifId="notif2">
                         <Columns>
                             <Column keyColumn="nom"
-                                    title={intlMessages.nom}
-                                    editable={true}
-                                    sortable={true}
+                                title={intlMessages.nom}
+                                editable={true}
+                                sortable={true}
                             />
-                            <Column keyColumn="desc" title={intlMessages.description} sortable={false}/>
-                            <DateColumn keyColumn="dateCreat" title={intlMessages.dateCr} sortable={true}/>
-                            <DateColumn keyColumn="dateMajEnreg" title={intlMessages.dateMaj} sortable={false}/>
-                            <Column keyColumn="auteurCreat" title={intlMessages.auteur} sortable={true}/>
+                            <Column keyColumn="desc" title={intlMessages.description} sortable={false} />
+                            <DateColumn keyColumn="dateCreat" title={intlMessages.dateCr} sortable={true} />
+                            <DateColumn keyColumn="dateMajEnreg" title={intlMessages.dateMaj} sortable={false} />
+                            <Column keyColumn="auteurCreat" title={intlMessages.auteur} sortable={true} />
                             <ActionColumn keyColumn="id"
-                                          alt={intlMessages.modificationTitle}
-                                          srcImg={Picto.blue.editer}
-                                          action={this.editItem.bind(this)}
+                                alt={intlMessages.modificationTitle}
+                                srcImg={Picto.blue.editer}
+                                action={this.editItem.bind(this)}
                             />
                             <ActionColumn keyColumn="id"
-                                          alt={intlMessages.suppressionAlt}
-                                          srcImg={Picto.blue.supprimer}
-                                          action={this.supprimer.bind(this)}
-                                          messageAlert={this.i18n("administration.secteurs.confirmationSuppression")}
-                                          titleAlert={this.i18n("administration.secteurs.suppressionTitle")}
+                                alt={intlMessages.suppressionAlt}
+                                srcImg={Picto.blue.supprimer}
+                                action={this.supprimer.bind(this)}
+                                messageAlert={this.i18n("administration.secteurs.confirmationSuppression")}
+                                titleAlert={this.i18n("administration.secteurs.suppressionTitle")}
                             />
                             <EditionActionColumn keyColumn="id"
-                                                 titleEdit={intlMessages.quickUpdateTitle}
-                                                 titleSave={"Enregistrer"}
-                                                 titleCancel={"Annuler"}
-                                                 messageAlert={this.i18n("administration.secteurs.confirmationAnnulationAction")}
-                                                 titleAlert={this.i18n("administration.secteurs.annulationTitle")}
+                                titleEdit={intlMessages.quickUpdateTitle}
+                                titleSave={"Enregistrer"}
+                                titleCancel={"Annuler"}
+                                messageAlert={this.i18n("administration.secteurs.confirmationAnnulationAction")}
+                                titleAlert={this.i18n("administration.secteurs.annulationTitle")}
                             />
                         </Columns>
                     </Content>
@@ -154,9 +234,10 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                 <Modal ref={(modal: Modal) => {
                     this.maModale = modal;
                 }} withoutOverflow={true} underlayClickExits={false} focusDialog={false}
-                       onClickClose={this.closeModal}>
+                    onClickClose={this.closeModal}>
                     <div className="content-modal-body">
                         <Form
+                            id="modalForm"
                             ref={(form: Form) => {
                                 this.monForm = form;
                                 if (this.monForm) {
@@ -167,22 +248,22 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                             formMessages={formI18n}
                             onSubmit={this.onSubmitEdition}
                         >
-                            <InputField name="id" type="hidden"/>
+                            <InputField name="id" type="hidden" />
                             <Row>
                                 <InputField name="nom" label={formI18n.fields.nom.label}
-                                            required={true} size={40} maxLength={50}/>
+                                    required={true} size={40} maxLength={50} />
                             </Row>
                             <Row>
                                 <InputField name="desc" label={formI18n.fields.desc.label}
-                                            required={true} size={40} maxLength={200}/>
+                                    required={true} size={40} maxLength={200} />
                             </Row>
                             <ButtonsArea>
                                 <Button type="submit" id="enregistrer" name="action:save"
-                                        value="Enregistrer" className="hornet-button" label={this.i18n("form.valid")}
-                                        title={this.i18n("administration.validTitle")}/>
+                                    value="Enregistrer" className="hornet-button" label={this.i18n("form.valid")}
+                                    title={this.i18n("administration.validTitle")} />
                                 <Button type="button" id="cancel" name="action:cancel"
-                                        value="Annuler" className="hornet-button" label={this.i18n("form.cancel")}
-                                        title={this.i18n("administration.cancelTitle")} onClick={this.closeModal}/>
+                                    value="Annuler" className="hornet-button" label={this.i18n("form.cancel")}
+                                    title={this.i18n("administration.cancelTitle")} onClick={this.closeModal} />
                             </ButtonsArea>
                         </Form>
                     </div>
@@ -205,7 +286,8 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
      */
     private submitLineForm(item: any): void {
         this.getService().modifier(item.id, item).then(() => {
-            NotificationManager.notify(null, null, Notifications.makeSingleNotification("", this.i18n("info.message.IN-AD-LST-01")));
+            NotificationManager.notify(null, "secteurPageForm", null,
+                Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
             this.refreshSecteurs();
         });
 
@@ -221,11 +303,14 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         NotificationManager.cleanAll();
 
         this.getService().supprimer(item.id).then((result) => {
-            if (!result.errors) {
-                NotificationManager.notify(null,null,
+            if (result) {
+                NotificationManager.notify(null, null, null,
                     Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
                 this.refreshSecteurs();
             }
+
+        }).catch((result) => {
+            NotificationManager.notify("notif2", null, null, null, result.errors);
         });
     }
 
@@ -253,7 +338,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
      * exemple de tri multicolonnes
      */
     private sortMulti(): void {
-        this.dataSource.sort([new SortData("dateCreat", SortDirection.DESC), new SortData("auteurCreat")]);
+        this.dataSource.sort({ sortDatas: [ new SortData("dateCreat", SortDirection.DESC), new SortData("auteurCreat") ] });
     }
 
     /**
@@ -275,9 +360,9 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         if (!_.isEmpty(secteur.id)) {
             this.getService().modifier(secteur.id, secteur).then((result) => {
                 if (!result.errors) {
+                    NotificationManager.notify("notif2", "secteurPageForm", null,
+                        Notifications.makeSingleNotification("notif2", this.i18n("info.message.IN-AD-LST-03")));
                     this.closeModal();
-                    NotificationManager.notify(null, null,
-                        Notifications.makeSingleNotification("", this.i18n("info.message.IN-AD-LST-01")));
                     this.refreshSecteurs();
                 }
             });
@@ -290,8 +375,8 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
             this.getService().creer(secteur).then((result) => {
                 if (!result.errors) {
                     this.closeModal();
-                    NotificationManager.notify(null, null,
-                        Notifications.makeSingleNotification("", this.i18n("info.message.IN-AD-LST-03")));
+                    NotificationManager.notify(null, "secteurPageForm", null,
+                        Notifications.makeSingleNotification("notif2", this.i18n("info.message.IN-AD-LST-03")));
                     this.refreshSecteurs();
                 }
             });

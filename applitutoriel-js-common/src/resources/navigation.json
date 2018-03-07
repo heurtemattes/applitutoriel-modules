@@ -1,13 +1,13 @@
 {
   // Commentaires autorisés !!
-  "menu": [
-    {
+  "menu": [{
       "text": "navigation.welcome",
       "url": "/accueil",
       "visibleDansMenu": false,
       "visibleDansPlan": true
     },
     {
+      "featureFlipping": "partenaire",
       "text": "navigation.partenaire.gestionDesPartenaires",
       "visibleDansMenu": true,
       "visibleDansPlan": true,
@@ -15,88 +15,87 @@
         "APPLI_TUTO_USER",
         "APPLI_TUTO_ADMIN"
       ],
-      "submenu": [
-        {
-          "text": "navigation.partenaire.listeViaRecherche",
-          "title": "navigation.partenaire.listeViaRecherche",
-          "url": "/partenaires",
-          "visibleDansMenu": true,
-          "visibleDansPlan": true,
-          "rolesAutorises": [
-            "APPLI_TUTO_USER",
-            "APPLI_TUTO_ADMIN"
-          ],
-          "submenu": [
-            {
-              "text": "navigation.partenaire.fichePartenaire",
-              "url": "/partenaires/consulter/(\\d+)",
-              "visibleDansMenu": false,
-              "visibleDansPlan": false,
-              "rolesAutorises": [
-                "APPLI_TUTO_USER",
-                "APPLI_TUTO_ADMIN"
-              ]
-            },
-            {
-              "text": "navigation.partenaire.editionPartenaire",
-              "url": "/partenaires/editer",
-              "visibleDansMenu": false,
-              "visibleDansPlan": false,
-              "rolesAutorises": [
-                "APPLI_TUTO_USER",
-                "APPLI_TUTO_ADMIN"
-              ]
-            },
-            {
-              "text": "navigation.partenaire.creationPartenaire",
-              "url": "/partenaires/creer",
-              "visibleDansMenu": false,
-              "visibleDansPlan": false,
-              "rolesAutorises": [
-                "APPLI_TUTO_USER",
-                "APPLI_TUTO_ADMIN"
-              ]
-            }
-          ]
-        },{
-          "text": "navigation.partenaire.creation.text",
-          "title": "navigation.partenaire.creation.title",
-          "url": "/partenaires/creer",
-          "visibleDansMenu": true,
-          "visibleDansPlan": true,
-          "rolesAutorises": [
-            "APPLI_TUTO_ADMIN"
-          ]
-        }
-      ]
+      "submenu": [{
+        "featureFlipping": "partenaire",
+        "text": "navigation.partenaire.listeViaRecherche",
+        "title": "navigation.partenaire.listeViaRecherche",
+        "url": "/partenaires",
+        "visibleDansMenu": true,
+        "visibleDansPlan": true,
+        "rolesAutorises": [
+          "APPLI_TUTO_USER",
+          "APPLI_TUTO_ADMIN"
+        ],
+        "submenu": [{
+            "featureFlipping": "partenaire",
+            "text": "navigation.partenaire.fichePartenaire",
+            "url": "/partenaires/consulter/(\\d+)",
+            "visibleDansMenu": false,
+            "visibleDansPlan": false,
+            "rolesAutorises": [
+              "APPLI_TUTO_USER",
+              "APPLI_TUTO_ADMIN"
+            ]
+          },
+          {
+            "featureFlipping": "partenaire",
+            "text": "navigation.partenaire.editionPartenaire",
+            "url": "/partenaires/editer",
+            "visibleDansMenu": false,
+            "visibleDansPlan": false,
+            "rolesAutorises": [
+              "APPLI_TUTO_USER",
+              "APPLI_TUTO_ADMIN"
+            ]
+          },
+          {
+            "featureFlipping": "partenaire",
+            "text": "navigation.partenaire.creationPartenaire",
+            "url": "/partenaires/creer",
+            "visibleDansMenu": false,
+            "visibleDansPlan": false,
+            "rolesAutorises": [
+              "APPLI_TUTO_USER",
+              "APPLI_TUTO_ADMIN"
+            ]
+          }
+        ]
+      }, {
+        "featureFlipping": "partenaire",
+        "text": "navigation.partenaire.creation.text",
+        "title": "navigation.partenaire.creation.title",
+        "url": "/partenaires/creer",
+        "visibleDansMenu": true,
+        "visibleDansPlan": true,
+        "rolesAutorises": [
+          "APPLI_TUTO_ADMIN"
+        ]
+      }]
     },
     {
       "text": "navigation.administration.label",
       "visibleDansMenu": true,
       "visibleDansPlan": true,
       "rolesAutorises": ["APPLI_TUTO_ADMIN"],
-      "submenu": [
-        {
-          "text": "navigation.administration.secteurs",
-          "visibleDansMenu": true,
-          "visibleDansPlan": true,
-          "submenu": [
-            {
-              "text": "navigation.administration.listeSecteurs",
-              "title": "navigation.administration.listeSecteursTitle",
-              "url": "/secteurs",
-              "visibleDansMenu": true,
-              "visibleDansPlan": true
-            },
-            {
-              "text": "navigation.administration.repartition",
-              "url": "/repartitions",
-              "visibleDansMenu": true,
-              "visibleDansPlan": true
-            }
-          ]
-        }
-      ]
+      "submenu": [{
+        "text": "navigation.administration.secteurs",
+        "visibleDansMenu": true,
+        "visibleDansPlan": true,
+        "submenu": [{
+            "text": "navigation.administration.listeSecteurs",
+            "title": "navigation.administration.listeSecteursTitle",
+            "url": "/secteurs",
+            "visibleDansMenu": true,
+            "visibleDansPlan": true
+          },
+          {
+            "text": "navigation.administration.repartition",
+            "url": "/repartitions",
+            "visibleDansMenu": true,
+            "visibleDansPlan": true
+          }
+        ]
+      }]
     },
     {
       "text": "navigation.accessibility",

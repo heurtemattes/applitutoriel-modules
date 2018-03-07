@@ -60,6 +60,11 @@
       "switch": "The value of « {field} » is incorrect."
     }
   },
+  "textarea": {
+    "alertMessage": "The number of characters is too high ({count}/{maxChar}).",
+    "alertTitle": "Too high number of characters",
+    "charLabel": "{count, plural, =1 {1 character} other {# characters}}"
+  },
   "uploadFile": {
     "selectedFile": "{count, plural, =0 {no file selected } =1 {1 file selected} other {# items files selected}}",
     "buttonLabel": "Select file",
@@ -265,6 +270,7 @@
     "form": {
       "titreFormulaire": "List of partners",
       "sousTitreFormulaire": "Search",
+      "titreImage": "Partner's picture",
       "textIntroForm": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.",
       "fields": {
         "criteres": {
@@ -311,6 +317,7 @@
       "reinitTitle": "Resetting partner search data"
     },
     "tableau": {
+      "summary": "Partners list",
       "iconConsulter": "Read more about {nom} {prenom}",
       "iconEditer": "Edit the sheet of {nom} {prenom}",
       "iconSupprimer": "remove the sheet of {nom} {prenom}",
@@ -375,6 +382,7 @@
     "ongletListeSecteursTitre": "Sectors Async",
     "ongletListeProduitContenu": "Show the list of products",
     "tableauAutresTel": {
+      "addTitle": "Add phone number",
       "title": "List of other cellular phones",
       "colonnes": {
         "numero": "Phone"
@@ -476,7 +484,7 @@
           }
         },
         "dateNaissance": {
-          "label": "Birth date"
+          "label": "Birth date (mm/dd/yyyy)"
         },
         "organisme": {
           "label": "Organism"
@@ -584,7 +592,8 @@
         },
         "commentaire": {
           "label": "Comment (limit 255 characters).",
-          "maxLength": "« Comment » Comment field exceeds allowed number of characters {limit}."
+          "maxLength": "« Comment » Comment field exceeds allowed number of characters {limit}.",
+          "placeHolder": "Please type in a comment "
         },
         "satisfaction": {
           "label": "How did you hear about us ?",

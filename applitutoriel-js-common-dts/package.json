@@ -1,6 +1,6 @@
 {
   "name": "applitutoriel-js-common-dts",
-  "version": "5.1.0-pub",
+  "version": "5.1.1",
   "license": "CECILL-2.1",
   "description": "Définition Typescript du module applitutoriel-js-common",
   "bugs": {
@@ -15,5 +15,20 @@
   "buildDependencies": {},
   "testDependencies": {},
   "author": "MEAE - Ministère de l'Europe et des Affaires étrangères",
-  "types": "./applitutoriel-js-common.d.ts"
+  "types": "./applitutoriel-js-common.d.ts",
+
+
+
+
+
+  "____HORNET-BUILDER____DO_NOT_MODIFY_THIS_OBJECT____": {
+    "current": "323217f643c3e3f1fe7532e72ac01bb0748c97be",
+    "history": {
+      "323217f643c3e3f1fe7532e72ac01bb0748c97be": {
+        "version": "5.1.1",
+        "date": "2018-01-11T15:00:56.230Z",
+        "deps": {}
+      }
+    }
+  }
 }

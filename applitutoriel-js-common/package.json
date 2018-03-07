@@ -1,6 +1,6 @@
 {
   "name": "applitutoriel-js-common",
-  "version": "5.1.0-pub",
+  "version": "5.1.1",
   "license": "CECILL-2.1",
   "description": "Application tutoriel utilisant le Framework hornet",
   "bugs": {
@@ -11,28 +11,30 @@
     "url": "git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git"
   },
   "tsDefinitionDependencies": {
-    "hornet-js-ts-typings": "5.1.0",
-    "hornet-js-utils-dts": "5.1.0",
-    "hornet-js-core-dts": "5.1.0",
-    "hornet-js-components-dts": "5.1.0",
-    "hornet-js-react-components-dts": "5.1.0",
-    "hornet-js-bean-dts": "5.1.0",
-    "hornet-js-test-dts": "5.1.0"
+    "hornet-js-ts-typings": "5.1.1",
+    "hornet-js-utils-dts": "5.1.1",
+    "hornet-js-core-dts": "5.1.1",
+    "hornet-js-components-dts": "5.1.1",
+    "hornet-js-react-components-dts": "5.1.1",
+    "hornet-js-bean-dts": "5.1.1",
+    "hornet-js-test-dts": "5.1.1"
   },
   "appDependencies": {
     "chart.js": "2.6.0",
-    "hornet-js-bean": "5.1.0",
-    "hornet-js-components": "5.1.0",
-    "hornet-js-react-components": "5.1.0",
-    "hornet-js-core": "5.1.0",
-    "hornet-js-utils": "5.1.0",
+    "hornet-js-bean": "5.1.1",
+    "hornet-js-components": "5.1.1",
+    "hornet-js-react-components": "5.1.1",
+    "hornet-js-core": "5.1.1",
+    "hornet-js-utils": "5.1.1",
     "connect-flash": "0.1.1",
     "passport": "0.2.1",
     "passport-local": "1.0.0",
     "sha1": "1.1.1"
   },
   "testDependencies": {},
-  "buildDependencies": {},
+  "buildDependencies": {
+    "typescript": "2.7.1"
+  },
   "scripts": {
     "init-dev": "hb install",
     "start": "node index.js"

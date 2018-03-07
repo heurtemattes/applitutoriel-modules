@@ -1,0 +1,7 @@
+{
+    "featureFlipping": [{
+        "id": "partenaire",
+        "label": "Activation des partenaires",
+        "enabled": true
+    }]
+}

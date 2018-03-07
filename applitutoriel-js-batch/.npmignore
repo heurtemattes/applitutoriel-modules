@@ -6,5 +6,6 @@ istanbul
 node_modules
 target
 definition-ts
-builder.js
 tsconfig.json
+vendor-manifest.json
+static/js/dll

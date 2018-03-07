@@ -17,11 +17,16 @@
     "uploadAntivirus": false,
     "sessionTimeout": 1800000,
     "stackTraceLimit": 100,
-    "bodyParserLimit": "50mb"
+    "bodyParserLimit": "50mb",
+    "rethrow": false,
+    "notifications": {
+      "sessionTimeoutDelay": 30000,
+      "notifSessionTimeoutRepeat": 5000
+    }
     /*
     "https": {
-      "cert": "c:/home/workspace/Hornet.js/5.1.0/applitutoriel/config/cert/cert.pem",
-      "key": "c:/home/workspace/Hornet.js/5.1.0/applitutoriel/config/cert/key.pem",
+      "cert": "c:/home/workspace/Hornet.js/5.1.1/applitutoriel/config/cert/cert.pem",
+      "key": "c:/home/workspace/Hornet.js/5.1.1/applitutoriel/config/cert/key.pem",
       "passphrase": "password"
     }
     //ex : openssl req -x509 -sha256 -newkey rsa:2048 -keyout key.pem -out cert.pem -days XXX
@@ -60,7 +65,7 @@
     "secure": true
     //"alwaysSetCookie": false
   },
-  "themeName": "hornet-themes",
+  "themeName": "hornet-themes-intranet",
   "security": {
     "enabled": true,
     "hpp": true,
@@ -125,9 +130,9 @@
   },
   "logClient": {
     "remote": false,
-    "level": "TRACE",
-    "appenders": [
-      {
+    "level": "INFO",
+    "appenders": {
+      "BrowserConsole": {
         "type": "BrowserConsole",
         //        "layout": {
         //          "type": "pattern",
@@ -137,7 +142,7 @@
           "type": "THIN"
         }
       },
-      {
+      "Ajax": {
         "type": "Ajax",
         "layout": {
           "type": "BASIC"
@@ -146,7 +151,7 @@
         "timeout": 3000,
         "url": "/log"
       }
-    ]
+    }
   },
   "database": {
     "config": {
@@ -154,6 +159,7 @@
       "username": "test",
       "password": "test",
       "options": {
+        "operatorsAliases": false,
         "dialect": "sqlite",
         "storage": "./database/database.sqlite",
         "pool": {
@@ -171,6 +177,7 @@
     "configPostgres": {
       "uri": "postgres://hornetjs@localhost:5433/applitutorielDB",
       "options": {
+        "operatorsAliases": false,
         "pool": {
           "max": 5,
           "min": 0,
@@ -219,15 +226,36 @@
   "authentication": {
     "loginUrl": "/login",
     "logoutUrl": "/logout"
+    //    "saml": {
+    //      "enabled": false,
+    //      "configuration": {
+    //        "hostUrlReturnTo": "http://localhost:8889",
+    //        "callbackUrl": "/login",
+    //        "logoutCallbackUrl": "/logout",
+    //        "issuer": "http://localhost:8889/applitutoriel",
+    //        "idp": [
+    //          {
+    //            "name": "idp",
+    //            "shibbolethUrl": "./config/idp/arobas/idp-metadata.xml",
+    //            "httpsCert": "./config/cert/arobas/arobas.dev.diplomatie.gouv.fr"
+    //          }
+    //        ]
+    //      }
   },
-  "cache": {
-    "client": {
-      "enabled": false,
-      "timetolive": 60
+  "request": {
+    "cache": {
+      "client": {
+        "enabled": false,
+        "timetolive": 60
+      },
+      "server": {
+        "enabled": false,
+        "timetolive": 120
+      }
     },
-    "server": {
-      "enabled": false,
-      "timetolive": 120
+    "timeout": {
+      "response": 10000,
+      "deadline": 60000
     }
   }
 }

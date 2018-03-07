@@ -1,6 +1,6 @@
 {
   "name": "applitutoriel-js-batch",
-  "version": "5.1.0-pub",
+  "version": "5.1.1",
   "license": "CECILL-2.1",
   "main": "index.js",
   "description": "Application tutoriel utilisant le Framework hornet",
@@ -12,34 +12,37 @@
     "url": "git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git"
   },
   "tsDefinitionDependencies": {
-    "hornet-js-ts-typings": "5.1.0",
-    "hornet-js-utils-dts": "5.1.0",
-    "hornet-js-core-dts": "5.1.0",
-    "hornet-js-components-dts": "5.1.0",
-    "hornet-js-database-dts": "5.1.0",
-    "hornet-js-bean-dts": "5.1.0",
-    "hornet-js-batch-dts": "5.1.0",
-    "hornet-js-test-dts": "5.1.0"
+    "hornet-js-ts-typings": "5.1.1",
+    "hornet-js-utils-dts": "5.1.1",
+    "hornet-js-core-dts": "5.1.1",
+    "hornet-js-components-dts": "5.1.1",
+    "hornet-js-database-dts": "5.1.1",
+    "hornet-js-bean-dts": "5.1.1",
+    "hornet-js-batch-dts": "5.1.1",
+    "hornet-js-test-dts": "5.1.1"
   },
   "appDependencies": {
-    "hornet-js-components": "5.1.0",
-    "hornet-js-core": "5.1.0",
-    "hornet-js-utils": "5.1.0",
-    "hornet-js-database": "5.1.0",
-    "hornet-js-bean": "5.1.0",
-    "hornet-js-batch": "5.1.0",
+    "hornet-js-components": "5.1.1",
+    "hornet-js-core": "5.1.1",
+    "hornet-js-utils": "5.1.1",
+    "hornet-js-database": "5.1.1",
+    "hornet-js-bean": "5.1.1",
+    "hornet-js-batch": "5.1.1",
     "pg": "7.3.0",
     "pg-hstore": "2.3.2",
     "pg-native": "2.2.0",
     "sqlite3": "3.1.8"
   },
-  "buildDependencies": {},
+  "buildDependencies": {
+    "typescript": "2.7.1"
+  },
   "testDependencies": {
-    "hornet-js-test": "5.1.0"
+    "hornet-js-test": "5.1.1"
   },
   "scripts": {
     "init-dev": "hb install",
     "start": "node index.js"
   },
   "author": "MEAE - Ministère de l'Europe et des Affaires étrangères"
+
 }

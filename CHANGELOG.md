@@ -1,3 +1,127 @@
+# applitutoriel-modules 5.1.1
+
+-	EVOL[s117] - Composant Aller au contenu
+-	FIX(S98-246): RadioField - prise en compte des booléens comme value
+-	[EVO] ajout d'un parametrage server.rethrow pour transmettre les status http reçus par le back-end
+-	FIX: accessibilité - gestion role banner
+-	FIX: accessibilité - indication de changement de langue dans le texte du form
+-	FIX:Déploiement module rundeck
+-	[EVOL] : gestion custom des exceptions business
+-	[CLEAN] formatage du code
+-	EVOL:Ajout batchjs au déploiement automatisé
+-	FIX: correction pour le deprecated de sequelize : "sequelize deprecated string based operators are now deprecated"
+-	[EVO] Duplication des composants user et lang pour respecter les preconisations RGA
+-	EVOL:ajout doc + log info
+-	EVOL[M0066197]: correction de l'affichage de satisfaction
+-	[FIX] gestion du readonly-VIP en mode création
+-	FIX: correction affichage lite postgres bloqué
+-	[s69] - mise en place composant Notification de déconnexion imminente
+-	EVOL[S85-259]: textarea: ajout de l'affichage du nombre de caractère et de l'autosizing
+-	EVOL : gestion de la selection le secteur
+-	EVOL : gestion de la selection pour les pays
+-	EVOL:maj doc
+-	EVOL: reprise timeout
+-	EVOL[s:76] Feature Flipping - activation menu partenaire
+-	EVOL[s:76] Feature Flipping
+-	FIX:variable production
+-	EVOL[S34-238]: ajout de la suppression et de l'ajout d'onglet
+-	[EVO] : ajout de la tâche d'install dans l'init-snapshot
+-	FIX:sqlite version
+-	EVOL : ajout d'un système de notification d'expiration de session
+-	FIX:move builder
+-	FIX[ 81 ]: compiler l'appli en 2.7
+-	EVOL: Update Sqlite3 3.1.8 -> 3.1.13
+-	FIX: retour version antérieure de sqlite
+-	FIX[ 81 ]: compiler l'appli en 2.7
+-	FIX(M0065955): Déclenchement onFormChange
+-	[EVO] l'appli tuto en ts2.7.1
+-	[EVO] changement des states de l'appli tuto...encore
+-	Fix : compilation ts 2.7.1 applituto
+-	Fix : compilation ts 2.7.1 applituto
+-	EVOL[S82-215]: upgrade librairies sqlite
+-	FIX: correction de l'injector
+-	FIX: correction de l'injection des service dans hornet-lite
+-	FIX: correction de l'injection des services
+-	FIX(SUPPORT): Datasource gestion de l'order à partir d'une méthode de comparaison
+-	EVOL:rules sonar
+-	FIX(SUPPORT): Gestion notification sur fermeture d'une modal
+-	FIX:Suppression commentaire
+-	EVOL:init-snapshot avec hb
+-	FIX[S15-100]: correction des notifications
+-	FIX[S15-100]: correction code
+-	FIX:Jenkins publish artifact
+-	FIX:Version maven Snapshot format
+-	FIX[S15-100]: 1.3.1 - correction du contenu alt du tableau des numéros de téléphone
+-	FIX:double quote  in version in pom.xml
+-	FIX:quote in version in pom.xml
+-	FIX:blank line in pom.xml
+-	FIX[ s15 ]: correction audit liste partenaire
+-	FIX:Publication maven
+-	EVOL[S13-52] : Ajout d'un timeout aux requests + revu structure noeud pour configuration cache
+-	FIX:Module Groupe PUB
+-	FIX:MODULE_GROUP_PUB
+-	FIX:Nom du pom.xml
+-	EVOL:generation pom.xml
+-	FIX:module group maven
+-	FIX:Repo maven
+-	EVOL:Fix snapshot
+-	EVOL:Gestion SNAPSHOT
+-	FIX:pb json
+-	EVOL[S28-147] : Application de la valorisation par défaut pour les radios boutons dans l'application + ajout de l'abonnement à la sélection des radioBoutons si pas de valeur par défaut
+-	FIX:dll + template environment
+-	EVOL[S16-158] : Ajout d'une option targetKey pour les relations dans SequelizeUtils
+-	FIX[ s15 ]: - Ajout de l'attibut alt pour les images du composant action-column - Ajout attribut title et messsage associé sur l'image permettant de vider un champs input
+-	FIX[ s51 ] Gestion token hornet-js
+-	EVOL[S29]:montée de version de React en 16.2.0 et MaJ des dts de React et ReactDom
+-	FIX[s137] bouton radio: revoir gestion des currentValue
+-	FIX:npmignore builder.js
+-	EVOL:Maj ignore dllentry
+-	EVOL:script init de snapshot
+-	EVOL:Passage Debian 9
+-	FIX:Publicatoin builder.js pour construction depuis npm
+-	FIX:Maj gitignore
+-	FIX:tar systemd logc
+-	FIX:correction module sonar
+-	FIX:Version release pour le deploy
+-	Commentaire rundeck batch
+-	Maj publish task
+-	Maj job rundeck name
+-	FIX:nom des jobs rundeck
+-	FIX:Correction syntax
+-	EVOL:ajout du dependency:set pour la gestion des snapshots hornet-js
+-	FIX:mauvaie nommage de variable
+-	EVOL:properties environnement DEB8/9
+-	FIX:Problème de syntaxe
+-	EVO:JenkinsFile
+-	FIX[S15-100]: ACCESSIBILITE:correctifs retour audit
+-	FIX[S15-100]: ACCESSIBILITE:correctifs retour audit
+-	FIX:correctif production.json
+-	EVOL[S14-53]: 5.1.1 applituto
+-	[FIX] : passage à la version 5.1.1
+-	EVOL[S32-95] : EVOL: montée de version log4json 5.0.2 & 5.1.1
+-	FIX[]: Retrait des id forms avant diffusion de la 5.1.0
+-	FIX: resyncho source
+-	EVOL[S32-95] : EVOL: montée de version log4json 5.0.2 & 5.1.1
+-	[APPLITUTO-CORRECTIF]: mise en commentaire du bouton permettant d'ajouter un nouvel onglet car non accessible
+-	[FIX] : correction sur le nom du middleware ieNoOpen
+-	retour arriere evol Notification / Form
+-	separation des services page/data
+-	[EVO] : Rotation des logs gc nouveau format de fichier
+-	EVOL(US14-53): ajout de l'id pour form
+-	Fix : correction du lancement de l'applituto-lite
+-	[FIX] utilisation de l'attribut
+-	[ACCESSIBILITE:correctifs retour audit]: correction doublon id "liste-produits"
+-	FIX : mode mock avec lazy loading
+-	Gestion des mocks
+-	Fix[S39]: Fomulaire: messages d'erreur paramétrés
+-	Ajout karma dans l'appli tuto
+-	Ajout d'un mock coté client
+-	suppression de l'ancienne injection
+-	renommage des fichiers injector
+-	Ajout des mocks coté client pour les appli-tuto
+-	ajout mock user pour fullspa mock
+
+
 # applitutoriel-modules 5.1.0
 
 -	213347	-	suppresison tri car multiple uniquement en mode array

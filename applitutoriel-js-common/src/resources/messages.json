@@ -57,6 +57,11 @@
       "switch": "La valeur du champ « {field} » est incorrecte."
     }
   },
+  "textarea": {
+    "alertMessage": "Le nombre de caractère renseigné est trop élevé par rapport au nombre maximum ({count}/{maxChar}).",
+    "alertTitle": "Nombre de caractères trop élevé",
+    "charLabel": "{count, plural, =1 {1 caractère} other {# caractères}}"
+  },
   "uploadFile": {
     "selectedFile": "{count, plural, =0 {aucun fichier sélectionné } =1 {1 fichier sélectionné} other {# items fichiers sélectionnés}}",
     "buttonLabel": "Choisir un fichier",
@@ -256,6 +261,7 @@
     "form": {
       "titreFormulaire": "Liste des partenaires",
       "sousTitreFormulaire": "Recherche",
+      "titreImage": "Photo du partenaire",
       "textIntroForm": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.",
       "fields": {
         "criteres": {
@@ -302,6 +308,7 @@
       "reinitTitle": "Réinitialisation des données de recherche des partenaires"
     },
     "tableau": {
+      "summary": "Liste des partenaires",
       "iconConsulter": "Consulter la fiche de {nom} {prenom}",
       "iconEditer": "Editer la fiche de {nom} {prenom}",
       "iconSupprimer": "Supprimer la fiche de {nom} {prenom}",
@@ -364,6 +371,15 @@
     "ongletListeProduitTitre": "Produits",
     "ongletListeSecteursTitre": "Secteurs Async",
     "ongletListeProduitContenu": "Montre la liste des produits",
+    "tableauAutresTel": {
+      "addTitle": "Ajouter un numéro de téléphone",
+      "title": "Liste des autres numéros de téléphone",
+      "colonnes": {
+        "numero": "Numéro de téléphone"
+      },
+      "suppressionMessage": "Etes-vous sûr(e) de vouloir supprimer ce numéro de téléphone?",
+      "suppressionTitle": "Supprimer ce numéro"
+    },
     "tableauProduits": {
       "colonnes": {
         "desc": "Description",
@@ -458,7 +474,7 @@
           }
         },
         "dateNaissance": {
-          "label": "Date de naissance"
+          "label": "Date de naissance (jj/mm/aaaa)"
         },
         "organisme": {
           "label": "Organisme / société"
@@ -568,7 +584,8 @@
         },
         "commentaire": {
           "label": "Commentaire (limite 255 caractères).",
-          "maxLength": "Le champ « Commentaire » excède {limit} caractères. Veuillez corriger la saisie de ce champ."
+          "maxLength": "Le champ « Commentaire » excède {limit} caractères. Veuillez corriger la saisie de ce champ.",
+          "placeHolder": "Veuillez saisir un commentaire"
         },
         "satisfaction": {
           "label": "Comment avez-vous entendu parler de nous ?",

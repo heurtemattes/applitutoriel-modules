@@ -1,3 +1,83 @@
+/**
+ * Copyright ou © ou Copr. Ministère de l'Europe et des Affaires étrangères (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
+ * Ce logiciel est un programme informatique servant à faciliter la création
+ * d'applications Web conformément aux référentiels généraux français : RGI, RGS et RGAA
+ * <p/>
+ * Ce logiciel est régi par la licence CeCILL soumise au droit français et
+ * respectant les principes de diffusion des logiciels libres. Vous pouvez
+ * utiliser, modifier et/ou redistribuer ce programme sous les conditions
+ * de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+ * sur le site "http://www.cecill.info".
+ * <p/>
+ * En contrepartie de l'accessibilité au code source et des droits de copie,
+ * de modification et de redistribution accordés par cette licence, il n'est
+ * offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+ * seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+ * titulaire des droits patrimoniaux et les concédants successifs.
+ * <p/>
+ * A cet égard  l'attention de l'utilisateur est attirée sur les risques
+ * associés au chargement,  à l'utilisation,  à la modification et/ou au
+ * développement et à la reproduction du logiciel par l'utilisateur étant
+ * donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+ * manipuler et qui le réserve donc à des développeurs et des professionnels
+ * avertis possédant  des  connaissances  informatiques approfondies.  Les
+ * utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+ * logiciel à leurs besoins dans des conditions permettant d'assurer la
+ * sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+ * à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+ * <p/>
+ * Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+ * pris connaissance de la licence CeCILL, et que vous en avez accepté les
+ * termes.
+ * <p/>
+ * <p/>
+ * Copyright or © or Copr. Ministry for Europe and Foreign Affairs (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
+ * This software is a computer program whose purpose is to facilitate creation of
+ * web application in accordance with french general repositories : RGI, RGS and RGAA.
+ * <p/>
+ * This software is governed by the CeCILL license under French law and
+ * abiding by the rules of distribution of free software.  You can  use,
+ * modify and/ or redistribute the software under the terms of the CeCILL
+ * license as circulated by CEA, CNRS and INRIA at the following URL
+ * "http://www.cecill.info".
+ * <p/>
+ * As a counterpart to the access to the source code and  rights to copy,
+ * modify and redistribute granted by the license, users are provided only
+ * with a limited warranty  and the software's author,  the holder of the
+ * economic rights,  and the successive licensors  have only  limited
+ * liability.
+ * <p/>
+ * In this respect, the user's attention is drawn to the risks associated
+ * with loading,  using,  modifying and/or developing or reproducing the
+ * software by the user in light of its specific status of free software,
+ * that may mean  that it is complicated to manipulate,  and  that  also
+ * therefore means  that it is reserved for developers  and  experienced
+ * professionals having in-depth computer knowledge. Users are therefore
+ * encouraged to load and test the software's suitability as regards their
+ * requirements in conditions enabling the security of their systems and/or
+ * data to be ensured and,  more generally, to use and operate it in the
+ * same conditions as regards security.
+ * <p/>
+ * The fact that you are presently reading this means that you have had
+ * knowledge of the CeCILL license and that you accept its terms.
+ *
+ */
+
+/**
+ * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
+ *
+ * @author MEAE - Ministère de l'Europe et des Affaires étrangères
+ * @version v5.1.1
+ * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
+ * @license CECILL-2.1
+ */
+
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-utils/src/logger";
 import * as React from "react";
@@ -95,7 +175,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     private defaultValues = {
         criteres: {
             partenaire: {
-                isClient: "true",
+                isClient: true,
                 isVIP: ""
             },
             idSecteur: "",
@@ -107,13 +187,12 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     /** Liste des types de client */
     private LISTE_IS_CLIENT: any[] = [
         {
-            isClient: "true",
+            isClient: true,
             libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.clientLabel")
         },
         {
-            isClient: "false",
-            libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.fournisseurLabel")
-
+            isClient: false,
+            libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.fournisseurLabel"),
         }
     ];
 
@@ -125,12 +204,13 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
 
         this.paginateDataSource = this.initDataSource(props);
         this.dataSourceIsClient = new DataSource(this.LISTE_IS_CLIENT, { value: "isClient", label: "libelle" });
-
-        this.state.pagination = {
-            pageIndex: 0,
-            itemsPerPage: 10,
-            totalItems: 0
-        } as PaginationProps;
+        this.state = {
+            ...this.state, pagination: {
+                pageIndex: 0,
+                itemsPerPage: 10,
+                totalItems: 0
+            } as PaginationProps
+        };
 
         /* Récupération des données provenant du CLS */
         let criteres;
@@ -138,11 +218,10 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
             criteres = props.navigateData.criteres;
         }
 
+
         /* Valeurs par défaut du formulaire de recherche */
         this.currentCriteres = {
             partenaire: {
-                isClient: _.get(criteres, "partenaire.isClient") != null ?
-                    _.get(criteres, "partenaire.isClient") : _.get(this.defaultValues, "criteres.partenaire.isClient"),
                 isVIP: _.get(criteres, "partenaire.isVIP") != null ?
                     _.get(criteres, "partenaire.isVIP") : _.get(this.defaultValues, "criteres.partenaire.isVIP")
             },
@@ -153,6 +232,10 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
             endDate: _.get(criteres, "endDate") ?
                 this.getDateFormatee(_.get(criteres, "endDate")) : _.get(this.defaultValues, "criteres.endDate")
         };
+        this.dataSourceSecteurs.on("add", () => {
+            // Valorisation des champs du formulaire de recherche
+            this.secteurSelect.setCurrentValue(this.currentCriteres.idSecteur);
+        })
     }
 
     /**
@@ -166,12 +249,10 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         this.getService().listerSecteurs().then((secteurs) => {
             // Alimentation de la liste déroulante des secteurs
             self.dataSourceSecteurs.add(true, this.listeSecteurs.concat(secteurs));
-            // Valorisation des champs du formulaire de recherche
-            self.secteurSelect.setCurrentValue(this.currentCriteres.idSecteur);
         });
 
         this.formRecherche.updateFields({ criteres: this.currentCriteres });
-
+        this.dataSourceIsClient.select(this.dataSourceIsClient.results[ 0 ]);
         if (this.currentCriteres.partenaire.isVIP) {
             this.checkBoxIsVip.setCurrentChecked(this.currentCriteres.partenaire.isVIP);
         }
@@ -238,11 +319,12 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                                 messageAlert={intlTab.massActionConfirmMessage}
                                 titleAlert={intlTab.massActionConfirmTitle}
                                 visible={() => this.isAdmin()}
-                                hasPopUp={true} />
+                                hasPopUp={true}
+                                type="button" />
 
                         </MenuActions>
                     </Header>
-                    <Content dataSource={this.paginateDataSource}>
+                    <Content dataSource={this.paginateDataSource} summary={intlTab.summary}>
                         <Columns>
 
                             {checkColumn}
@@ -272,7 +354,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                                 disabled={() => !this.isAdmin()}
                                 hasPopUp={true}
                             />
-                            <MoreInfoColumn keyColumn="idMore" visible={(value) => value.isVIP === true} alt={intlTab.colonnes.moreInfoTitle}>
+                            <MoreInfoColumn keyColumn="idMore" visible={(value) => value.isVIP === true} alt={intlTab.colonnes.moreInfoTitle} headers={[ "nom", "prenom", "proCourriel", "organisme" ]}>
                                 <LineAfter visible={(value) => value.isVIP === true}>
                                     <DivExpandable className="mm-expandable" />
                                 </LineAfter>
@@ -347,11 +429,13 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         return (
             <div>
                 <Form
+                    id="rpaForm"
                     formMessages={intlMessages}
                     schema={schema}
                     subTitle={intlMessages.sousTitreFormulaire}
                     onSubmit={this.onSubmit}
                     text={intlMessages.textIntroForm}
+                    textLang={"la"}
                     ref={(form) => { this.formRecherche = form }}
                     customValidators={[ new ParRpaValidateIsVipEndDate(), new ParRpaValidateSectorStartDate() ]}
                     defaultValues={{ criteres: this.currentCriteres }}
@@ -363,6 +447,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                             toolTip={intlMessages.fields.criteres.partenaire.typePartenaire.tooltip}
                             labelClass="blocLabelUp"
                             inline={RadiosField.Inline.FIELD}
+                            currentChecked={true}
                         />
                         <CheckBoxField name="criteres.partenaire.isVIP"
                             label={intlMessages.fields.criteres.partenaire.isVIP.label}
@@ -445,6 +530,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         this.maTable.setState({ isVisible: false });
 
         this.paginateDataSource.deleteAll();
+        this.dataSourceIsClient.select(this.dataSourceIsClient.results[ 0 ]);
 
         this.criteresRecherche = {};
 
@@ -499,7 +585,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         if (partenaire.isVIP) {
             notif.text = notifErrorText;
             errors.addNotification(notif);
-            NotificationManager.notify("notifRpaPage", errors, confirmations);
+            NotificationManager.notify("notifRpaPage", "rpaForm", errors, confirmations);
             this.refresh();
         } else {
             this.getService().supprimer(partenaire.id).then((res) => {
@@ -510,7 +596,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                     notif.text = notifSuccessText;
                     confirmations.addNotification(notif);
                 }
-                NotificationManager.notify("notifRpaPage", errors, confirmations);
+                NotificationManager.notify("notifRpaPage", "rpaForm", errors, confirmations);
                 this.refresh();
             });
         }
@@ -558,7 +644,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                 }
             });
 
-            NotificationManager.notify("notifRpaPage", errors, confirmations);
+            NotificationManager.notify("notifRpaPage", "rpaForm", errors, confirmations);
 
             this.refresh();
         });
@@ -610,7 +696,7 @@ const DivExpandable = (props) => {
     return (
         <div className="grid" key={"card-container-" + props.value.nom + "-" + props.value.prenom}>
             <div style={{ float: "left", width: "10%" }} className="one-fifth">
-                <img src={Picto.grey.userCircle} style={{ width: "200%" }} />
+                <img src={Picto.grey.userCircle} style={{ width: "200%" }} alt={HornetPage.getI18n("partenairesListePage.form.titreImage")} />
             </div>
             <div className={props.className}
                 key={"card-content-" + props.value.nom + "-" + props.value.prenom}>

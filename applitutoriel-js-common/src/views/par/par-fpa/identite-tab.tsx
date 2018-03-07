@@ -1,3 +1,83 @@
+/**
+ * Copyright ou © ou Copr. Ministère de l'Europe et des Affaires étrangères (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
+ * Ce logiciel est un programme informatique servant à faciliter la création
+ * d'applications Web conformément aux référentiels généraux français : RGI, RGS et RGAA
+ * <p/>
+ * Ce logiciel est régi par la licence CeCILL soumise au droit français et
+ * respectant les principes de diffusion des logiciels libres. Vous pouvez
+ * utiliser, modifier et/ou redistribuer ce programme sous les conditions
+ * de la licence CeCILL telle que diffusée par le CEA, le CNRS et l'INRIA
+ * sur le site "http://www.cecill.info".
+ * <p/>
+ * En contrepartie de l'accessibilité au code source et des droits de copie,
+ * de modification et de redistribution accordés par cette licence, il n'est
+ * offert aux utilisateurs qu'une garantie limitée.  Pour les mêmes raisons,
+ * seule une responsabilité restreinte pèse sur l'auteur du programme,  le
+ * titulaire des droits patrimoniaux et les concédants successifs.
+ * <p/>
+ * A cet égard  l'attention de l'utilisateur est attirée sur les risques
+ * associés au chargement,  à l'utilisation,  à la modification et/ou au
+ * développement et à la reproduction du logiciel par l'utilisateur étant
+ * donné sa spécificité de logiciel libre, qui peut le rendre complexe à
+ * manipuler et qui le réserve donc à des développeurs et des professionnels
+ * avertis possédant  des  connaissances  informatiques approfondies.  Les
+ * utilisateurs sont donc invités à charger  et  tester  l'adéquation  du
+ * logiciel à leurs besoins dans des conditions permettant d'assurer la
+ * sécurité de leurs systèmes et ou de leurs données et, plus généralement,
+ * à l'utiliser et l'exploiter dans les mêmes conditions de sécurité.
+ * <p/>
+ * Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
+ * pris connaissance de la licence CeCILL, et que vous en avez accepté les
+ * termes.
+ * <p/>
+ * <p/>
+ * Copyright or © or Copr. Ministry for Europe and Foreign Affairs (2017)
+ * <p/>
+ * pole-architecture.dga-dsi-psi@diplomatie.gouv.fr
+ * <p/>
+ * This software is a computer program whose purpose is to facilitate creation of
+ * web application in accordance with french general repositories : RGI, RGS and RGAA.
+ * <p/>
+ * This software is governed by the CeCILL license under French law and
+ * abiding by the rules of distribution of free software.  You can  use,
+ * modify and/ or redistribute the software under the terms of the CeCILL
+ * license as circulated by CEA, CNRS and INRIA at the following URL
+ * "http://www.cecill.info".
+ * <p/>
+ * As a counterpart to the access to the source code and  rights to copy,
+ * modify and redistribute granted by the license, users are provided only
+ * with a limited warranty  and the software's author,  the holder of the
+ * economic rights,  and the successive licensors  have only  limited
+ * liability.
+ * <p/>
+ * In this respect, the user's attention is drawn to the risks associated
+ * with loading,  using,  modifying and/or developing or reproducing the
+ * software by the user in light of its specific status of free software,
+ * that may mean  that it is complicated to manipulate,  and  that  also
+ * therefore means  that it is reserved for developers  and  experienced
+ * professionals having in-depth computer knowledge. Users are therefore
+ * encouraged to load and test the software's suitability as regards their
+ * requirements in conditions enabling the security of their systems and/or
+ * data to be ensured and,  more generally, to use and operate it in the
+ * same conditions as regards security.
+ * <p/>
+ * The fact that you are presently reading this means that you have had
+ * knowledge of the CeCILL license and that you accept its terms.
+ *
+ */
+
+/**
+ * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
+ *
+ * @author MEAE - Ministère de l'Europe et des Affaires étrangères
+ * @version v5.1.1
+ * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
+ * @license CECILL-2.1
+ */
+
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-utils/src/logger";
 import * as React from "react";
@@ -115,6 +195,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     private dataSourceIsClient: DataSource<any>;
     private dataSourceOtherTelephones: DataSource<any>;
 
+
     public readonly props: Readonly<IdentiteTabProps>;
 
     private formI18n = this.i18n("partenaireFichePage.form");
@@ -126,9 +207,13 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         let intlMess = this.i18n("partenaireFichePage");
         let fieldMessages = intlMess.form.fields;
 
-        this.state.readOnly = this.props.pageAttributes.mode === PAR_MODE_CONSULTER;
-        this.state.nationalites = [];
-        this.state.schema = schema;
+        this.state = {
+            ...this.state,
+            readOnly: this.props.pageAttributes.mode === PAR_MODE_CONSULTER,
+            mode: this.props.pageAttributes.mode,
+            nationalites: [],
+            schema: schema
+        }
         this.dataSourceNationalite = this.props.dataSourcesService.dataSourceNationalite;
         this.dataSourcePays = new DataSourceMaster<PaysMetier>([], { value: "id", text: "libelle" });
         this.dataSourceVille = new DataSource<VilleMetier>([], { value: "id", text: "libelle", idPays: "pays.id" });
@@ -138,19 +223,29 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                 this.villeAutoComplete.resetField();
             }
         });
-        this.dataSourcePays.on("select", (value) => {
-            this.dataSourceVille.filter(function (ville) {
-                return (ville.value == null || ville.idPays == value);
-            }, true);
+        this.dataSourcePays.on("select", (object) => {
+            if (object) {
+                this.dataSourceVille.filter(function (ville) {
+                    return (ville.value == null || ville.idPays == object.value);
+                }, true);
+            }
         });
 
         this.dataSourceOtherTelephones = new DataSource<any>([ { "autreTel": "0240506070" }, { "autreTel": "0241516171" }]);
 
         // Alimentation des listes de choix isClient
-        this.listeIsClient = [ { "value": "true", "label": fieldMessages.isClient.clientLabel },
-        { "value": "false", "label": fieldMessages.isClient.fournisseurLabel }];
+        this.listeIsClient = [
+            {
+                isClient: true,
+                libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.clientLabel")
+            },
+            {
+                isClient: false,
+                libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.fournisseurLabel"),
+            }
+        ];
 
-        this.dataSourceIsClient = new DataSource(this.listeIsClient);
+        this.dataSourceIsClient = new DataSource(this.listeIsClient, { value: "isClient", label: "libelle" });
 
         /* Alimentation des listes de choix de Civilités.
          Sert d'exemple d'utilisation de clés customisées autres que "value" et "label" */
@@ -177,7 +272,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
 
         this.partenaire.isVIP = this.props.pageAttributes && this.props.pageAttributes.isVIP || false;
 
-        this.state.isVIP = this.partenaire.isVIP;
+        this.state = { ...this.state, isVIP: this.partenaire.isVIP };
     }
 
     componentDidUpdate(prevProps: any, prevState: any, prevContext: any): void {
@@ -197,14 +292,16 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         return (
             <div>
                 <Form
+                    id="identiteForm"
                     ref={(form) => {
                         this.formPartenaire = form;
-                    } }
+                    }}
                     onSubmit={this.props.onSubmit}
                     readOnly={this.state.readOnly}
                     className=""
                     schema={this.state.schema}
-                    formMessages={this.i18n("partenaireFichePage.form")}>
+                    formMessages={this.i18n("partenaireFichePage.form")}
+                    onFormChange={this.onFormChangeFn}>
                     {this.renderFieldsetType()}
                     {(this.state.isVIP) ? this.renderPartenaireVip() : this.renderPartenaire()}
                     {this.renderButton()}
@@ -212,6 +309,10 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                 </Form>
             </div>
         );
+    }
+
+    onFormChangeFn(event) {
+        console.log("Déclenchement de la méthode gerrant les changements dans le form !");
     }
 
     /**
@@ -231,9 +332,8 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     /**
      * Alimente la fiche de partenaire
      */
-    setPartenaire(partenaire: PartenaireMetier, mode : string) {
+    setPartenaire(partenaire: PartenaireMetier, mode: string) {
         this.partenaire = partenaire;
-
         if (partenaire.ville && partenaire.ville.pays && partenaire.ville.pays.id) {
             this.dataSourceVille.on("add", () => {
                 this.dataSourceVille.filter(function (ville) {
@@ -243,18 +343,33 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         }
 
 
-        if (this.partenaire.satisfaction) {
+        if (this.partenaire.satisfaction && this.partenaire.satisfaction.split) {
             partenaire.satisfaction = { ids: this.partenaire.satisfaction.split(",") }
         }
         /* MaJ de chacun des champs */
-        //this.dataSourceIsClient.reload();
         this.dataSourceOtherTelephones.reload();
-        this.setState({ isVIP: partenaire.isVIP, readOnly : (mode === PAR_MODE_CONSULTER)}, ()=>{
+        this.setState({ isVIP: partenaire.isVIP, mode: mode, readOnly: (mode === PAR_MODE_CONSULTER) }, () => {
             this.formPartenaire.updateFieldsAndClean(partenaire);
             /* Toggle Des champs en readOnly */
             this.toggleReadOnly(this.isNonContactFieldDisabled());
         });
 
+    }
+
+    /**
+     * Méthode permettant la sélection de valeurs dans le datasource lié aux radiosBouton pour isClient
+     * @param {boolean} value : valeur booléenne pour isClient
+     */
+    selectIntoIsClientDataSource(value: boolean): void {
+        if (value !== undefined) {
+            let selectedValue;
+            if (value) {
+                selectedValue = this.listeIsClient[0];
+            } else {
+                selectedValue = this.listeIsClient[1];
+            }
+            this.dataSourceIsClient.select(selectedValue);
+        }
     }
 
     /**
@@ -358,16 +473,16 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         label={this.formI18n.fields.isClient.label}
                         dataSource={this.dataSourceIsClient}
                         currentChecked={true}
-                        currentValue={"false"}
+                        currentValue={this.listeIsClient[1]}
                         inline={RadiosField.Inline.FIELD}
-                        />
+                    />
                     <CheckBoxField name="isVIP"
                         label={this.formI18n.fields.isVIP.label}
                         toolTip={this.formI18n.fields.isVIP.tooltip}
                         abbr={this.formI18n.fields.isVIP.title}
                         onChange={this.handleIsVIPChange}
                         inline={CheckBoxField.Inline.ALL}
-                        />
+                    />
                 </Row>
             </FieldSet>);
     }
@@ -378,7 +493,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     renderFieldsetCivilite(): JSX.Element {
         return (<FieldSet legend={this.formI18n.civilite} ref={(fieldset) => {
             this.fieldSetCivilite = fieldset;
-        } } key="fieldSetCivilite">
+        }} key="fieldSetCivilite">
             <Row>
                 <AutoCompleteField dataSource={this.dataSourceCivilite}
                     maxHeight={200}
@@ -415,13 +530,13 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                     toolTip={this.i18n("form.autoCompleteField.toolTip")}
                     labelKey="nationalite"
                     valueKey="id"
-                    />
+                />
             </Row>
             <Row>
                 <CalendarField
                     label={this.formI18n.fields.dateNaissance.label}
                     name="dateNaissance"
-                    />
+                />
             </Row>
         </FieldSet>
         );
@@ -435,7 +550,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         return (
             <FieldSet legend={this.formI18n.sectionCoordPro} key="fiedsetCoordonnee" ref={(fieldset) => {
                 this.fieldSetCoordonnees = fieldset;
-            } }>
+            }}>
                 <Row>
                     {/* Exemple d'utilisation du composant input standard dans le même formulaire */}
                     <InputField
@@ -443,7 +558,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         label={this.formI18n.fields.organisme.label}
                         maxLength={50}
 
-                        />
+                    />
                 </Row>
                 <Row>
                     <InputField name="fonction" label={this.formI18n.fields.fonction.label} maxLength={50} />
@@ -466,7 +581,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         required={true}
                         minLength={3}
                         maxLength={80}
-                        />
+                    />
                 </Row>
                 <Row>
                     <InputField
@@ -474,7 +589,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         label={this.formI18n.fields.proFax.label}
                         maxLength={14}
                         toolTip={this.i18n("partenaireFichePage.form.fields.proFax.tooltip")}
-                        />
+                    />
                 </Row>
                 {this.renderOtherPhones()}
             </FieldSet>
@@ -505,12 +620,12 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
             <Table id="liste-other-phones">
                 <Header title={this.i18n("partenaireFichePage.tableauAutresTel.title")}>
                     <MenuActions>
-                        <ActionButton title={this.i18n("administration.secteurs.table.addTitle")}
-                                      srcImg={Picto.white.add}
-                                      action={this.ajouterAutreTelephone}
-                                      priority={true}
-                                      visible={() => !this.isNonContactFieldDisabled()}
-                                      displayedWithoutResult={true}/>
+                        <ActionButton title={this.i18n("partenaireFichePage.tableauAutresTel.addTitle")}
+                            srcImg={Picto.white.add}
+                            action={this.ajouterAutreTelephone}
+                            priority={true}
+                            visible={() => !this.isNonContactFieldDisabled()}
+                            displayedWithoutResult={true} />
                     </MenuActions>
                 </Header>
                 <Content dataSource={this.dataSourceOtherTelephones}
@@ -519,16 +634,16 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         <InputTextColumn keyColumn="autreTel"
                             title={this.i18n("partenaireFichePage.tableauAutresTel.colonnes.numero")}
                             editable={!this.isNonContactFieldDisabled()}
-                            />
+                        />
                         <ActionColumn keyColumn="id"
-                            alt={this.formI18n.suppressionAlt}
+                            alt={this.formI18n.fields.suppressionAlt}
                             srcImg={Picto.blue.supprimer}
                             action={this.supprimerAutreTelephone}
                             messageAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionMessage")}
                             titleAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionTitle")}
                             disabled={() => this.isNonContactFieldDisabled()}
                             visible={() => !this.state.readOnly}
-                            />
+                        />
                     </Columns>
                 </Content>
             </Table>
@@ -543,14 +658,14 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         return (
             <FieldSet legend={this.formI18n.sectionAdresse} ref={(fieldset) => {
                 this.fieldSetAdresses = fieldset;
-            } } key="fieldSetAdresses">
+            }} key="fieldSetAdresses">
                 <Row>
                     <InputField
                         name="proAdrRue"
                         label={this.formI18n.fields.proAdrRue.label}
                         required={true}
                         maxLength={250}
-                        />
+                    />
                 </Row>
                 <Row>
                     <InputField
@@ -558,7 +673,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         label={this.formI18n.fields.proAdrCP.label}
                         required={true}
                         maxLength={9}
-                        />
+                    />
                 </Row>
                 <Row>
                     <AutoCompleteField dataSource={this.dataSourcePays}
@@ -570,18 +685,18 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         labelKey="libelle"
                         valueKey="id"
                         filterText={FilterTextType.beginWith}
-                        />
+                    />
                     <AutoCompleteField dataSource={this.dataSourceVille}
                         ref={(villeAutoComplete) => {
                             this.villeAutoComplete = villeAutoComplete;
-                        } }
+                        }}
                         maxHeight={200}
                         name="ville"
                         label={this.formI18n.fields.ville.label}
                         required={true}
                         labelKey="libelle"
                         valueKey="id"
-                        />
+                    />
                 </Row>
             </FieldSet>
         );
@@ -595,17 +710,17 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         return (
             <FieldSet legend={this.formI18n.sectionCoordAssistance} ref={(fieldset) => {
                 this.fieldSetCoordAssist = fieldset;
-            } } key="fieldSetCoordAssist">
+            }} key="fieldSetCoordAssist">
                 <Row>
                     <InputField name="assistNom"
                         label={this.formI18n.fields.assistNom.label}
                         id="assistNom"
                         maxLength={50}
-                        />
+                    />
                     <InputField name="assistPrenom"
                         label={this.formI18n.fields.assistPrenom.label}
                         maxLength={50}
-                        />
+                    />
                 </Row>
                 <Row>
                     <InputField
@@ -613,14 +728,14 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         toolTip={this.i18n("partenaireFichePage.form.fields.assistTel.tooltip")}
                         label={this.formI18n.fields.assistTel.label}
                         maxLength={14}
-                        />
+                    />
                 </Row>
                 <Row>
                     <InputField
                         name="assistCourriel"
                         label={this.formI18n.fields.assistCourriel.label}
                         maxLength={80}
-                        />
+                    />
                 </Row>
             </FieldSet>
         );
@@ -635,17 +750,17 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
 
             <FieldSet legend={this.formI18n.sectionDivers} ref={(fieldset) => {
                 this.fieldSetDivers = fieldset;
-            } } key="fieldSetDivers">
+            }} key="fieldSetDivers">
                 <Row>
                     <TextAreaField name="commentaire"
                         label={this.formI18n.fields.commentaire.label}
                         labelClass="blocLabelUp"
-                        maxLength={255}
                         rows={4}
+                        maxChar={255}
                         readOnly={false}
                         disabled={this.isNonContactFieldDisabled()}
-                        placeholder="Veuillez saisir un commentaire"
-                        />
+                        placeholder={this.formI18n.fields.commentaire.placeHolder}
+                    />
                 </Row>
                 <Row>
                     <UploadFileField
@@ -655,7 +770,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         renderPreviewFile={this.renderPreviewUploadFile}
                         buttonLabel={this.uploadFileI18n.buttonLabel}
                         fileSelectedLabel={this.uploadFileI18n.selectedFile}
-                        />
+                    />
                 </Row>
             </FieldSet>
         );
@@ -670,7 +785,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
 
             <FieldSet legend={this.formI18n.sectionSatisfactionClient} ref={(fieldset) => {
                 this.fieldSetSatisfaction = fieldset;
-            } } key="fieldSetSatisfaction">
+            }} key="fieldSetSatisfaction">
                 <Row>
                     <AutoCompleteMultiField
                         dataSource={this.dataSourceSatisfactions}
@@ -682,7 +797,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         labelClass="blocLabelUp"
                         itemSelectedLabel={this.i18n("form.autoCompleteField.selectedItem")}
                         cleanFilterOnBlur={true}
-                        />
+                    />
                 </Row>
             </FieldSet>
         );
@@ -751,6 +866,9 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      * @param isReadOnly
      */
     private toggleReadOnly(isReadOnly: boolean): void {
+        if (this.state.mode === PAR_MODE_CREER) {
+            isReadOnly = false;
+        }
         if (this.fieldSetCivilite) {
             this.fieldSetCivilite.setDisabled(isReadOnly).setReadOnly(isReadOnly);
         }

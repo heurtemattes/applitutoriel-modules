@@ -1,35 +1,4 @@
 {
-  "dispatcher": {
-    "stores": {
-      "PageInformationStore": {
-        "currentUser": {
-          "name": "admin",
-          "roles": [
-            {
-              "id": 1,
-              "name": "AppliTuto_ADMIN"
-            },
-            {
-              "id": 2,
-              "name": "AppliTuto_USER"
-            }
-          ]
-        }
-      },
-      "NavigationBaseStore": {
-        "menuItems": []
-      }
-    }
-  },
-  "mock": {
-    "enabled": true,
-    "servicePage" : {
-      "enabled": true
-    },
-    "serviceData" : {
-      "enabled": true
-    }
-  },
   "contextPath": "applitutoriel-spa",
   "fullSpa": {
     "enabled": true,
@@ -40,6 +9,39 @@
     "host": "http://localhost/",
     "name": "applitutoriel-service"
   },
-  "themeUrl": "http://localhost/5.1.0/intranet",
-  "locale": "fr-FR"
+  "themeName": "hornet-themes-intranet",
+  "localeI18n": {
+    "locale": "fr-FR",
+    "lang": "fr"
+  },
+  "mock": {
+    "enabled": true,
+    "servicePage" : {
+      "enabled": true
+    },
+    "serviceData" : {
+      "enabled": true
+    }
+  },
+  "logClient": {
+    "remote": false,
+    "level": "DEBUG",
+    "appenders": {
+      "BrowserConsole": {
+        "type": "BrowserConsole",
+        "layout": {
+          "type": "THIN"
+        }
+      },
+      "Ajax": {
+        "type": "Ajax",
+        "layout": {
+          "type": "BASIC"
+        },
+        "threshold": 100,
+        "timeout": 3000,
+        "url": "/log"
+      }
+    }
+  }
 }

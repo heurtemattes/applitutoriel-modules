@@ -1,56 +1,68 @@
 # applitutoriel-modules
 
-L'application TUTORIEL a pour objectif de présenter une application basée sur le framework Hornet.
+Module parent de l'application TUTORIEL. Cette application de démonstration met en avant l'usage des frameworks hornet, hornet-lite et l'utilisation de batch en javascript/
 
-`applitutoriel-modules` chapote différents projets :
-* `applitutoriel-js-common` : projet contenant tout le code commun aux différents projets
-* `applitutoriel-js` : projet contenant le code spécifique à Hornet.js
-* `applitutoriel-js-lite` : projet contenant le code spécifique à Hornet.js lite
-* `applitutoriel-js-batch` : projet contenant le code spécifique à Hornet.js batch
+__Cas fonctionnels__
+
+Les cas fonctionnels présentés dans les applications sont :
+
+* Formulaire de recherche
+* Présentation du résultat sous forme de tableau éditable
+* Formulaire étendu
+* Tableau d'ajout/suppression/modification d'items
+* Affichage de graphique
+* batch
+
+__RGAA V3__
+
+L'applitutoriel est une mise en pratique du RGAA V3 au travers du framework Hornet.
+
+A noter :
+* Hornet facilite la mise en oeuvre du RGAA V3 dans une application.
+* Mais l'utilisation de Hornet ne garantit pas qu'une application soit valide RGAA.
 
 ## Prérequis #
 
-* NodeJS 6.X
-* hornet-js-builder 1.x.x (le builder) installé globalement :
+* NodeJS 8.X
+* hornet-js-builder 1.X installé en global:
 
 ```shell
-    $ npm install -g hornet-js-builder
+npm install -g hornet-js-builder
 ```
 
 * checkout du projet `applitutoriel-modules`
 
 ## Initialisation #
-Se positionner dans le répertoire du projet `applitutoriel-js-modules` et lancer la commande :
+Se positionner dans le répertoire du projet `applitutoriel-modules` et lancer la commande:
 
 ```shell
-    $ hb install
+hb install
 ```
 
-## Démarrage de l'application en mode développement #
-Se positionner dans le répertoire du projet à démarrer :
-* `applitutoriel-js`
-* `applitutoriel-js-lite`
-* `applitutoriel-js-batch`
+## Compilation de tous les modules #
+
+L'applitutoriel contient plusieurs module qu'il est nécessaire de compiler avant utilisation.
+
+```shell
+hb compile
+```
+
+## Démarrage rapide d'une application #
+
+Se positionner dans le module : `applitutoriel-js-lite`
 
 ### Commande par défaut
 
 la commande à exécuter en mode développement est la suivante:
 
 ```shell
-    $ hb w
+hb w
 ```
 
 Elle permet de lancer l'application en mode `watcher` afin que les modifications soient prises en compte (ce qui
 entrainera un redémarrage du serveur node dans le cas d'une détection de modification).
 
-### Options
 
-Il est également possible d'ajouter à cette commande l'option:
+## Vérification
 
-```shell
-    $ hb w -i
-```
-
-Cette commande indique au builder de ne pas transpiler les fichiers typescript en javascript.
-Elle est à utiliser dans le cas où l'IDE a été configuré de telle sorte que la transpilation ts->js
-se fasse via ce dernier.
+L'application est accessible depuis un navigateur à l'addresse : `http://localhost:8888/applitutorieljslite/`.

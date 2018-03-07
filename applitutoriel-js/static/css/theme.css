@@ -1,31 +1,44 @@
 .content-modal-body {
-    max-height: 700px;
+    overflow: auto;
+    max-height: 28em;
 }
 
-.green-background-row td, .green-background-row td.hornet-datatable-sorted {
-    background-color: #54c08b /*!important*/
-}
-.red-background-row td, .red-background-row td.hornet-datatable-sorted  {
-    background-color: #f5716e /*!important*/
+.green-background-row td,
+.green-background-row td.hornet-datatable-sorted {
+    background-color: #54c08b/*!important*/
 }
 
-.yellow-background-row td, .yellow-background-row td.hornet-datatable-sorted  {
-    background-color: #dbf163 /*!important*/
+.red-background-row td,
+.red-background-row td.hornet-datatable-sorted {
+    background-color: #f5716e/*!important*/
+}
+
+.yellow-background-row td,
+.yellow-background-row td.hornet-datatable-sorted {
+    background-color: #dbf163/*!important*/
 }
 
 .testModal {
-    left : 50% !important ;
-    top: 50% !important ;
-    transform : translate(-50%, -50%) !important ;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     width: 900px;
 }
 
 
-#tabsPartenaire-3, #tabsPartenaire-3 a{
-    width: 2em !important;
-    min-width: 2em;
-    color:#03476e;
-}
+/*#tabsPartenaire-3, #tabsPartenaire-3 a{*/
+
+
+/*width: 2em !important;*/
+
+
+/*min-width: 2em;*/
+
+
+/*color:#03476e;*/
+
+
+/*}*/
 
 .onglet-secteur-header-title {
     display: inline-flex;
@@ -40,3 +53,10 @@
     color: white;
 }
 
+#header-container #banner {
+    background: #429dd6 url("../img/headerAppliTuto.png") no-repeat scroll 0 0;
+}
+
+#menu-main button.toggler {
+    background-color: transparent;
+}
