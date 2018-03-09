@@ -454,12 +454,8 @@ Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais 
   }
 ```
 
-<<<<<<< HEAD
-### Configuration du Cache
-=======
 ### Configuration du Request
 #### Configuration du Cache
->>>>>>> develop
 
 | Paramètre | Description | Valeur |
 |-----------|-------------|--------|
@@ -467,23 +463,10 @@ Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais 
 |timetolive|Durée de rétention du cache|60|
 
 ```json
-<<<<<<< HEAD
-"cache": {
-    "client": {
-      "enabled": false,
-      "timetolive": 60
-    },
-    "server": {
-      "enabled": false,
-      "timetolive": 120
-    }
-  }
-=======
 "request": {
     "cache": {
         "enabled": true,
         "timetolive": 60
       }
     }
->>>>>>> develop
 ```
