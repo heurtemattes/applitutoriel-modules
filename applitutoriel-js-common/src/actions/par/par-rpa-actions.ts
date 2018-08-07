@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -126,7 +126,7 @@ export class Rechercher extends RouteActionService<any, PartenaireService> {
         logger.trace("Partenaire Action Rechercher, criterias:", this.req.body);
 
         if (this.req.body) {
-            let payload: any = this.getPayload();
+            const payload: any = this.getPayload();
 
             if (!payload) {
                 logger.warn("Recherche non valide : Accès direct");
@@ -162,10 +162,10 @@ export class SupprimerEnMasse extends RouteActionService<{ id: string }, Partena
         logger.trace("ACTION SupprimerEnMasse.PartenairesRouteAction");
         logger.debug("Suppression des partenaires :", this.req.body);
         if (this.req.body) {
-            let partenairesNotVip: PartenaireResult[] = [];
+            const partenairesNotVip: PartenaireResult[] = [];
             // Contrôle IsVip
             this.req.body.map((item: PartenaireResult) => {
-                if (!item.isVIP) {
+                if (!item.vip) {
                     partenairesNotVip.push(item);
                 }
             });
@@ -178,14 +178,14 @@ export class SupprimerEnMasse extends RouteActionService<{ id: string }, Partena
                         /* En cas d'erreur technique on utilise le traitement standard */
                         throw error;
                     }
-                    let ids: number[] = [];
+                    const ids: number[] = [];
                     if (error instanceof BusinessErrorList) {
                         /* En cas d'erreurs métier, plusieurs partenaires ont pu cependant être supprimés avec succès.
                          * Ceux qui ne sont pas retournés dans la liste ids seront notifiés en erreur. */
-                        let errors: BusinessError[] = (error as BusinessErrorList).getErrors();
+                        const errors: BusinessError[] = (error as BusinessErrorList).getErrors();
                         errors.forEach((error: BusinessError) => {
-                            if (error.code == "IN-PA-RPA-01") {
-                                ids.push(parseInt(error.args[ "$2" ]));
+                            if (error.code === "IN-PA-RPA-01") {
+                                ids.push(parseInt(error.args[ "$2" ], 10));
                             }
                         });
                     }
@@ -205,18 +205,18 @@ export class Export extends RouteActionService<{ mediaType: string }, Partenaire
         logger.trace("ACTION Export.PartenairesRouteAction");
         logger.debug("Partenaire Action Export - récupération des criteres de recherche dans la session");
 
-        let criteres: any = this.getPayload() && this.getPayload().criteres;
+        const criteres: any = this.getPayload() && this.getPayload().criteres;
 
         if (criteres) {
             logger.debug("Critères trouvés dans la session ", criteres);
-            let mediaType: MediaType = this.getMediaType();
+            const mediaType: MediaType = this.getMediaType();
 
             logger.debug("MIMETYPE :", mediaType.MIME);
 
             // Pour l'export on force à avoir tous les items dans la recherche
-            let payload: any = _.assign({}, {
-                criteres: criteres,
-                pagination: { pageIndex: 0, itemsPerPage: ITEMS_PER_PAGE_ALL } as Pagination
+            const payload: any = _.assign({}, {
+                criteres,
+                pagination: { pageIndex: 0, itemsPerPage: ITEMS_PER_PAGE_ALL } as Pagination,
             });
             return this.getService().rechercher(payload, mediaType, this.res).then((retourApi) => {
                 return new ResultStream(retourApi, retourApi.mimeType);
@@ -230,58 +230,59 @@ export class ExportLite extends RouteActionService<any, PartenaireService> {
         logger.trace("ACTION Export.PartenairesRouteAction");
         logger.debug("Partenaire Action Export - récupération des criteres de recherche dans la session");
 
-        let criteres: any = this.getPayload() && this.getPayload().criteres;
+        const criteres: any = this.getPayload() && this.getPayload().criteres;
 
         if (criteres) {
             logger.debug("Critères trouvés dans la session ", criteres);
-            let mediaType: MediaType = this.getMediaType() as MediaType;
-            let originalMediaType: MediaType = this.getMediaType() as MediaType;
+            const mediaType: MediaType = this.getMediaType() as MediaType;
+            const originalMediaType: MediaType = this.getMediaType() as MediaType;
 
             logger.debug("MIMETYPE :", mediaType.MIME);
 
             // Pour l'export on force à avoir tous les items dans la recherche
-            let payload: any = {
-                criteres: criteres,
-                pagination: { pageIndex: 0, itemsPerPage: ITEMS_PER_PAGE_ALL } as Pagination
+            const payload: any = {
+                criteres,
+                pagination: { pageIndex: 0, itemsPerPage: ITEMS_PER_PAGE_ALL } as Pagination,
             };
 
-            let ODT = MediaTypes.ODT;
-            let ODS = MediaTypes.ODS;
-            let CSV = MediaTypes.CSV;
-            let PDF = MediaTypes.PDF;
+            const ODT = MediaTypes.ODT;
+            const ODS = MediaTypes.ODS;
+            const CSV = MediaTypes.CSV;
+            const PDF = MediaTypes.PDF;
             return this.getService().rechercher(payload, MediaTypes.JSON).then((retourApi) => {
                 let res: ResultFile;
-                let dataOpenDocument = {
+                const dateDebut = DateUtils.formatInTZ(retourApi.listeCriteres.startDate, DateUtils.YMD_Formats[ 0 ]);
+                const dataOpenDocument = {
                     title: "Liste des partenaires",
-                    tableLabel: "Recherche par date de début : " + DateUtils.formatInTZ(retourApi.listeCriteres.startDate, DateUtils.YMD_Formats[ 0 ]),
+                    tableLabel: "Recherche par date de début : " + dateDebut,
                     fieldNames: {
                         nom: "Nom",
                         prenom: "Prénom",
                         organisme: "Organisme",
-                        proCourriel: "Courriel"
+                        proCourriel: "Courriel",
                     },
-                    data: retourApi.liste
+                    data: retourApi.liste,
                 };
 
-                if (originalMediaType.SHORT == ODS.SHORT) {
+                if (originalMediaType.SHORT === ODS.SHORT) {
                     res = new ResultODS({
                         data: dataOpenDocument,
                         templateFilePath: path.join(__dirname, "../../resources/templates/partenairesList.ods"),
-                        filename: "partenairesListe." + ODS.SHORT
+                        filename: "partenairesListe." + ODS.SHORT,
                     } as OptionsOpenDocument);
-                } else if (originalMediaType.SHORT == ODT.SHORT) {
+                } else if (originalMediaType.SHORT === ODT.SHORT) {
                     res = new ResultODT({
                         data: dataOpenDocument,
                         templateFilePath: path.join(__dirname, "../../resources/templates/partenairesList.odt"),
-                        filename: "partenairesListe." + ODS.SHORT
+                        filename: "partenairesListe." + ODS.SHORT,
                     } as OptionsOpenDocument);
-                } else if (originalMediaType.SHORT == CSV.SHORT) {
+                } else if (originalMediaType.SHORT === CSV.SHORT) {
                     res = new ResultCSV({
                         data: retourApi.liste,
                         fields: [ "nom", "prenom", "organisme", "proCourriel" ],
-                        filename: "customFileName." + CSV.SHORT
+                        filename: "customFileName." + CSV.SHORT,
                     } as OptionsCSV);
-                } else if (originalMediaType.SHORT == PDF.SHORT) {
+                } else if (originalMediaType.SHORT === PDF.SHORT) {
                     res = new ResultPDF({
                         data: retourApi.liste,
                         fields: [ "nom", "prenom", "organisme", "proCourriel" ],
@@ -290,60 +291,60 @@ export class ExportLite extends RouteActionService<any, PartenaireService> {
                             pageSize: "A4",
                             content: [
                                 { text: "Liste des partenaires", style: "subheader" },
-                                { text: "Recherche par date de début : " + DateUtils.formatInTZ(retourApi.listeCriteres.startDate, DateUtils.YMD_Formats[ 0 ]) },
+                                { text: "Recherche par date de début : " + dateDebut },
                                 {
                                     style: "tableExample",
                                     table: { headerRows: 2 },
                                     layout: {
                                         fillColor: (i, node) => {
                                             return (i % 2 === 0) ? "#F3F6F8" : null;
-                                        }
-                                    }
-                                }],
+                                        },
+                                    },
+                                } ],
                             header: {
                                 columns: [
                                     {
                                         alignment: "right",
-                                        text: "" + DateUtils.formatInTZ(new Date(), DateUtils.YMD_Formats[ 0 ])
-                                    }
-                                ]
+                                        text: "" + DateUtils.formatInTZ(new Date(), DateUtils.YMD_Formats[ 0 ]),
+                                    },
+                                ],
                             },
                             footer: (page, pages) => {
                                 return {
                                     columns: [
                                         {
                                             alignment: "left",
-                                            text: "footer left"
+                                            text: "footer left",
                                         }, {
                                             alignment: "right",
                                             text: [
                                                 " Page ",
                                                 { text: page.toString() },
                                                 " sur ",
-                                                { text: pages.toString() }
-                                            ]
-                                        }
+                                                { text: pages.toString() },
+                                            ],
+                                        },
                                     ],
-                                    margin: [ 10, 0 ]
+                                    margin: [ 10, 0 ],
                                 };
                             },
                             styles: {
                                 tableExample: {
-                                    margin: [ 2, 2, 2, 2 ]
+                                    margin: [ 2, 2, 2, 2 ],
                                 },
                                 tableHeader: {
                                     bold: true,
                                     fontSize: 13,
-                                    fillColor: "#8FAFCC"
+                                    fillColor: "#8FAFCC",
                                 },
                                 subheader: {
                                     margin: [ 20, 20, 20, 20 ],
                                     bold: true,
                                     fontSize: 25,
-                                    alignment: "center"
-                                }
-                            }
-                        }
+                                    alignment: "center",
+                                },
+                            },
+                        },
                     } as OptionsPDF);
                 } else {
                     res = null;

@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -99,6 +99,6 @@ export class ApplitutorielAgent extends HornetSuperAgent {
         let roles: string = (this.currentUser) ? JSON.stringify(this.currentUser.roles) : "";
         logger.trace("Roles ajoutés à la requête : ", roles);
 
-        this.plugins.addBefore(new HornetPluginConfig("applitutoRoles", superAgentPlugins.AddParam, ["role", roles]), this.plugins[0]);
+        this.plugins.addBefore(new HornetPluginConfig("applitutoRoles", superAgentPlugins.AddParam, [ "role", roles ]), this.plugins[ 0 ]);
     }
 }

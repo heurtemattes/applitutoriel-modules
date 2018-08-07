@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -81,23 +81,23 @@
 import { AbstractRoutes, PageRouteInfos, DataRouteInfos } from "hornet-js-core/src/routes/abstract-routes";
 import { Roles } from "applitutoriel-js-common/src/utils/roles";
 import { RepartitionPage } from "applitutoriel-js-common/src/views/adm/adm-rps-page";
-import { Repartition } from "applitutoriel-js-common/src/actions/adm/adm-rps-actions";
-import { FicheProduitServiceImpl } from "src/services/page/adm/adm-fpo-service-page-impl";
+import { ProduitAction, ACTION_REPARTITION_PRODUITS } from "applitutoriel-js-common/src/actions/adm/adm-rps-actions";
+import { FicheProduitService } from "applitutoriel-js-common/src/services/page/adm/adm-fpo-service-page";
 import { URL_PRODUITS } from "applitutoriel-js-common/src/utils/urls";
-
+import { Injector } from "hornet-js-core/src/inject/injector";
 export default class ProduitsRoutes extends AbstractRoutes {
     constructor() {
         super();
 
         /* Route des pages */
         this.addPageRoute("/",
-            () => new PageRouteInfos(RepartitionPage, null, FicheProduitServiceImpl),
+            () => new PageRouteInfos(RepartitionPage, null, Injector.getRegistered(FicheProduitService)),
             Roles.ADMIN
         );
 
         /* Route des datas */
         this.addDataRoute(URL_PRODUITS,
-            () => new DataRouteInfos(Repartition, null, FicheProduitServiceImpl),
+            () => new DataRouteInfos(ProduitAction, {action: ACTION_REPARTITION_PRODUITS}, Injector.getRegistered("FicheProduitServiceData")),
             Roles.ADMIN
         );
     }

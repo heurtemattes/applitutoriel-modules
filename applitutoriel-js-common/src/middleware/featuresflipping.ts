@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -153,7 +153,7 @@
  * hornet-js-react-components - Ensemble des composants web React de base de hornet-js
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.1.0
  * @link git+https://github.com/diplomatiegouvfr/hornet-js.git
  * @license CECILL-2.1
  */
@@ -162,8 +162,6 @@ import { NavigationUtils } from 'hornet-js-components/src/utils/navigation-utils
 import { AbstractHornetMiddleware } from 'hornet-js-core/src/middleware/middlewares';
 import { PageRouteInfos, RouteInfos, RouteType } from 'hornet-js-core/src/routes/abstract-routes';
 import { PageRenderingMiddleware } from 'hornet-js-react-components/src/middleware/component-middleware';
-import { HornetComponent } from 'hornet-js-react-components/src/widget/component/hornet-component';
-import { HornetPage } from 'hornet-js-react-components/src/widget/component/hornet-page';
 import { Utils } from 'hornet-js-utils';
 import { HttpError } from 'hornet-js-utils/src/exception/http-error';
 import { Logger } from 'hornet-js-utils/src/logger';
@@ -172,10 +170,6 @@ import { CommonServiceData } from 'src/services/data/common/common-service-data'
 import { CommonServiceDataImpl } from 'src/services/data/common/common-service-data-impl';
 import { SecurityError } from "hornet-js-utils/src/exception/security-error";
 
-import * as _ from 'lodash';
-import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
-
 // -------------------------------------------------------------------------------------------------------------------
 // // PageRenderingMiddleware
 // -------------------------------------------------------------------------------------------------------------------
@@ -183,7 +177,7 @@ import * as ReactDOMServer from 'react-dom/server';
 const logger: Logger = Utils.getLogger('middleware.PageRenderingMiddleware');
 
 export class FeaturePageRenderingMiddleware extends AbstractHornetMiddleware {
-    private static logger: Logger = Utils.getLogger('hornet-js-react-components.middleware.PageRenderingMiddleware');
+    private static logger: Logger = Utils.getLogger('hornet-js-react-components.middleware.FeaturePageRenderingMiddleware');
 
     private commonService: CommonServiceData = new CommonServiceDataImpl();
 

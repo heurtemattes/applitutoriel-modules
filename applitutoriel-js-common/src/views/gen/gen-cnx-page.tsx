@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -88,9 +88,9 @@ import * as _ from "lodash";
 const logger: Logger = Utils.getLogger("applitutoriel.views.gen.gen-cnx-page");
 
 export interface ConnexionPageProps extends HornetComponentProps {
-    errorMessage?: any,
-    previousUrl?: string,
-    staticUrl?: string
+    errorMessage?: any;
+    previousUrl?: string;
+    staticUrl?: string;
 }
 
 /**
@@ -112,12 +112,12 @@ export class ConnexionPage extends HornetComponent<ConnexionPageProps, any> {
     render(): JSX.Element {
         logger.trace("VIEW ConnexionPage render");
 
-        let fwkTheme: string = process.env.NODE_ENV === "production" ? "/css/theme-min.css" : "/css/theme.css";
+        const fwkTheme: string = process.env.NODE_ENV === "production" ? "/css/theme-min.css" : "/css/theme.css";
 
         return (
-            <html lang='fr'>
+            <html lang="fr">
                 <head>
-                    <title>{"Magasin de L'Étang-Salé : Authentification centrale"}</title>
+                    <title>{"Authentification centrale | "  + this.i18n("applicationTitle") }</title>
                     <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
                     <link rel="icon" type="image/png" href={this.genUrlStatic("/img/logoHornet.png")} />
                     <link rel="stylesheet" type="text/css" href={ConnexionPage.genUrlTheme(fwkTheme)} />
@@ -126,7 +126,7 @@ export class ConnexionPage extends HornetComponent<ConnexionPageProps, any> {
                 <body id="auth">
                     <div id="site">
                         <div id="content">
-                            <h1 id="app-name">{"Magasin de L'étang-salé Authentification centrale."}</h1>
+                            <h1 id="app-name">{"Applitutoriel - Authentification centrale"}</h1>
                             <form id="fm1" className="fm-v" method="post">
                                 <div id="login" className="box">
                                     <h2>Entrez votre identifiant et votre mot de passe.</h2>

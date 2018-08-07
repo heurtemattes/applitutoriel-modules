@@ -1,3 +1,52 @@
+# applitutoriel-modules 5.2.0
+
+- FIX  - Accessibilité: title dropdownItem toggleColumnButton/Pager
+- EVOL - Accessibilité : contextualisation des title du pager
+- EVOL - Accessibilité: Pager
+- FIX  - correction orthographe
+- EVOL - ajout du format et de la taille du fichier uploadé + tslint
+- FIX  - Accessibilité : lang
+- FIX  - [s243] - Accessibilité: title -> ajout nom site
+- FIX  - [TU] - applitutoriel-js-lite : gestion info VIP
+- FIX  - applitutoriel-js : correction erreur validation endDate pour un VIP
+- FIX  - message console
+- FIX  - [s240] - Accessibilité: px to em
+- FIX  - applitutoriel-js-lite : gestion du boolean vip sur enregistrement
+- EVOL - [S169-571] - applitutoriel-js-batch : Intégration generic DAO
+- EVOL - [S169-571] - applitutoriel-js-lite : Intégration generic DAO
+- EVOL - [s231] -  DatePicker : accessibilité des boutons de navigation
+- EVOL - [S169-571] - applitutoriel-js-batch : Intégration generic DAO dans appliTuto-batch
+- EVOL - [s228] - Menu : Ajout title sur les menuitems
+- EVOL - [S169-571] - applitutoriel-js-lite : Intégration generic DAO dans appliTuto
+- FIX  - applitutoriel-js-lite : répartition des produits par sécteurs
+- FIX  - suppression test 3 boutons radio
+- EVOL - [S168] - applitutoriel-js-lite : DAO génériques pour civlité et ville
+- FIX  - CharCounter : Ajout charsCounter sur l'inputfield Fonction
+- EVOL - optim conf
+- FIX  - suppression typescript des buildDependencies
+- FIX  - [S204-562] - applitutoriel-js-common : mise en place d'un controle de format sur le champs date de naissance
+- EVOL - [m68184] - [applitutoriel-js-common] : mise en place exemple I18nLoaderSubDirectory
+- FIX  - Action: factorisation actions Repartition
+- FIX  - [m0068619] - Template : renvoie undefined si la valeur voulue est un booléen
+- EVOL - [S194] - applitutoriel-js : Retrait Promise.all pour injector context
+- EVOL - [s200] - Textarea : Ajout limite maxchar dans le label
+- FIX  - [S194-548] - applitutoriel-js : Retrait Promise.all de l'injector context
+- EVOL - [S177-492] - applitutoriel-js : normalisation injector
+- EVOL - [S177-492] - applitutoriel-modules : Normalisation des injectors
+- FIX  - [m0068169] - textarea : Message en cas de dépassement du nombre de caractères autorisés contient une faute d'orthographe
+- EVOL - [S80] - applitutoriel-modules : Ajout strict mode
+- FIX  - CharCount : message lié au compteur du nombre de caractères de Textarea
+- FIX  - doc request
+- EVOL - log rundeck
+- EVOL - applitutoriel-js-lite -Mise en place des DAO générique dans appliTuto
+- EVOL - applitutoriel-js-lite : maj conf request + conf database sur le lite
+- FIX  - applitutoriel-js-common : Correction upload photo
+- EVOL - applitutoriel-js-common : Exemple utilisation dispositionType
+- FIX  - [s128] - Middlewares: configuration depuis default.json
+- EVOL - applitutoriel-js-common: ajout service generation token JWT
+- EVOL - [S104-394] - applitutoriel-js-common: update applituto suite au passage a spring data
+- EVOL - [s93] - SAML: configuration des chemins des certificats dans default.json
+
 # applitutoriel-modules 5.1.0
 
 -	213347	-	suppresison tri car multiple uniquement en mode array
@@ -277,7 +326,7 @@
 - 53280 - Regression de version de dépendances et nouvelles dépendancs
 - 53267 - reorganisation des resources json
 - 53268 - Version de l'application
-- 53295 - Barre d'accessibilité : fixe sur le thème intranet
+- 53295 - Barre d'accessibilité : fixe sur le thème
 - 53283 - Ecran recherche partenaire : Vip doit être en majuscule
 - 53353 - Ecran recherche partenaire : I18N liste des secteurs
 - 53354 - Ecran liste des secteurs : Modale avec style en dur
@@ -394,7 +443,7 @@
 - 51791  -  DEV_APT_HAN  -  En tant que Developpeur je peux utiliser React pour le template de page
 - 51792  -  DEV_DEV_DTS  -  En tant que Developpeur je peux mettre des point d'arret dans les TS 
 - 51793  -  DEV_DEV_SCO  -  En tant que Developpeur je peux Lancer les application sans ligne de commande
-- 51794  -  DEV_TEM_TJS  -  En tant que Developpeur je peux Constuire une application Node JS basée sur yeoman (thème Intranet)
+- 51794  -  DEV_TEM_TJS  -  En tant que Developpeur je peux Constuire une application Node JS basée sur yeoman (thème)
 - 51795  -  DEV_TEM_TJA  -  En tant que Developpeur je peux Constuire une application Service basée sur Maven (Archetype)
 - 51796  -  UTI_APT_ECS  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format CSV
 - 51797  -  UTI_APT_EXL  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format EXL

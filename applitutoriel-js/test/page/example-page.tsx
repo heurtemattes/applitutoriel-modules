@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -128,13 +128,13 @@ export class ExamplePage extends HornetPage<any, HornetComponentProps, any> {
 
                 <Form
                     id={"form-example-page"}
-                    ref={(form) => {this.exampleForm = form;}}
+                    ref={(form) => { this.exampleForm = form; }}
                     onSubmit={this.onSubmit}
                     schema={validationSchema}>
                     <Row>
                         {/* Champs Hornet de type texte */}
-                        <InputField name="nom" label="Nom" required={true}/>
-                        <InputField name="prenom" label="Prénom" required={true}/>
+                        <InputField name="nom" label="Nom" required={true} />
+                        <InputField name="prenom" label="Prénom" required={true} />
                     </Row>
                 </Form>
             </div>

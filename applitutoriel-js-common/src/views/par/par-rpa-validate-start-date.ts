@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -94,7 +94,7 @@ export class ParRpaValidateSectorStartDate implements ICustomValidation {
      * @returns {{valid: boolean, errors: Array<ErrorObject>}}
      */
     validate(data: any): IValidationResult {
-        let errors: Array<ErrorObject> = [];
+        const errors: Array<ErrorObject> = [];
         let valid: boolean = true;
         if (data.criteres != null && data.criteres.idSecteur != null && data.criteres.startDate != null) {
             const startTime: number = Date.parse(data.criteres.startDate);
@@ -105,20 +105,20 @@ export class ParRpaValidateSectorStartDate implements ICustomValidation {
                     dataPath: "criteres.startDate",
                     keyword: "sectorStartDate",
                     schemaPath: "/",
-                    params: {}
+                    params: {},
                 });
                 valid = false;
             }
             if (data.criteres.endDate) {
                 const startTime: Date = new Date(data.criteres.startDate);
                 const endTime: Date = new Date(data.criteres.endDate);
-                let diff = Utils.dateUtils.diff(startTime, endTime, DateDiffUnit.DAYS);
+                const diff = Utils.dateUtils.diff(startTime, endTime, DateDiffUnit.DAYS);
                 if (diff.days <= 2) {
                     errors.push({
                         dataPath: "criteres.startDate",
                         keyword: "sectorBetweenDate",
                         schemaPath: "/",
-                        params: {linkedFieldsName: ["criteres.endDate"]}
+                        params: { linkedFieldsName: [ "criteres.endDate" ] },
                     });
                     valid = false;
                 }
@@ -126,8 +126,8 @@ export class ParRpaValidateSectorStartDate implements ICustomValidation {
         }
 
         return {
-            valid: valid,
-            errors: errors
+            valid,
+            errors,
         };
     }
 }

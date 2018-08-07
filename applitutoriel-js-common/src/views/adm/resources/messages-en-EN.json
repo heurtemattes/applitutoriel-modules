@@ -1,0 +1,67 @@
+{
+    "labelLanguage": "English",
+    "administration": {
+    "secteurs": {
+      "titreSecteur": "Sector list",
+      "table": {
+        "tableTitle": "Sector management",
+        "captionText": "Sector list with add/edit/remove ans sort sector features",
+        "emptyResult": "No data found.",
+        "addTitle": "Add sector",
+        "sortMultiTitle": "multi sort by creation date first and author next."
+      },
+      "nom": "Name",
+      "description": "Description",
+      "dateCr": "Creation date",
+      "dateMaj": "Update date",
+      "auteur": "Creator",
+      "quickUpdate": "Quick update",
+      "quickUpdateTitle": "Quick update for sector {nom}",
+      "modification": "Update",
+      "modificationTitle": "Update sector {desc}",
+      "suppressionAlt": "Delete {desc}",
+      "confirmationAnnulationAction": "This action will be canceled. Continue?",
+      "suppression": "Delete",
+      "editionRapide": "Quick update",
+      "editer": "Update",
+      "enregistrer": "Save",
+      "annuler": "Cancel",
+      "confirmationSuppression": "This item will be removed. Continue?",
+      "suppressionTitle": "Delete sector",
+      "form": {
+        "nomRequired": "The « Name » field is required. Please enter this field.",
+        "descRequired": "The « Description » field is required. Please enter this field.",
+        "dateRequired": "The « Update date » field is required. Please enter this field.",
+        "fields": {
+          "desc": {
+            "label": "Description",
+            "required": "The « Description » field is required. Please enter this field.",
+            "maxLength": "« Description » field exceeds allowed number of characters 200. Please correct this field."
+          },
+          "nom": {
+            "label": "Name",
+            "required": "The « Name » field is required. Please enter this field.",
+            "maxLength": "« Name » field exceeds allowed number of characters 50. Please correct this field."
+          }
+        },
+        "validTitle": "Sector entry validation",
+        "cancelTitle": "Sector entry cancellation"
+      }
+    },
+    "modification": "Update sector",
+    "ajout": "Add sector",
+    "closeModification": "Leave sector update",
+    "closeAjout": "Leave sector adding",
+    "validTitle": "Add sector",
+    "cancelTitle": "Cancel sector adding"
+  },
+  "repartitionPage": {
+    "title": "Graphical sector allocation",
+    "description": "Graphical sector allocation",
+    "type": {
+      "doughnut": "donut",
+      "pie": "lune",
+      "polarArea": "polaire"
+    }
+  }
+}

@@ -29,11 +29,11 @@
     "id": {
       "type": "string"
     },
-    "isClient": {
+    "client": {
       "description": "Indique si le partenaire est client (true) ou fournisseur (false) ",
       "type": "boolean"
     },
-    "isVIP": {
+    "vip": {
       "description": "Indique si le partenaire est VIP",
       "type": "boolean"
     },
@@ -77,6 +77,10 @@
     "prenomLocal": {
       "type": "string",
       "maxLength": 50
+    },
+    "dateNaissance": {
+      "type": "string",
+      "format": "date-time"
     },
     "nationalite": {
       "title": "Nationalité du partenaire",
@@ -237,8 +241,7 @@
       }
     },
     "commentaire": {
-      "type": "string",
-      "maxLength": 255
+      "type": "string"
     },
     //    "satisfaction": {
     //      "title": "Satisfaction client",

@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -81,8 +81,8 @@
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-utils/src/logger";
 import { ServiceRequest } from "hornet-js-core/src/services/service-request";
-import {URL_PRODUITS, URL_REPARTITIONS} from "applitutoriel-js-common/src/utils/urls";
-import {FicheProduitService} from "applitutoriel-js-common/src/services/page/adm/adm-fpo-service-page";
+import { URL_PRODUITS, URL_REPARTITIONS } from "applitutoriel-js-common/src/utils/urls";
+import { FicheProduitService } from "applitutoriel-js-common/src/services/page/adm/adm-fpo-service-page";
 
 const logger: Logger = Utils.getLogger("applitutoriel.services.adm.adm-fpo-service-page-impl");
 
@@ -93,19 +93,19 @@ const logger: Logger = Utils.getLogger("applitutoriel.services.adm.adm-fpo-servi
  * @extends {ServiceApi}
  */
 export class FicheProduitServiceImpl extends ServiceRequest implements FicheProduitService {
-    
+
     /**
      * liste les produit
      * @return Promise
      */
-    listerProduits() : Promise<any> {
+    listerProduits(): Promise<any> {
         logger.trace("SERVICES - repartition");
-        return this.fetch({method : "get", url: this.buildUrl(URL_PRODUITS)});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_PRODUITS) });
     }
 
-    repartition() : Promise<any> {
+    repartition(): Promise<any> {
         logger.trace("SERVICES - repartition");
-        return this.fetch({method : "get", url: this.buildUrl(URL_REPARTITIONS + URL_PRODUITS)});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_REPARTITIONS + URL_PRODUITS) });
     }
 
 

@@ -73,14 +73,14 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-utils/src/logger";
-import { URL_UTILISATEURS, URL_UTILISATEURS_AUTH } from "applitutoriel-js-common/src/utils/urls";
+import { URL_UTILISATEURS, URL_UTILISATEURS_AUTH, URL_UTILISATEURS_TOKEN } from "applitutoriel-js-common/src/utils/urls";
 import { HornetRequest } from "hornet-js-core/src/services/hornet-superagent-request";
 import { AuthService } from "applitutoriel-js-common/src/services/data/auth/auth-service";
 import { ServiceSecure } from "hornet-js-core/src/services/service-secure";
@@ -109,6 +109,18 @@ export class AuthServiceImpl extends AuthService {
 
         let request: HornetRequest = {
             url: this.buildUrl(URL_UTILISATEURS + URL_UTILISATEURS_AUTH),
+            method: "post",
+            data: data
+        };
+
+        return this.fetch(request);
+    }
+
+    generateToken(data): Promise<any> {
+        logger.trace("SERVICES - auth", data);
+
+        let request: HornetRequest = {
+            url: this.buildUrl(URL_UTILISATEURS + URL_UTILISATEURS_TOKEN),
             method: "post",
             data: data
         };

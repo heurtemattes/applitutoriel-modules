@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -104,13 +104,14 @@ import { FichePartenaireServiceImpl } from "src/services/page/par/par-fpa-servic
 
 import { Injector } from "hornet-js-core/src/inject/injector";
 import { FichePartenaire, EcrirePartenaire, LirePhoto } from "applitutoriel-js-common/src/actions/par/par-fpa-actions";
-
+import { FichePartenairePageService } from "applitutoriel-js-common/src/services/page/par/par-fpa-service";
+import { RecherchePartenaireService } from "applitutoriel-js-common/src/services/page/par/par-rpa-service";
 export default class PartenairesRoutes extends AbstractRoutes {
     constructor() {
         super();
 
         this.addPageRoute("/(\\w+)/(\\d+)",
-            (mode, id) => new PageRouteInfos(FichePartenairePage, {mode: mode, id: id}, FichePartenaireServiceImpl),
+            (mode, id) => new PageRouteInfos(FichePartenairePage, { mode: mode, id: id }, Injector.getRegistered(FichePartenairePageService)),
             Roles.EVERYONE
         );
 
@@ -118,13 +119,13 @@ export default class PartenairesRoutes extends AbstractRoutes {
 
         /* Nouvelle page de recherche avec critères par défaut */
         this.addPageRoute("/",
-            () => new PageRouteInfos(RecherchePartenairesPage, {}, RecherchePartenaireServiceImpl),
+            () => new PageRouteInfos(RecherchePartenairesPage, {}, Injector.getRegistered(RecherchePartenaireService)),
             Roles.EVERYONE
         );
 
         /* Page de création de partenaire*/
         this.addPageRoute(URL_PAR_CREER,
-            () => new PageRouteInfos(FichePartenairePage, {mode: PAR_MODE_CREER}, FichePartenaireServiceImpl),
+            () => new PageRouteInfos(FichePartenairePage, { mode: PAR_MODE_CREER }, Injector.getRegistered(FichePartenairePageService)),
             Roles.ADMIN
         );
 
@@ -148,7 +149,7 @@ export default class PartenairesRoutes extends AbstractRoutes {
         );
 
         this.addDataRoute("/(\\d+)",
-            (id) => new DataRouteInfos(FichePartenaire, {id: id}, Injector.getRegistered(PartenaireService)),
+            (id) => new DataRouteInfos(FichePartenaire, { id: id }, Injector.getRegistered(PartenaireService)),
             Roles.EVERYONE
         );
 
@@ -158,13 +159,13 @@ export default class PartenairesRoutes extends AbstractRoutes {
         );
 
         this.addDataRoute("/(\\d+)",
-            (id) => new DataRouteInfos(EcrirePartenaire, {id: id}, Injector.getRegistered(PartenaireService)),
+            (id) => new DataRouteInfos(EcrirePartenaire, { id: id }, Injector.getRegistered(PartenaireService)),
             Roles.ADMIN,
             "put"
         );
 
         this.addDataRoute("/(\\d+)",
-            (id) => new DataRouteInfos(RecherchePartenairesAction.SupprimerPartenaire, {id: id}, Injector.getRegistered(PartenaireService)),
+            (id) => new DataRouteInfos(RecherchePartenairesAction.SupprimerPartenaire, { id: id }, Injector.getRegistered(PartenaireService)),
             Roles.ADMIN,
             "delete"
         );
@@ -176,7 +177,7 @@ export default class PartenairesRoutes extends AbstractRoutes {
         );
 
         this.addDataRoute("/(\\d+)" + URL_PAR_PHOTO,
-            (id) => new DataRouteInfos(LirePhoto, {idPartenaire: id}, Injector.getRegistered(FichePartenaireService)),
+            (id) => new DataRouteInfos(LirePhoto, { idPartenaire: id }, Injector.getRegistered(FichePartenaireService)),
             Roles.EVERYONE
         );
     }

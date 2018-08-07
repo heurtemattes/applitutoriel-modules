@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -93,10 +93,10 @@ describe("Test Karma", () => {
         assert.equal(1, 1);
     });
     it("Test React", () => {
-        let button = ReactTestUtils.renderIntoDocument(<Button/>)
+        let button = ReactTestUtils.renderIntoDocument(<Button />)
         chai.expect(button).to.be.ok;
         var div = document.createElement('div');
         document.body.appendChild(div);
-        ReactDom.render(<Button/>, div);
+        ReactDom.render(<Button />, div);
     });
 });

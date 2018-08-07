@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -104,17 +104,14 @@ export class ParRpaValidateIsVipEndDate implements ICustomValidation {
             });
             valid = false;
         }
-        if (data.criteres && data.criteres.partenaire) {
-            if (data.criteres.partenaire.isVIP && !data.criteres.endDate) {
-
-                errors.push({
-                    dataPath: ".criteres.endDate",
-                    keyword: "isVipIsEndDate",
-                    schemaPath: "/",
-                    params: {}
-                });
-                valid = false;
-            }
+        if (data.criteres && data.criteres.partenaire && data.criteres.partenaire.vip && !data.criteres.endDate) {
+            errors.push({
+                dataPath: ".criteres.endDate",
+                keyword: "isVipIsEndDate",
+                schemaPath: "/",
+                params: {}
+            });
+            valid = false;
         }
 
         return {

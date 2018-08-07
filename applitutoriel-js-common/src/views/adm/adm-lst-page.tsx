@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -140,7 +140,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
 
         this.refHeaderTable.bind(this);
 
-        let sort: DefaultSort = new DefaultSort([ new SortData("dateCreat"), new SortData("auteurCreat", SortDirection.ASC) ]);
+        const sort: DefaultSort = new DefaultSort([ new SortData("dateCreat"), new SortData("auteurCreat", SortDirection.ASC) ]);
         this.dataSource = new DataSource<SecteurMetier>([], {}, [ sort ]);
     }
 
@@ -285,6 +285,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
      * @param item: l'item du tableau qu a été edité
      */
     private submitLineForm(item: any): void {
+        item.user = this.user.name;
         this.getService().modifier(item.id, item).then(() => {
             NotificationManager.notify(null, "secteurPageForm", null,
                 Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
@@ -356,12 +357,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
     private onSubmitEdition(data: any): void {
         NotificationManager.cleanAll();
 
-        let secteur = data;
+        const secteur = data;
         if (!_.isEmpty(secteur.id)) {
             this.getService().modifier(secteur.id, secteur).then((result) => {
                 if (!result.errors) {
                     NotificationManager.notify("notif2", "secteurPageForm", null,
-                        Notifications.makeSingleNotification("notif2", this.i18n("info.message.IN-AD-LST-03")));
+                                               Notifications.makeSingleNotification("notif2", this.i18n("info.message.IN-AD-LST-03")));
                     this.closeModal();
                     this.refreshSecteurs();
                 }
@@ -376,7 +377,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                 if (!result.errors) {
                     this.closeModal();
                     NotificationManager.notify(null, "secteurPageForm", null,
-                        Notifications.makeSingleNotification("notif2", this.i18n("info.message.IN-AD-LST-03")));
+                                               Notifications.makeSingleNotification("notif2", this.i18n("info.message.IN-AD-LST-03")));
                     this.refreshSecteurs();
                 }
             });

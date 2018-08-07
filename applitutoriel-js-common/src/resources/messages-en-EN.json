@@ -63,7 +63,15 @@
   "textarea": {
     "alertMessage": "The number of characters is too high ({count}/{maxChar}).",
     "alertTitle": "Too high number of characters",
-    "charLabel": "{count, plural, =1 {1 character} other {# characters}}"
+    "charLabel": "{count, plural, =0 {0 character} =1 {1 character} other {# characters}}",
+  },
+  "charsCounter": {
+    "limitLabel": "(limit {maxChar} characters)"
+  },
+  "inputField": {
+    "alertMessage": "The number of characters is too high ({count}/{maxChar}).",
+    "alertTitle": "Too high number of characters",
+    "charLabel": "{count, plural, =0 {0 character} =1 {1 character} other {# characters}}",
   },
   "uploadFile": {
     "selectedFile": "{count, plural, =0 {no file selected } =1 {1 file selected} other {# items files selected}}",
@@ -89,6 +97,7 @@
     "mainMenu": "Main Menu",
     "openMenu": "Open menu",
     "closeMenu": "Close Menu",
+    "activePage": "active page",
     "shortcuts": {
       "enterSpace": "Enter in menu or sub-menu or activate link",
       "escape": "Close menu",
@@ -109,14 +118,16 @@
     "modalContentTitle": "Keyboard shortcut"
   },
   "toggleColumnsButton": {
-    "title": "Column to print/mask"
+    "title": "Column to print/mask",
+    "itemTitleToggle": "print/mask Column « {title} »"
   },
   "user": {
     "title": "User"
   },
   "table": {
     "pager": {
-      "dropdownTitle": "Number of items"
+      "dropdownTitle": "Number of items",
+      "inputLabel": "Number of the page displayed of {summary}"
     },
     "menuActions": {
       "title": "Action menu"
@@ -155,10 +166,11 @@
       "pdf": "PDF"
     },
 
-    "firstPage": "|< First",
-    "prevPage": "< Previous",
-    "nextPage": "Next >",
-    "lastPage": "Last >|",
+    "firstPage": "Goto first page (page {firstPage}) of {summary}",
+    "prevPage": "Goto previous page (page {prevPage} of {totalPages}) of {summary}",
+    "nextPage": "Goto next page (page {nextPage} of {totalPages}) of {summary}",
+    "lastPage": "Goto last page (page {totalPages}) of {summary}",
+    "pagerSummary" : "table",
     "inputPage": "Page number to display",
     "10": "10",
     "20": "20",
@@ -205,7 +217,11 @@
     "timezoneOffset": 60,
     "firstDayOfWeek": 1,
     "minimalDaysInFirstWeek": 1,
-    "placeHolder": "MM/DD/YYYY"
+    "placeHolder": "MM/DD/YYYY",
+    "nextYear": "Next year",
+    "previousYear": "Previous year",
+    "nextMonth": "Next month",
+    "previousMonth": "Previous month"
   },
   "changeLanguage": {
     "title": "Change language"
@@ -275,7 +291,7 @@
       "fields": {
         "criteres": {
           "partenaire": {
-            "isClient": {
+            "client": {
               "label": "Type",
               "clientLabel": "Client",
               "fournisseurLabel": "Provider"
@@ -283,7 +299,7 @@
             "typePartenaire": {
               "tooltip": "Type of partner"
             },
-            "isVIP": {
+            "vip": {
               "label": "VIP",
               "tooltip": "VIP's partners can not be deleted",
               "title": "Very Important Person"
@@ -318,6 +334,7 @@
     },
     "tableau": {
       "summary": "Partners list",
+      "pagerSummary": "search result of partners",
       "iconConsulter": "Read more about {nom} {prenom}",
       "iconEditer": "Edit the sheet of {nom} {prenom}",
       "iconSupprimer": "remove the sheet of {nom} {prenom}",
@@ -432,12 +449,12 @@
       "sectionDivers": "Other",
       "sectionSatisfactionClient": "Client satisfaction",
       "fields": {
-        "isClient": {
+        "client": {
           "label": "Type",
           "clientLabel": "Client",
           "fournisseurLabel": "Provider"
         },
-        "isVIP": {
+        "vip": {
           "label": "VIP",
           "tooltip": "VIP's partners can not be deleted",
           "title": "Very Important Person"
@@ -493,19 +510,19 @@
           "label": "Function/Employment"
         },
         "proTelFixe": {
-          "label": "Phone number",
+          "label": "Phone number (format xxxxxxxxxx or +(xx)xxxxxxxxxx)",
           "tooltip": "Example : '0240506070', '+(33)240506070'",
           "pattern": "Le format du champ « Téléphone fixe » est incorrect. Example : '0240506070', '+(33)240506070'",
           "format": "Le format du champ « Téléphone fixe » est incorrect. Example : '0240506070', '+(33)240506070'"
         },
         "proTelPort": {
-          "label": "Mobile number",
+          "label": "Mobile number (format xxxxxxxxxx or +(xx)xxxxxxxxxx)",
           "tooltip": "Example : '0240506070', '+(33)240506070'",
           "pattern": "The format of « Mobile number » field is incorrect. Example : '0240506070', '+(33)240506070'",
           "format": "The format of « Mobile number » field is incorrect. Example : '0240506070', '+(33)240506070'"
         },
         "autreTel": {
-          "label": "Other phone.",
+          "label": "Other phone. (format xxxxxxxxxx or +(xx)xxxxxxxxxx)",
           "placeholder": "This is an example of use, data are not saved.",
           "tooltip": "Example : '0240506070', '+(33)240506070'",
           "invalid1": "The format of « Other phone ",
@@ -521,7 +538,7 @@
           "format": "The format of « Email »  is incorrect (Format: name@example.com)"
         },
         "proFax": {
-          "label": "Fax",
+          "label": "Fax (format xxxxxxxxxx or +(xx)xxxxxxxxxx)",
           "tooltip": "Example : '0240506070', '+(33)240506070'",
           "invalid": "The format of « Fax » field is incorrect. Example : '0240506070', '+(33)240506070'",
           "pattern": "The format of « Fax » field is incorrect. Example : '0240506070', '+(33)240506070'",
@@ -563,7 +580,7 @@
           "label": "First name"
         },
         "assistTel": {
-          "label": "Phone number",
+          "label": "Phone number (format xxxxxxxxxx or +(xx)xxxxxxxxxx)",
           "tooltip": "Example : '0240506070', '+(33)240506070'",
           "invalid": "The format of « Assistant phone number » is incorrect.",
           "pattern": "The format of « Assistant phone number » is incorrect. Example : '0240506070', '+(33)240506070'",
@@ -591,7 +608,7 @@
           }
         },
         "commentaire": {
-          "label": "Comment (limit 255 characters).",
+          "label": "Comment",
           "maxLength": "« Comment » Comment field exceeds allowed number of characters {limit}.",
           "placeHolder": "Please type in a comment "
         },
@@ -627,15 +644,6 @@
       "mme": "Mrs"
     }
   },
-  "repartitionPage": {
-    "title": "Graphical sector allocation",
-    "description": "Graphical sector allocation",
-    "type": {
-      "doughnut": "donut",
-      "pie": "lune",
-      "polarArea": "polaire"
-    }
-  },
   "contactPage": {
     "title": "Contact",
     "form": {
@@ -663,62 +671,6 @@
     },
     "mailTemplate": "${content} \n\n Lastname: ${name} \n Firstname: ${firstname} \n Mail: ${mail}",
     "subject": "Contact from application form"
-  },
-  "administration": {
-    "secteurs": {
-      "titreSecteur": "Sector list",
-      "table": {
-        "tableTitle": "Sector management",
-        "captionText": "Sector list with add/edit/remove ans sort sector features",
-        "emptyResult": "No data found.",
-        "addTitle": "Add sector",
-        "sortMultiTitle": "multi sort by creation date first and author next."
-      },
-      "nom": "Name",
-      "description": "Description",
-      "dateCr": "Creation date",
-      "dateMaj": "Update date",
-      "auteur": "Creator",
-      "quickUpdate": "Quick update",
-      "quickUpdateTitle": "Quick update for sector {nom}",
-      "modification": "Update",
-      "modificationTitle": "Update sector {desc}",
-      "suppression": "Delete",
-      "suppressionAlt": "Delete {desc}",
-      "confirmationAnnulationAction": "This action will be canceled. Continue?",
-      "suppression": "Delete",
-      "editionRapide": "Quick update",
-      "editer": "Update",
-      "enregistrer": "Save",
-      "annuler": "Cancel",
-      "confirmationSuppression": "This item will be removed. Continue?",
-      "suppressionTitle": "Delete sector",
-      "form": {
-        "nomRequired": "The « Name » field is required. Please enter this field.",
-        "descRequired": "The « Description » field is required. Please enter this field.",
-        "dateRequired": "The « Update date » field is required. Please enter this field.",
-        "fields": {
-          "desc": {
-            "label": "Description",
-            "required": "The « Description » field is required. Please enter this field.",
-            "maxLength": "« Description » field exceeds allowed number of characters 200. Please correct this field."
-          },
-          "nom": {
-            "label": "Name",
-            "required": "The « Name » field is required. Please enter this field.",
-            "maxLength": "« Name » field exceeds allowed number of characters 50. Please correct this field."
-          }
-        },
-        "validTitle": "Sector entry validation",
-        "cancelTitle": "Sector entry cancellation"
-      }
-    },
-    "modification": "Update sector",
-    "ajout": "Add sector",
-    "closeModification": "Leave sector update",
-    "closeAjout": "Leave sector adding",
-    "validTitle": "Add sector",
-    "cancelTitle": "Cancel sector adding"
   },
   "error": {
     "message": {

@@ -70,51 +70,31 @@
  */
 
 /**
- * applitutoriel-js-batch - Application tutoriel utilisant le Framework hornet
+ * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
+import { Class } from "hornet-js-utils/src/typescript-utils";
 import { Logger } from "hornet-js-utils/src/logger";
-import { EntityDAO } from "src/dao/entity-dao";
-import { SecteurMetier } from "src/models/adm/sec-mod";
-import Map from "hornet-js-bean/src/decorators/Map";
-import * as Sequelize from "sequelize";
+import { HornetSequelizeEntityAttributes,
+    HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
+import { HornetGenericDAO } from "hornet-js-database/src/sequelize/hornet-generic-dao";
+import { inject } from "hornet-js-core/src/inject/inject";
+import { ModelDAO } from "src/dao/model-dao";
+import { injectable } from "hornet-js-core/src/inject/injectable";
+import { HornetSequelizeModel } from "hornet-js-database/src/sequelize/hornet-sequelize-model";
+import { CiviliteAttributes } from "src/models/ref/ref-civilite-mod";
 
-const logger: Logger = Utils.getLogger("applitutoriel.src.dao.secteurs-dao");
+const logger: Logger = Utils.getLogger("applitutoriel.src.dao.civilite-dao");
 
-export class SecteursDAO extends EntityDAO {
-
-    constructor() {
-        super();
+@injectable()
+export class CiviliteDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceModel<CiviliteAttributes>> {
+    constructor(entity: string = "civiliteEntity", @inject(ModelDAO) modelDAO?: ModelDAO) {
+        super(modelDAO[entity], modelDAO);
     }
-
-    @Map(SecteurMetier)
-    listerSecteurs(): Promise<Array<SecteurMetier>> {
-        return this.modelDAO.secteurEntity.findAll();
-    }
-
-    updateById(id: number, data) {
-        data.dateMajEnreg = new Date();
-        return this.modelDAO.secteurEntity.update(data, {where: {id: id}});
-    }
-
-    insert(data) {
-        data.dateCreat = new Date();
-        data.dateMajEnreg = new Date();
-        return this.modelDAO.secteurEntity.create(data);
-    }
-
-    deleteById(id: number | Array<number>) {
-        return this.modelDAO.secteurEntity.destroy({where: {id: id}});
-    }
-
-    getEntity(): Sequelize.Model<any, any> {
-        return this.modelDAO.secteurEntity;
-    }
-
 }

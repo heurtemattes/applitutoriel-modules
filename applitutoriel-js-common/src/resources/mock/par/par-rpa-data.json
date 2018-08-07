@@ -16,7 +16,7 @@
         },
         "civilite": {
           "id": null,
-          "libelle": null
+          "libelle": "Mr"
         },
         "nationalite": {
           "id": null,
@@ -24,8 +24,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": true,
+        "client": true,
+        "vip": true,
         "isVIPFiltre": null,
         "nom": "ALBERT",
         "prenom": "Renaud",
@@ -71,8 +71,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": true,
+        "client": true,
+        "vip": true,
         "isVIPFiltre": null,
         "nom": "ALBERT",
         "prenom": "Pierre",
@@ -118,8 +118,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": true,
+        "client": true,
+        "vip": true,
         "isVIPFiltre": null,
         "nom": "ALBERT",
         "prenom": "Bruce",
@@ -165,8 +165,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": false,
+        "client": true,
+        "vip": false,
         "isVIPFiltre": null,
         "nom": "ALFRED",
         "prenom": "David",
@@ -212,8 +212,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": false,
+        "client": true,
+        "vip": false,
         "isVIPFiltre": null,
         "nom": "ALFRED",
         "prenom": "Guillaume",
@@ -259,8 +259,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": false,
+        "client": true,
+        "vip": false,
         "isVIPFiltre": null,
         "nom": "ALFRED",
         "prenom": "Albert",
@@ -306,8 +306,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": true,
+        "client": true,
+        "vip": true,
         "isVIPFiltre": null,
         "nom": "BAZIN",
         "prenom": "Max",
@@ -353,8 +353,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": false,
+        "client": true,
+        "vip": false,
         "isVIPFiltre": null,
         "nom": "BAZIN",
         "prenom": "Jules",
@@ -400,8 +400,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": false,
+        "client": true,
+        "vip": false,
         "isVIPFiltre": null,
         "nom": "DENO",
         "prenom": "James",
@@ -447,8 +447,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": true,
+        "client": true,
+        "vip": true,
         "isVIPFiltre": null,
         "nom": "DEVIL",
         "prenom": "Jacques",
@@ -500,8 +500,8 @@
           "libelle": null
         },
         "photo": null,
-        "isClient": true,
-        "isVIP": null,
+        "client": true,
+        "vip": null,
         "isVIPFiltre": null,
         "nom": null,
         "prenom": null,

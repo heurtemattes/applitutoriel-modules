@@ -8,5 +8,8 @@ module.exports = {
     externalModules: {
         enabled: false,
         directories: []
+    },
+    config: {
+        autoGenerateIndex: false
     }
 };

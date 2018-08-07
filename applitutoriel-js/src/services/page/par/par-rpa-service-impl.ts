@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -133,7 +133,7 @@ export class RecherchePartenaireServiceImpl extends RecherchePartenaireService {
 
     supprimerPage(id): Promise<any> {
         return this.fichePartenaireService.fichePartenaire(id).then((partenaire: FichePartenaire) => {
-            if (partenaire.isVIP) {
+            if (partenaire.vip) {
                 throw new BusinessError("ERR_PARTENAIRE_VIP_SUPPRESSION", { $1: partenaire.nom, $2: partenaire.prenom });
             }
             return this.fetch({ method: "delete", url: this.buildUrl(URL_PARTENAIRES + "/" + id) });
@@ -161,7 +161,7 @@ export class RecherchePartenaireServiceImpl extends RecherchePartenaireService {
 
     exporter(reqMimeType: MediaType, criteres?: PartenaireRechercheParameter): Promise<any> {
         logger.trace("SERVICES - exporter : ", reqMimeType);
-            return this.fetch({ method: "post", url: this.buildUrl(URL_PARTENAIRES + URL_PAR_EXPORTER), typeMime: reqMimeType, data: criteres });
+        return this.fetch({ method: "post", url: this.buildUrl(URL_PARTENAIRES + URL_PAR_EXPORTER), typeMime: reqMimeType, data: criteres });
     }
 
     exporterODF(reqMimeType: MediaType, criteres?: PartenaireRechercheParameter): Promise<any> {

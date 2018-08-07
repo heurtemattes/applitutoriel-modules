@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -89,18 +89,18 @@ import * as path from "path";
 
 const logger: Logger = Utils.getLogger("applitutoriel.views.layouts.hornet-layout");
 
-const styleLoader: any = ".loader-page:before {display: block;position: absolute;content: '';left: -200px;width: 200px;height: 4px;background-color: #00d468;animation: loadingPage 2s linear infinite;}@keyframes loadingPage {from {left: -200px; width: 30%;}50% {width: 30%;}70% {width: 70%;}80% { left: 50%;}95% {left: 120%;}to {left: 100%;}}"
+const styleLoader: any = ".loader-page:before {display: block;position: absolute;content: '';left: -12.5em;width: 12.5em;height: 0.25em;background-color: #00d468;animation: loadingPage 2s linear infinite;}@keyframes loadingPage {from {left: -12.5em; width: 30%;}50% {width: 30%;}70% {width: 70%;}80% { left: 50%;}95% {left: 120%;}to {left: 100%;}}";
 
 export interface HornetLayoutProps extends HornetComponentProps {
-    content: string,
-    state: any,
-    appLogo: string,
-    appTheme: string,
-    fwkTheme: string,
-    appStatic: string,
-    applicationLoading: string,
-    nojavascript: boolean,
-    applicationTitle: string
+    content: string;
+    state: any;
+    appLogo: string;
+    appTheme: string;
+    fwkTheme: string;
+    appStatic: string;
+    applicationLoading: string;
+    nojavascript: boolean;
+    applicationTitle: string;
 }
 
 /**
@@ -115,14 +115,16 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
         appStatic: "/js/client.js",
         appStaticDll: "/js/dll",
         nojavascript: false,
-        applicationTitle: ""
+        applicationTitle: "",
     };
 
     constructor(props: HornetLayoutProps, context?: any) {
         super(props, context);
 
         const currentUrl = Utils.getCls("hornet.routePath");
-        this.state = { ...this.state, applicationTitle: this.i18n(NavigationUtils.retrievePageTextKey(NavigationUtils.getConfigMenu(), currentUrl)) };
+        const applicationTitle = this.i18n(NavigationUtils.retrievePageTextKey(NavigationUtils.getConfigMenu(), currentUrl))
+            + " | " + this.i18n("applicationTitle");
+        this.state = { ...this.state, applicationTitle };
 
     }
 
@@ -138,18 +140,18 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
      */
     render(): JSX.Element {
         logger.trace("VIEW HornetLayout render");
-        let loaderStyle: React.CSSProperties = {
-            "width": "100%",
-            "position": "absolute",
-            "overflow": "hidden",
-            "backgroundColor": "#eee",
-            "height": "4px",
-            "top": "6em",
-            zIndex: 9999
+        const loaderStyle: React.CSSProperties = {
+            width: "100%",
+            position: "absolute",
+            overflow: "hidden",
+            backgroundColor: "#eee",
+            height: "0.25em",
+            top: "6em",
+            zIndex: 9999,
         };
 
 
-        let loadingOverlayStyle: React.CSSProperties = {
+        const loadingOverlayStyle: React.CSSProperties = {
             background: "black",
             position: "fixed",
             top: 0,
@@ -157,22 +159,22 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
             right: 0,
             left: 0,
             opacity: 0.1,
-            "zIndex": 9999
+            zIndex: 9999,
         };
 
         try {
 
-            let compatible = "<!--[if IE]> <meta http-equiv=\"X-UA-Compatible\" content=\"edge\" /> <![endif]-->";
+            const compatible = "<!--[if IE]> <meta http-equiv=\"X-UA-Compatible\" content=\"edge\" /> <![endif]-->";
             let configMock = Utils.config.get("mock");
 
             if (!configMock || !configMock.enable) {
                 configMock = Utils.config.getOrDefault("mock", {
                     enabled: false, sevicePage: { enabled: false },
-                    seviceData: { enabled: false }
-                })
+                    seviceData: { enabled: false },
+                });
             }
             return (
-                <html dir="ltr" lang={Utils.getCls("hornet.internationalization").lang}>
+                <html dir="ltr" lang={Utils.getCls("hornet.internationalization").locale}>
                     <head>
                         <meta name="viewport"
                             content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no" />
@@ -180,7 +182,7 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
                         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                         <link rel="icon" type="image/png" href={this.genUrlStatic(this.state.appLogo)} />
                         <title>{this.state.applicationTitle}</title>
-                        <link rel="stylesheet" type="text/css" href={HornetLayout.genUrlTheme(this.state.fwkTheme)} />
+                         <link rel="stylesheet" type="text/css" href={HornetLayout.genUrlTheme(this.state.fwkTheme)} />
                         <link rel="stylesheet" type="text/css" href={this.genUrlStatic(this.state.appTheme)} />
                     </head>
                     <body>
@@ -197,7 +199,7 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
                         <script dangerouslySetInnerHTML={{ __html: (this.state.state || "").toString() }} />
                         <script
                             dangerouslySetInnerHTML={{
-                                __html: `window.Config["mock"] = ` + JSON.stringify(configMock) + `; window.Config["env"] = "` + process.env.NODE_ENV + `"`
+                                __html: `window.Config["mock"] = ` + JSON.stringify(configMock) + `; window.Config["env"] = "` + process.env.NODE_ENV + `"`,
                             }}
                         />
                         {process.env.NODE_ENV !== "production" ? this.renderScriptVendor() : null}
@@ -225,16 +227,16 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
 
         logger.debug("VIEW HornetLayout renderScript DLL");
 
-        let dlls = [];
+        const dlls = [];
         if (!this.state.nojavascript) {
 
-            let dllDirectory = path.join(path.dirname(require.main.filename), "static", this.state.appStaticDll);
+            const dllDirectory = path.join(path.dirname(require.main.filename), "static", this.state.appStaticDll);
 
             if (fs.existsSync(dllDirectory)) {
 
-                let listFiles = fs.readdirSync(dllDirectory);
+                const listFiles = fs.readdirSync(dllDirectory);
                 listFiles.reverse().forEach((file, idx) => {
-                    if (path.extname(file) == ".js" && path.basename(file).match(/^dll_/)) {
+                    if (path.extname(file) === ".js" && path.basename(file).match(/^dll_/)) {
                         dlls.push(<script
                             src={this.genUrlStatic(path.join(this.state.appStaticDll, path.basename(file)))}
                             key={"dll-" + idx}></script>);

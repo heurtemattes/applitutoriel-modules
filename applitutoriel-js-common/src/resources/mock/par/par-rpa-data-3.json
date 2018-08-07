@@ -13,7 +13,7 @@
     },
     "listeCriteres": {
       "partenaire": {
-        "isClient": true
+        "client": true
       },
       "startDate": "2015-03-25T00:00:00.000Z"
     },
@@ -24,7 +24,7 @@
         "prenom": "Jean-Pierre",
         "proCourriel": "jean-pierre.pascal@live.fr",
         "organisme": "Organisme 4",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -51,7 +51,7 @@
         "prenom": "David",
         "proCourriel": "david.pascal@yahoo.fr",
         "organisme": "Organisme 3",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -78,7 +78,7 @@
         "prenom": "Sylvestre",
         "proCourriel": "sylvestre.pascal@msn.com",
         "organisme": "Organisme 5",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -105,7 +105,7 @@
         "prenom": "Marc",
         "proCourriel": "marc.pascal@gmail.com",
         "organisme": "Organisme 4",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -132,7 +132,7 @@
         "prenom": "Bertrand",
         "proCourriel": "bertrand.pascal@gmail.com",
         "organisme": "Organisme 3",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -159,7 +159,7 @@
         "prenom": "Bertrand",
         "proCourriel": "bertrand.paul@yahoo.fr",
         "organisme": "Organisme 5",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -186,7 +186,7 @@
         "prenom": "Paul",
         "proCourriel": "paul.silva@hotmail.com",
         "organisme": "Organisme 2",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -213,7 +213,7 @@
         "prenom": "Guillaume",
         "proCourriel": "guillaume.tadio@free.fr",
         "organisme": "Organisme 3",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -240,7 +240,7 @@
         "prenom": "Vincent",
         "proCourriel": "vincent.tadio@yahoo.fr",
         "organisme": "Organisme 1",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -267,7 +267,7 @@
         "prenom": "Albert",
         "proCourriel": "albert.tadio@hotmail.com",
         "organisme": "Organisme 3",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",

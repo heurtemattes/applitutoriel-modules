@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -92,7 +92,7 @@ import { FieldSet } from "hornet-js-react-components/src/widget/form/fieldset";
 import {
     AutoCompleteField,
     AutoCompleteFieldProps,
-    FilterTextType
+    FilterTextType,
 } from "hornet-js-react-components/src/widget/form/auto-complete-field";
 import { AutoCompleteMultiField } from "hornet-js-react-components/src/widget/form/auto-complete-multi-field";
 import { TextAreaField } from "hornet-js-react-components/src/widget/form/textarea-field";
@@ -158,7 +158,7 @@ export interface IdentiteTabProps extends TabContentProps {
     /**
      * Mode edition ou consultation du formulaire
      */
-    pageAttributes: { id: string, mode: string, isVIP: boolean }
+    pageAttributes: { id: string, mode: string, vip: boolean };
 
 }
 
@@ -176,7 +176,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     /* Liste de choix des satisfactions */
     private listeSatisfactions: Array<any>;
 
-    private partenaire: any = {};
+    partenaire: any = {};
     private formPartenaire: Form;
 
     private fieldSetCivilite: FieldSet;
@@ -204,16 +204,16 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     constructor(props: IdentiteTabProps, context) {
         super(props, context);
 
-        let intlMess = this.i18n("partenaireFichePage");
-        let fieldMessages = intlMess.form.fields;
+        const intlMess = this.i18n("partenaireFichePage");
+        const fieldMessages = intlMess.form.fields;
 
         this.state = {
             ...this.state,
             readOnly: this.props.pageAttributes.mode === PAR_MODE_CONSULTER,
             mode: this.props.pageAttributes.mode,
             nationalites: [],
-            schema: schema
-        }
+            schema,
+        };
         this.dataSourceNationalite = this.props.dataSourcesService.dataSourceNationalite;
         this.dataSourcePays = new DataSourceMaster<PaysMetier>([], { value: "id", text: "libelle" });
         this.dataSourceVille = new DataSource<VilleMetier>([], { value: "id", text: "libelle", idPays: "pays.id" });
@@ -226,37 +226,37 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         this.dataSourcePays.on("select", (object) => {
             if (object) {
                 this.dataSourceVille.filter(function (ville) {
-                    return (ville.value == null || ville.idPays == object.value);
-                }, true);
+                    return (ville.value == null || ville.idPays === object.value);
+                },                          true);
             }
         });
 
-        this.dataSourceOtherTelephones = new DataSource<any>([ { "autreTel": "0240506070" }, { "autreTel": "0241516171" }]);
+        this.dataSourceOtherTelephones = new DataSource<any>([ { autreTel: "0240506070" }, { autreTel: "0241516171" } ]);
 
         // Alimentation des listes de choix isClient
         this.listeIsClient = [
             {
-                isClient: true,
-                libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.clientLabel")
+                client: true,
+                libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.client.clientLabel"),
             },
             {
-                isClient: false,
-                libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.fournisseurLabel"),
-            }
+                client: false,
+                libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.client.fournisseurLabel"),
+            },
         ];
 
-        this.dataSourceIsClient = new DataSource(this.listeIsClient, { value: "isClient", label: "libelle" });
+        this.dataSourceIsClient = new DataSource(this.listeIsClient, {value: "client", label: "libelle"});
 
         /* Alimentation des listes de choix de Civilités.
          Sert d'exemple d'utilisation de clés customisées autres que "value" et "label" */
         this.listeCivilites = [
             { id: 1, libelle: intlMess.form.mme },
-            { id: 2, libelle: intlMess.form.mr }];
+            { id: 2, libelle: intlMess.form.mr } ];
 
         this.dataSourceCivilite = new DataSource<any>(this.listeCivilites, {
             value: "id",
-            text: "libelle"
-        }, [ new DefaultSort([ { key: "text" } as SortData ]) ]);
+            text: "libelle",
+        },                                            [ new DefaultSort([ { key: "text" } as SortData ]) ]);
 
         // Alimentation des listes de choix Satisfaction
         this.listeSatisfactions = [
@@ -266,13 +266,13 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
             { id: "4", label: fieldMessages.satisfaction.tele },
             { id: "5", label: fieldMessages.satisfaction.journal },
             { id: "6", label: fieldMessages.satisfaction.radio },
-            { id: "7", label: fieldMessages.satisfaction.autres }
+            { id: "7", label: fieldMessages.satisfaction.autres },
         ];
         this.dataSourceSatisfactions = new DataSource(this.listeSatisfactions, { value: "id", text: "label" });
 
-        this.partenaire.isVIP = this.props.pageAttributes && this.props.pageAttributes.isVIP || false;
+        this.partenaire.vip = this.props.pageAttributes && this.props.pageAttributes.vip || false;
 
-        this.state = { ...this.state, isVIP: this.partenaire.isVIP };
+        this.state = {...this.state, vip: this.partenaire.vip};
     }
 
     componentDidUpdate(prevProps: any, prevState: any, prevContext: any): void {
@@ -303,7 +303,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                     formMessages={this.i18n("partenaireFichePage.form")}
                     onFormChange={this.onFormChangeFn}>
                     {this.renderFieldsetType()}
-                    {(this.state.isVIP) ? this.renderPartenaireVip() : this.renderPartenaire()}
+                    {(this.state.vip) ? this.renderPartenaireVip() : this.renderPartenaire()}
                     {this.renderButton()}
                     {this.renderButtonCancel()}
                 </Form>
@@ -312,7 +312,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     }
 
     onFormChangeFn(event) {
-        console.log("Déclenchement de la méthode gerrant les changements dans le form !");
+        // console.log("Déclenchement de la méthode gerrant les changements dans le form !");
     }
 
     /**
@@ -337,18 +337,18 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         if (partenaire.ville && partenaire.ville.pays && partenaire.ville.pays.id) {
             this.dataSourceVille.on("add", () => {
                 this.dataSourceVille.filter(function (ville) {
-                    return (ville.value !== null && ville.idPays == partenaire.ville.pays.id);
-                }, true);
+                    return (ville.value !== null && ville.idPays === partenaire.ville.pays.id);
+                },                          true);
             });
         }
 
 
         if (this.partenaire.satisfaction && this.partenaire.satisfaction.split) {
-            partenaire.satisfaction = { ids: this.partenaire.satisfaction.split(",") }
+            partenaire.satisfaction = { ids: this.partenaire.satisfaction.split(",") };
         }
         /* MaJ de chacun des champs */
         this.dataSourceOtherTelephones.reload();
-        this.setState({ isVIP: partenaire.isVIP, mode: mode, readOnly: (mode === PAR_MODE_CONSULTER) }, () => {
+        this.setState({vip: partenaire.vip, mode, readOnly: (mode === PAR_MODE_CONSULTER)}, () => {
             this.formPartenaire.updateFieldsAndClean(partenaire);
             /* Toggle Des champs en readOnly */
             this.toggleReadOnly(this.isNonContactFieldDisabled());
@@ -364,9 +364,9 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         if (value !== undefined) {
             let selectedValue;
             if (value) {
-                selectedValue = this.listeIsClient[0];
+                selectedValue = this.listeIsClient[ 0 ];
             } else {
-                selectedValue = this.listeIsClient[1];
+                selectedValue = this.listeIsClient[ 1 ];
             }
             this.dataSourceIsClient.select(selectedValue);
         }
@@ -378,10 +378,10 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      */
     renderButton() {
 
-        let prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
-        let bodyCancelButtonLbl = (!this.state.readOnly) ?
+        const prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
+        const bodyCancelButtonLbl = (!this.state.readOnly) ?
             this.i18n("partenaireFichePage.form.backTitle") : this.i18n("partenaireFichePage.form.cancelTitle");
-        let cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
+        const cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
 
         return (
             <div>
@@ -408,10 +408,10 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      * @returns {any}
      */
     renderButtonCancel() {
-        let prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
-        let bodyCancelButtonLbl = (!this.state.readOnly) ?
+        const prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
+        const bodyCancelButtonLbl = (!this.state.readOnly) ?
             this.i18n("partenaireFichePage.form.backTitle") : this.i18n("partenaireFichePage.form.cancelTitle");
-        let cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
+        const cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
 
         return (
             <div>
@@ -433,7 +433,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      */
     getFieldset(): any[] {
 
-        let res: any[] = [];
+        const res: any[] = [];
         res.push({ element: this.renderFieldsetCivilite(), title: this.formI18n.civilite });
         res.push({ element: this.renderFieldsetCoordonnee(), title: this.formI18n.sectionCoordPro });
         res.push({ element: this.renderFieldsetAdresse(), title: this.formI18n.sectionAdresse });
@@ -450,10 +450,10 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      */
     getAccordions(fieldsets): JSX.Element[] {
 
-        let accordions: JSX.Element[] = [];
+        const accordions: JSX.Element[] = [];
         _.forEach(fieldsets, (item, index) => {
-            let accordion: JSX.Element = (
-                <Accordion title={item.title} isOpen={(index == "0") ? true : false} key={"identite-accordion-" + index}>{item.element}</Accordion>
+            const accordion: JSX.Element = (
+                <Accordion title={item.title} isOpen={(index === "0") ? true : false} key={"identite-accordion-" + index}>{item.element}</Accordion>
             );
 
             accordions.push(accordion);
@@ -469,19 +469,19 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
             <FieldSet legend={this.formI18n.type} key="fieldsetType">
                 <Row>
                     {/*Exemple d'application de la propriété readOnly directement sur un champ*/}
-                    <RadiosField name="isClient"
-                        label={this.formI18n.fields.isClient.label}
-                        dataSource={this.dataSourceIsClient}
-                        currentChecked={true}
-                        currentValue={this.listeIsClient[1]}
-                        inline={RadiosField.Inline.FIELD}
+                    <RadiosField name="client"
+                                 label={this.formI18n.fields.client.label}
+                                 dataSource={this.dataSourceIsClient}
+                                 currentChecked={true}
+                                 currentValue={this.listeIsClient[ 1 ]}
+                                 inline={RadiosField.Inline.FIELD}
                     />
-                    <CheckBoxField name="isVIP"
-                        label={this.formI18n.fields.isVIP.label}
-                        toolTip={this.formI18n.fields.isVIP.tooltip}
-                        abbr={this.formI18n.fields.isVIP.title}
-                        onChange={this.handleIsVIPChange}
-                        inline={CheckBoxField.Inline.ALL}
+                    <CheckBoxField name="vip"
+                                   label={this.formI18n.fields.vip.label}
+                                   toolTip={this.formI18n.fields.vip.tooltip}
+                                   abbr={this.formI18n.fields.vip.title}
+                                   onChange={this.handleIsVIPChange}
+                                   inline={CheckBoxField.Inline.ALL}
                     />
                 </Row>
             </FieldSet>);
@@ -561,7 +561,12 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                     />
                 </Row>
                 <Row>
-                    <InputField name="fonction" label={this.formI18n.fields.fonction.label} maxLength={50} />
+                    <InputField name="fonction"
+                            label={this.formI18n.fields.fonction.label}
+                            maxLength={50}
+                            maxChar={25}
+                            displayCharNumber={true}
+                            showAlert={true}/>
                 </Row>
                 <Row>
                     <InputField name="proTelFixe"
@@ -760,6 +765,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         readOnly={false}
                         disabled={this.isNonContactFieldDisabled()}
                         placeholder={this.formI18n.fields.commentaire.placeHolder}
+                        displayMaxCharInLabel={true}
                     />
                 </Row>
                 <Row>
@@ -810,7 +816,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      * @returns {any}
      */
     private renderPartenaireVip(): JSX.Element {
-        let accordions = this.getAccordions(this.getFieldset());
+        const accordions = this.getAccordions(this.getFieldset());
         return (
             <Accordions id="id-accordions-partenaire-vip"
                 multiSelectable={true}>{accordions}</Accordions>
@@ -825,7 +831,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      */
     renderPartenaire(): JSX.Element {
 
-        let fieldset: JSX.Element[] = this.getFieldset().map((fieldsetElement) => {
+        const fieldset: JSX.Element[] = this.getFieldset().map((fieldsetElement) => {
             return fieldsetElement.element;
         });
         return (
@@ -844,7 +850,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      * @return {boolean} true lorsque les champs qui ne font pas partie du bloc des coordonnées doivent être désactivés
      */
     private isNonContactFieldDisabled(): boolean {
-        return (this.state.readOnly || (this.partenaire.isVIP && this.props.pageAttributes.mode !== PAR_MODE_CREER));
+        return (this.state.readOnly || (this.partenaire.vip && this.props.pageAttributes.mode !== PAR_MODE_CREER));
     }
 
     /**
@@ -854,10 +860,10 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     handleIsVIPChange(e?: SyntheticEvent<HTMLElement>): void {
 
         if (e) {
-            let isVIPInput: HTMLInputElement = e.target as HTMLInputElement;
-            this.partenaire = IdentiteTab.mergeObjects(this.formPartenaire.extractData(), { isVIP: isVIPInput.checked });
+            const isVIPInput: HTMLInputElement = e.target as HTMLInputElement;
+            this.partenaire = IdentiteTab.mergeObjects(this.formPartenaire.extractData(), {vip: isVIPInput.checked});
         }
-        this.setState({ isVIP: this.partenaire.isVIP }, () => this.toggleReadOnly(this.isNonContactFieldDisabled()));
+        this.setState({vip: this.partenaire.vip}, () => this.toggleReadOnly(this.isNonContactFieldDisabled()));
 
     }
 
@@ -897,11 +903,19 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      * @param file fichier sélectionné
      * @returns {*}
      */
-    private renderPreviewUploadFile(file: UploadedFile): React.ReactElement<any> {
+    private renderPreviewUploadFile(file: any): React.ReactElement<any> {
         let fileTag: React.ReactElement<any> = null;
+        let format;
+        let size;
+        if (file) {
+            const split = file.filename.split(".");
+            format = split ? split[split.length - 1].toUpperCase() : "";
+            size = this.formatBytes(file.size, 2);
+        }
 
+        const info =  format && size ? <span className="file-info">{"( " + format + " - " + size + " ) "}</span> : null;
         if (file && file.id > -1) {
-            let urlfile: string = Utils.buildContextPath("/services/partenaires/" + this.props.pageAttributes.id + "/photo");
+            const urlfile: string = Utils.buildContextPath("/services/partenaires/" + this.props.pageAttributes.id + "/photo");
 
             // Lorsque le fichier Photo n'est pas une image, on affiche simplement un lien
             // L'attribut data-pass-thru="true" est nécessaire pour court-circuiter le routeur client
@@ -912,16 +926,17 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
             // la valeur est unique par fichier : ainsi, un deuxième clic sur le lien ouvre le fichier dans le même onglet,
             // mais le lien d'un autre fichier s'ouvre dans un autre onglet
             // - si le navigateur ne sait pas ouvrir le fichier, il propose un telechargement
-            let fileTarget = "newTabForPhoto" + file.id;
+            const fileTarget = "newTabForPhoto" + file.id;
+
 
             fileTag =
                 <div className="grid-form-field ">
                     <div className="">
                         <a href={urlfile} data-pass-thru="true"
-                            target={fileTarget}>{this.i18n("partenaireFichePage.form.fields.photo.altImage")}</a>
+                            target={fileTarget}>{this.i18n("partenaireFichePage.form.fields.photo.altImage")}</a>{info}
                     </div>
                 </div>;
-        } else if (file && file.name) {
+        } else if (file && file.fileName) {
             /* Le fichier vient d'être sélectionné : on affiche son nom */
             fileTag =
                 <Row>
@@ -932,10 +947,25 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         </label>
                     </div>
                     <div className="grid-form-field ">
-                        <div className="">{file.name}</div>
+                        <div className="">{file.fileName}{info}</div>
                     </div>
                 </Row>;
         }
         return fileTag;
     }
+
+    /**
+     * conversion de la taille du fichier en chaine de caractère en bytes
+     * @param bytes 
+     * @param decimals 
+     */
+    formatBytes(bytes,decimals: number) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1000;
+        const dm = decimals || 2;
+        const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+        
+       const  i = Math.floor(Math.log(bytes) / Math.log(k));
+     return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[i];
+     }
 }

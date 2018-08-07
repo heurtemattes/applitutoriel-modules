@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -86,7 +86,7 @@ import { AdministrationSecteurServiceData } from "applitutoriel-js-common/src/se
 
 import { ServiceSecure } from "hornet-js-core/src/services/service-secure";
 import { Response } from "superagent";
-import { Promise } from 'hornet-js-utils/src/promise-api';
+import { Promise } from "hornet-js-utils/src/promise-api";
 
 const logger: Logger = Utils.getLogger("applitutoriel.services.adm.secteur-service-data-impl");
 
@@ -133,7 +133,7 @@ export class SecteurServiceImpl extends ServiceSecure implements AdministrationS
         return this.fetch({
             method: "post",
             url: this.buildUrl(URL_SECTEURS),
-            data: secteur
+            data: secteur,
         });
     }
 
@@ -151,7 +151,7 @@ export class SecteurServiceImpl extends ServiceSecure implements AdministrationS
             method: "put",
             url: this.buildUrl(URL_SECTEURS + "/" + id),
             data: secteur,
-            cacheLinkKey: [ this.buildUrl(URL_SECTEURS) ]
+            cacheLinkKey: [ this.buildUrl(URL_SECTEURS) ],
         });
     }
 }

@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -153,7 +153,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -171,6 +171,7 @@ export interface SecteurAttributes extends HornetSequelizeAttributes {
     auteurMaj: string;
     dateSupEnreg: string;
     auteurSupEnreg: string;
+    nomdesc:any;
 }
 
 export let SecteurModel: Sequelize.DefineAttributes = {

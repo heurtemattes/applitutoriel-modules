@@ -73,23 +73,23 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import {Utils} from "hornet-js-utils";
-import {Logger} from "hornet-js-utils/src/logger";
+import { Utils } from "hornet-js-utils";
+import { Logger } from "hornet-js-utils/src/logger";
 import * as React from "react";
-import {HornetPage} from "hornet-js-react-components/src/widget/component/hornet-page";
-import {HornetComponentProps} from "hornet-js-components/src/component/ihornet-component";
+import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
+import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 
 const logger: Logger = Utils.getLogger("applitutoriel.views.gen.gen-hom-page");
 
 /**
  * Ecran de page d'accueil de l'application
  */
-export class HomePage extends HornetPage<any, HornetComponentProps,any> {
+export class HomePage extends HornetPage<any, HornetComponentProps, any> {
 
     prepareClient() {
     }
@@ -101,17 +101,17 @@ export class HomePage extends HornetPage<any, HornetComponentProps,any> {
         logger.trace("VIEW HomePage render");
         return (
             <div id="pageAccueil">
-                <h3>Accueil</h3>
+                <h2>Présentation</h2>
                 <div>
                     <h3>Bienvenue sur l'application TUTORIEL Hornet.js</h3>
                     <div>
                         <p className="texte">L'application TUTORIEL a pour objectif de présenter une application basée sur le framework Hornet.js
                         </p>
                         <p className="texte">
-                        Le framework "Hornet.js" est un framework open-source conçu pour développer des applications web modernes et réactives.
+                            Le framework "Hornet.js" est un framework open-source conçu pour développer des applications web modernes et réactives.
                         </p>
                         <p className="texte">
-                        Il permet de répondre aux besoins posés par les référentiels généraux de l'état Français pour les administrations :
+                            Il permet de répondre aux besoins posés par les référentiels généraux de l'état Français pour les administrations :
                         </p>
                         <ul>
                             <li><a href="http://references.modernisation.gouv.fr/securite" title="Référentiel Général de Sécurité"> RGS</a> : Référentiel Général de Sécurité</li>
@@ -125,23 +125,23 @@ export class HomePage extends HornetPage<any, HornetComponentProps,any> {
                             <li>Hornet.js facilite la mise en oeuvre du RGAA dans une application.</li>
                             <li>Mais l'utilisation de "Hornet.js" ne garantit pas qu'une application soit valide RGAA.
                             </li>
-                            <li>Pour qu'une application puisse avoir une certificatione RGAA de conformité "AA", elle doit, au préalable, avoir été auditée par un expert accessibilité.</li>
+                            <li>Pour qu'une application puisse avoir une certification RGAA de conformité "AA", elle doit, au préalable, avoir été auditée par un expert accessibilité.</li>
                         </ul>
                     </div>
                 </div>
                 <div>
                     <h3>Mise en oeuvre</h3>
-                        <p className="texte">Les cas fonctionnels présentés dans l'application sont :
+                    <p className="texte">Les cas fonctionnels présentés dans l'application sont :
                         </p>
-                        <ul>
-                            <li>Formulaire de recherche/saisie</li>
-                            <li>Présentation du résultat sous forme de tableau éditable ou non</li>
-                            <li>Formulaire étendu</li>
-                            <li>Accordéons</li>
-                            <li>Onglets</li>
-                            <li>Graphiques</li>
-                            <li>...</li>
-                        </ul>
+                    <ul>
+                        <li>Formulaire de recherche/saisie</li>
+                        <li>Présentation du résultat sous forme de tableau éditable ou non</li>
+                        <li>Formulaire étendu</li>
+                        <li>Accordéons</li>
+                        <li>Onglets</li>
+                        <li>Graphiques</li>
+                        <li>...</li>
+                    </ul>
                 </div>
             </div>
         );

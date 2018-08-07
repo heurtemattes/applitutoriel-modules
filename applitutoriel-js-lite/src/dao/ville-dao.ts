@@ -70,23 +70,43 @@
  */
 
 /**
- * applitutoriel-js-batch - Application tutoriel utilisant le Framework hornet
+ * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { injectable } from "hornet-js-core/src/inject/injectable";
-import { HornetSequelizeEntity } from "hornet-js-database/src/sequelize/hornet-sequelize-entity";
+import { Utils } from "hornet-js-utils";
+import { Class } from "hornet-js-utils/src/typescript-utils";
+import { Logger } from "hornet-js-utils/src/logger";
+import { HornetSequelizeEntityAttributes,
+    HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
+import { HornetGenericDAO, Criteria } from "hornet-js-database/src/sequelize/hornet-generic-dao";
 import { inject } from "hornet-js-core/src/inject/inject";
 import { ModelDAO } from "src/dao/model-dao";
+import { injectable } from "hornet-js-core/src/inject/injectable";
+import { HornetSequelizeModel } from "hornet-js-database/src/sequelize/hornet-sequelize-model";
+import Map from "hornet-js-bean/src/decorators/Map";
+import { VilleMetier } from "applitutoriel-js-common/src/models/ref/ref-ville-mod";
+import { VilleAttributes } from "src/models/ref/ref-ville-mod";
+
+const logger: Logger = Utils.getLogger("applitutoriel.src.dao.ville-dao");
 
 @injectable()
-export class EntityDAO extends HornetSequelizeEntity<ModelDAO> {
-
-    constructor(@inject(ModelDAO) modelDAO?: ModelDAO) {
-        super(modelDAO);
+export class VilleDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceModel<VilleAttributes>> {
+    constructor(entity: string = "villeEntity", @inject(ModelDAO) modelDAO?: ModelDAO) {
+        super(modelDAO[entity], modelDAO);
     }
+
+    @Map(VilleMetier)
+    listerVilles(): Promise<VilleMetier[]> {
+        const criteres: Criteria = {
+            include: [{
+                model: this.modelDAO.paysEntity,
+                as: "lePays"}]};
+        return (<any>this).findAllGeneric(criteres);
+    }
+
 }

@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -107,13 +107,13 @@ export default class SecteursRoutes extends AbstractRoutes {
         /* Route des datas */
 
         this.addDataRoute("/(\\d+)",
-            (id) => new DataRouteInfos(ModifierSecteur, {id: id}, Injector.getRegistered(AdministrationSecteurServiceData)),
+            (id) => new DataRouteInfos(ModifierSecteur, { id: id }, Injector.getRegistered(AdministrationSecteurServiceData)),
             Roles.ADMIN,
             "put"
         );
 
         this.addDataRoute("/(\\d+)",
-            (id) => new DataRouteInfos(SupprimerSecteur, {id: id}, Injector.getRegistered(AdministrationSecteurServiceData)),
+            (id) => new DataRouteInfos(SupprimerSecteur, { id: id }, Injector.getRegistered(AdministrationSecteurServiceData)),
             Roles.ADMIN,
             "delete"
         );

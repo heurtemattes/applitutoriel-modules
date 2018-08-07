@@ -59,9 +59,18 @@
     }
   },
   "textarea": {
-    "alertMessage": "Le nombre de caractère renseigné est trop élevé par rapport au nombre maximum ({count}/{maxChar}).",
+    "alertMessage": "Le nombre de caractères renseignés est trop élevé par rapport au nombre maximum ({count}/{maxChar}).",
     "alertTitle": "Nombre de caractères trop élevé",
-    "charLabel": "{count, plural, =1 {1 caractère} other {# caractères}}"
+    "charLabel": "{count, plural, =0 {0 caractère} =1 {1 caractère} other {# caractères}}",
+  },
+  "charsCounter": {
+    "limitLabel": "(limite {maxChar} caractères)"
+  },
+  "inputField": {
+    "messageBtn": "Effacer le champ",
+    "alertMessage": "Le nombre de caractères renseignés est trop élevé par rapport au nombre maximum ({count}/{maxChar}).",
+    "alertTitle":"Nombre de caractères trop élevé",
+    "charLabel":"{count, plural, =0 {0 caractère} =1 {1 caractère} other {# caractères}}"
   },
   "uploadFile": {
     "selectedFile": "{count, plural, =0 {aucun fichier sélectionné } =1 {1 fichier sélectionné} other {# items fichiers sélectionnés}}",
@@ -87,6 +96,7 @@
     "mainMenu": "Menu principal",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
+    "activePage": "page active",
     "shortcuts": {
       "enterSpace": "Entre dans le menu ou le sous menu ou active le lien",
       "escape": "Ferme le menu",
@@ -114,7 +124,8 @@
   },
   "table": {
     "pager": {
-      "dropdownTitle": "Nombre d'élément"
+      "dropdownTitle": "Nombre d'éléments {summary}",
+      "inputLabel": "Numéro de la page affichée du {summary}"
     },
     "menuActions": {
       "title": "Menu d'actions"
@@ -152,10 +163,6 @@
       "csv": "CSV",
       "pdf": "PDF"
     },
-    "firstPage": "|< Début",
-    "prevPage": "< Précédent",
-    "nextPage": "Suivant >",
-    "lastPage": "Fin >|",
     "inputPage": "Saisie de la page à afficher",
     "10": "10",
     "20": "20",
@@ -203,7 +210,11 @@
     "timezoneOffset": 60,
     "firstDayOfWeek": 1,
     "minimalDaysInFirstWeek": 1,
-    "placeHolder": "JJ/MM/AAAA"
+    "placeHolder": "JJ/MM/AAAA",
+    "nextYear": "Année suivante",
+    "previousYear": "Année précédente",
+    "nextMonth": "Mois suivant",
+    "previousMonth": "Mois précédent"
   },
   "changeLanguage": {
     "title": "Changer la langue"
@@ -270,7 +281,7 @@
       "fields": {
         "criteres": {
           "partenaire": {
-            "isClient": {
+            "client": {
               "label": "Type",
               "clientLabel": "Client",
               "fournisseurLabel": "Fournisseur"
@@ -278,7 +289,7 @@
             "typePartenaire": {
               "tooltip": "Type de partenaire"
             },
-            "isVIP": {
+            "vip": {
               "label": "VIP",
               "tooltip": "Les partenaires VIP ne peuvent pas être supprimés",
               "title": "Very Important Person"
@@ -313,6 +324,7 @@
     },
     "tableau": {
       "summary": "Liste des partenaires",
+      "pagerSummary": "résultat de recherche des partenaires",
       "iconConsulter": "Consulter la fiche de {nom} {prenom}",
       "iconEditer": "Editer la fiche de {nom} {prenom}",
       "iconSupprimer": "Supprimer la fiche de {nom} {prenom}",
@@ -427,12 +439,12 @@
       "sectionDivers": "Divers",
       "sectionSatisfactionClient": "Satisfaction client",
       "fields": {
-        "isClient": {
+        "client": {
           "label": "Type de partenaire",
           "clientLabel": "Client",
           "fournisseurLabel": "Fournisseur"
         },
-        "isVIP": {
+        "vip": {
           "label": "VIP",
           "tooltip": "Les partenaires VIP ne peuvent pas être supprimés",
           "title": "Very Important Person"
@@ -488,19 +500,19 @@
           "label": "Fonction"
         },
         "proTelFixe": {
-          "label": "Téléphone fixe",
+          "label": "Téléphone fixe (format xxxxxxxxxx ou +(xx)xxxxxxxxxx)",
           "tooltip": "Exemples valides : '0240506070', '+(33)240506070'",
           "pattern": "Le format du champ « Téléphone fixe » est incorrect. Exemples valides : '0240506070', '+(33)240506070'",
           "format": "Le format du champ « Téléphone fixe » est incorrect. Exemples valides : '0240506070', '+(33)240506070'"
         },
         "proTelPort": {
-          "label": "Téléphone portable",
+          "label": "Téléphone portable (format xxxxxxxxxx ou +(xx)xxxxxxxxxx)",
           "tooltip": "Exemples valides : '0240506070', '+(33)240506070'",
           "pattern": "Le format du champ « Téléphone portable » est incorrect. Exemples valides : '0240506070', '+(33)240506070'",
           "format": "Le format du champ « Téléphone portable » est incorrect. Exemples valides : '0240506070', '+(33)240506070'"
         },
         "autreTel": {
-          "label": "Autre Tel.",
+          "label": "Autre Tel. (format xxxxxxxxxx ou +(xx)xxxxxxxxxx)",
           "placeholder": "Ceci est un exemple d'utilisation. Les données ne sont pas enregistrées.",
           "tooltip": "Exemples valides : '0240506070', '+(33)240506070'",
           "invalid1": "Le format du champ « Autre téléphone, à la ligne {complement} ",
@@ -509,15 +521,15 @@
           "pattern": "Le format du champ « Autre téléphone, à la ligne {complement} » est incorrect. Exemples valides : '0240506070', '+(33)240506070'"
         },
         "proCourriel": {
-          "label": "Courriel pro (format attendu: nom@example.com)",
+          "label": "Courriel pro (format attendu : nom@example.com)",
           "toolTip": "Courriel utilisé pour les invitations.",
           "minLength": "Le champ « Courriel pro » doit contenir au moins 3 caractères.",
           "required": "Le champ « Courriel pro » est obligatoire. Veuillez saisir ce champ.",
-          "pattern": "Le format du champ « Courriel pro » est incorrect (format attendu: nom@example.com)",
-          "format": "Le format du champ « Courriel pro » est incorrect (format attendu: nom@example.com)"
+          "pattern": "Le format du champ « Courriel pro » est incorrect (format attendu : nom@example.com)",
+          "format": "Le format du champ « Courriel pro » est incorrect (format attendu : nom@example.com)"
         },
         "proFax": {
-          "label": "Fax",
+          "label": "Fax (format xxxxxxxxxx ou +(xx)xxxxxxxxxx)",
           "tooltip": "Exemples valides : '0240506070', '+(33)240506070'",
           "invalid": "Le format du champ « Fax » est incorrect. Exemples valides : '0240506070', '+(33)240506070'",
           "pattern": "Le format du champ « Fax » est incorrect. Exemples valides : '0240506070', '+(33)240506070'",
@@ -560,17 +572,17 @@
           "label": "Prénom"
         },
         "assistTel": {
-          "label": "Téléphone",
+          "label": "Téléphone (format xxxxxxxxxx ou +(xx)xxxxxxxxxx)",
           "tooltip": "Exemples valides : '0240506070', '+(33)240506070'",
           "invalid": "Le format du champ « Téléphone Assistant » est incorrect.",
           "pattern": "Le format du champ « Téléphone Assistant » est incorrect. Exemples valides : '0240506070', '+(33)240506070'",
           "format": "Le format du champ « Téléphone Assistant » est incorrect. Exemples valides : '0240506070', '+(33)240506070'"
         },
         "assistCourriel": {
-          "label": "Courriel (format attendu: nom@example.com)",
-          "emailInvalid": "Le format du champ « Courriel des coordonnées assistant » est incorrect. (format attendu: nom@example.com)",
-          "pattern": "Le format du champ « Courriel des coordonnées assistant » est incorrect. (format attendu: nom@example.com)",
-          "format": "Le format du champ « Courriel des coordonnées assistant » est incorrect. (format attendu: nom@example.com)"
+          "label": "Courriel (format attendu : nom@example.com)",
+          "emailInvalid": "Le format du champ « Courriel des coordonnées assistant » est incorrect. (format attendu : nom@example.com)",
+          "pattern": "Le format du champ « Courriel des coordonnées assistant » est incorrect. (format attendu : nom@example.com)",
+          "format": "Le format du champ « Courriel des coordonnées assistant » est incorrect. (format attendu : nom@example.com)"
         },
         "photo": {
           "label": "Photo de l'individu",
@@ -588,7 +600,7 @@
           }
         },
         "commentaire": {
-          "label": "Commentaire (limite 255 caractères).",
+          "label": "Commentaire",
           "maxLength": "Le champ « Commentaire » excède {limit} caractères. Veuillez corriger la saisie de ce champ.",
           "placeHolder": "Veuillez saisir un commentaire"
         },
@@ -651,7 +663,7 @@
         "mail": {
           "label": "Mail",
           "required": "Le champ « Email » est obligatoire. Veuillez saisir ce champ.",
-          "format": "Le format du champ « Email » est incorrect (format attendu: nom@example.com)"
+          "format": "Le format du champ « Email » est incorrect (format attendu : nom@example.com)"
         },
         "message": {
           "label": "Message",
@@ -663,63 +675,6 @@
     },
     "mailTemplate": "${content} \n\n Nom: ${name} \n Prénom: ${firstname} \n Mail: ${mail}",
     "subject": "Contact depuis l'application"
-  },
-  "administration": {
-    "secteurs": {
-      "titreSecteur": "Liste des secteurs",
-      "table": {
-        "tableTitle": "Administration des secteurs",
-        "captionText": "Liste des secteurs avec fonctionnalités d'ajout/modification/suppression d'un secteur, de trier les secteurs",
-        "emptyResult": "Aucun secteur présent",
-        "addTitle": "Ajouter un secteur",
-        "sortMultiTitle": "Tri multicolonne par date de création décroissant en premier et ensuite par auteur croissant."
-      },
-      "nom": "Nom",
-      "description": "Description",
-      "dateCr": "Date de création",
-      "dateMaj": "Date de mise à jour",
-      "auteur": "Auteur de la création",
-      "quickUpdate": "Edition rapide",
-      "quickUpdateTitle": "Modification rapide du secteur {nom}",
-      "modification": "Modification",
-      "modificationTitle": "Modification du secteur {nom}",
-      "suppression": "Suppression",
-      "suppressionAlt": "Suppression du {desc}",
-      "confirmationSuppression": "Etes-vous sûr(e) de vouloir supprimer ce secteur ?",
-      "confirmationAnnulationAction": "Etes-vous sûr(e) de vouloir annuler l'action en cours ?",
-      "suppression": "Suppression",
-      "editionRapide": "Edition rapide",
-      "editer": "Editer",
-      "enregistrer": "Enregistrer",
-      "annuler": "Annuler",
-      "suppressionTitle": "Suppression de secteur",
-      "annulationTitle": "Annulation",
-      "form": {
-        "nomRequired": "Le champ « Nom » est obligatoire. Veuillez saisir ce champ.",
-        "descRequired": "Le champ « Description » est obligatoire. Veuillez saisir ce champ.",
-        "dateRequired": "Le champ « Date de mise à jour » est obligatoire. Veuillez saisir ce champ.",
-        "fields": {
-          "desc": {
-            "label": "Description",
-            "required": "Le champ « Description » est obligatoire. Veuillez saisir ce champ.",
-            "maxLength": "Le champ « Description » est limité à 200 caractères. Veuillez corriger votre saisie."
-          },
-          "nom": {
-            "label": "Nom",
-            "required": "Le champ « Nom » est obligatoire. Veuillez saisir ce champ.",
-            "maxLength": "Le champ « Nom » est limité à 50 caractères. Veuillez corriger votre saisie."
-          }
-        },
-        "validTitle": "Validation de la saisie du secteur",
-        "cancelTitle": "Annulation de la saisie du secteur"
-      }
-    },
-    "modification": "Modification d'un secteur",
-    "ajout": "Ajout d'un secteur",
-    "closeModification": "Abandonner la modification d'un secteur",
-    "closeAjout": "Abandonner l'ajout d'un secteur",
-    "validTitle": "Ajout d'un secteur",
-    "cancelTitle": "Annulation de l'ajout d'un secteur"
   },
   "error": {
     "message": {
@@ -757,7 +712,7 @@
       "ER-PA-RPA-04": "Erreur dans l'action : supprimerEnMasse pour partenaire",
       "ER-PA-RPA-05": "Erreur dans l'action : export pour partenaire",
       "ER-PA-RPA-06": "Erreur dans l'action : preparerExport pour partenaire",
-      "ER-PA-RPA-07": "Le partenaire « {$0} {$1} » n'a pas été supprimé.",
+      "ER-PA-RPA-07": "Le partenaire « {$0} {$1} » n'a pas été supprimé : Impossible de supprimer un partenaire VIP.",
       "ER-CL-CLI-01": "Une erreur technique est survenue: {error}",
       "ERR-CODE-MAIL-001": "Un problème réseau (erreur SMTP) est survenu lors de l'envoi de mail"
     }

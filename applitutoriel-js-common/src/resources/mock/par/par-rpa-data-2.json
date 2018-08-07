@@ -13,7 +13,7 @@
     },
     "listeCriteres": {
       "partenaire": {
-        "isClient": true
+        "client": true
       },
       "startDate": "2015-03-25T00:00:00.000Z"
     },
@@ -24,7 +24,7 @@
         "prenom": "Jeanne",
         "proCourriel": "jeanne.dupont@email.com",
         "organisme": null,
-        "isVIP": false,
+        "vip": false,
         "dateModif": 1504216800000
       },
       {
@@ -33,7 +33,7 @@
         "prenom": "Jacques",
         "proCourriel": "jacques.dupont@orange.net",
         "organisme": "Organisme 1",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -60,7 +60,7 @@
         "prenom": "Albert",
         "proCourriel": "albert.durand@gmail.com",
         "organisme": "Organisme 4",
-        "isVIP": false,
+        "vip": false,
         "dateModif": 1503570948886
       },
       {
@@ -69,7 +69,7 @@
         "prenom": "Vincent",
         "proCourriel": "vincent.jack@hotmail.com",
         "organisme": "Organisme 5",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -96,7 +96,7 @@
         "prenom": "Jean",
         "proCourriel": "jean.jean@hotmail.com",
         "organisme": "Organisme 3",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -123,7 +123,7 @@
         "prenom": "Max",
         "proCourriel": "max.jean@orange.net",
         "organisme": "Organisme 3",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -150,7 +150,7 @@
         "prenom": "Matthieu",
         "proCourriel": "matthieu.jean@bouygues.net",
         "organisme": "Organisme 4",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -177,7 +177,7 @@
         "prenom": "Jean-Paul",
         "proCourriel": "jean-paul.kiven@live.fr",
         "organisme": "Organisme 1",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -204,7 +204,7 @@
         "prenom": "Jacques",
         "proCourriel": "jacques.kiven@gmail.com",
         "organisme": "Organisme 5",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -231,7 +231,7 @@
         "prenom": "Jules",
         "proCourriel": "jules.martin@gmail.com",
         "organisme": "Organisme 4",
-        "isVIP": false,
+        "vip": false,
         "dateModif": 1503570948879
       }
     ]

@@ -455,8 +455,10 @@ Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais 
   }
 ```
 
-### Configuration de Request
+### Configuration du Request
 #### Configuration du Cache
+
+La gestion du cache est paramétrable côté client et serveur pour les requêtes.
 
 | Paramètre | Description | Valeur |
 |-----------|-------------|--------|
@@ -466,8 +468,28 @@ Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais 
 ```json
 "request": {
     "cache": {
-        "enabled": true,
+      "client": {
+        "enabled": false,
         "timetolive": 60
+      },
+      "server": {
+        "enabled": false,
+        "timetolive": 120
       }
-  }
+    }
+```
+
+#### Configuration du timeout
+
+| Paramètre | Description | Valeur |
+|-----------|-------------|--------|
+|response   | Attend 10 secondes le debut de la réponse du serveur, avant de déclencher le timeOut | &nbsp; |
+|deadline   | Le serveur doit répondre en moins 60 secondes avant de déclencher le timeOut      | &nbsp; |
+
+```json
+"request": {
+    "timeout": {
+      "response": 10000,
+      "deadline": 60000
+    }
 ```

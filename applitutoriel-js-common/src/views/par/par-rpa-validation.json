@@ -19,11 +19,11 @@
           "title": "Critères concernant le partenaire",
           "type": "object",
           "properties": {
-            "isClient": {
+            "client": {
               "description": "Indique si le partenaire est client (true) ou fournisseur (false) ",
               "type": "boolean"
             },
-            "isVIP": {
+            "vip": {
               "description": "Indique si le partenaire est VIP",
               "type": "boolean"
             }

@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -160,17 +160,17 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
                 }
 
                 /*maj tableau de produits*/
-                if (!products ||  Array.isArray(products) && products.length == 0) {
+                if (!products || Array.isArray(products) && products.length == 0) {
                     products = [];
                     for (let i: number = 1; i < 50; i++) {
-                        products.push({nom: "dummy" + i, desc: "dummyDesc" + i} as ProduitMetier);
+                        products.push({ nom: "dummy" + i, desc: "dummyDesc" + i } as ProduitMetier);
                     }
                 }
                 this.dataSourceNationalite.init(null);
                 this.dataSourceProduits.deleteAll();
                 this.dataSourceProduits.add(true, products);
                 this.identiteTab.handleIsVIPChange();
-                this.identiteTab.selectIntoIsClientDataSource(result.partenaire.isClient);
+                this.identiteTab.selectIntoIsClientDataSource(result.partenaire.client);
             });
         }
     }
@@ -203,7 +203,7 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
             if (!products || Array.isArray(products) && products.length == 0) {
                 products = [];
                 for (let i: number = 1; i < 50; i++) {
-                    products.push({nom: "dummy" + i, desc: "dummyDesc" + i} as ProduitMetier);
+                    products.push({ nom: "dummy" + i, desc: "dummyDesc" + i } as ProduitMetier);
                 }
             }
             this.dataSourceNationalite.init(null);
@@ -211,7 +211,7 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
             this.identiteTab.setPays(result.pays);
             this.identiteTab.setVilles(result.villes);
             this.identiteTab.handleIsVIPChange();
-            this.identiteTab.selectIntoIsClientDataSource(result.partenaire.isClient);
+            this.identiteTab.selectIntoIsClientDataSource(result.partenaire.client);
 
         }).catch((error) => {
             logger.warn(error.message);
@@ -230,17 +230,17 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
                 }} title={this.i18n("partenaireFichePage.titre", {
                     nom: "",
                     prenom: ""
-                }) + this.i18n("partenaireFichePage.suffixeCreation")}/>
-                <br/>
+                }) + this.i18n("partenaireFichePage.suffixeCreation")} />
+                <br />
 
                 <Tabs ref={(tabs) => {
                     this.tabs = tabs
                 }} id="tabsPartenaire" selectedTabIndex={0}
-                      addTabFunction={this.addTab}
-                      deleteTabFunction={this.removeTab}
+                    addTabFunction={this.addTab}
+                    deleteTabFunction={this.removeTab}
                 >
                     <Tab id="tab1" onSelect={this.onSelect}
-                         title={this.i18n("partenaireFichePage.ongletIdentiteTitre")}
+                        title={this.i18n("partenaireFichePage.ongletIdentiteTitre")}
                     >
                         <IdentiteTab
                             ref={(tab) => {
@@ -252,29 +252,29 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
                             pageAttributes={{
                                 id: this.attributes.id,
                                 mode: this.attributes.mode,
-                                isVIP: ((this.props.navigateData && this.props.navigateData.isVIP) || false)
-                            }}/>
+                                vip: ((this.props.navigateData && this.props.navigateData.vip) || false)
+                            }} />
                     </Tab>
                     <Tab id="tab2" title={this.i18n("partenaireFichePage.ongletListeProduitTitre")}
-                         onSelect={this.onSelect}>
-                        <ProduitsTab dataSource={this.dataSourceProduits}/>
+                        onSelect={this.onSelect}>
+                        <ProduitsTab dataSource={this.dataSourceProduits} />
                     </Tab>
 
                     <Tab id="tab3" title={this.i18n("partenaireFichePage.ongletListeSecteursTitre")}
-                         isDeletable={true}
-                         mount={false}
-                         onSelect={this.onSelect}
-                         onClick={this.loadAsyncTab}>
-                        <SecteursTab dataSource={this.dataSourceSecteurs}/>
+                        isDeletable={true}
+                        mount={false}
+                        onSelect={this.onSelect}
+                        onClick={this.loadAsyncTab}>
+                        <SecteursTab dataSource={this.dataSourceSecteurs} />
                     </Tab>
                     {/*{this.attributes.mode != "consulter" ?*/}
-                        {/*<Tab id="tab4" mount={false} onClick={this.addTab}>*/}
+                    {/*<Tab id="tab4" mount={false} onClick={this.addTab}>*/}
 
 
-                            {/*<TabHeader>*/}
-                                {/*<a href={"#"} title={"Ajouter un onglet 'Produit'"} onClick={this.addTab}>+</a>*/}
-                            {/*</TabHeader>*/}
-                        {/*</Tab> : <div/>}*/}
+                    {/*<TabHeader>*/}
+                    {/*<a href={"#"} title={"Ajouter un onglet 'Produit'"} onClick={this.addTab}>+</a>*/}
+                    {/*</TabHeader>*/}
+                    {/*</Tab> : <div/>}*/}
                 </Tabs>
             </div>
         );
@@ -313,13 +313,13 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
         };
 
         this.tabs.addElements(this.tabs.getTabsNumber(), <Tab id={index} isDeletable={true}
-                                                              deleteTabFunction={this.removeNewTab.bind(index)}>
+            deleteTabFunction={this.removeNewTab.bind(index)}>
             <TabHeader>
                 <div className={"onglet-secteur-header-title"}>{"New Produits " + this.tabAddedNumber}</div>
             </TabHeader>
             <TabContent>
                 <div aria-live={"polite"}>
-                    <ProduitsTab dataSource={this.dataSourceProduits}/>
+                    <ProduitsTab dataSource={this.dataSourceProduits} />
                 </div>
             </TabContent>
         </Tab>, cb);
@@ -384,6 +384,14 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
     private onSubmit(partenaireData: any): void {
         logger.trace("Submit du formulaire fiche partenaire");
         if (this.attributes.mode == PAR_MODE_CREER || this.attributes.mode == PAR_MODE_EDITER) {
+            if (this.attributes.mode == PAR_MODE_EDITER && partenaireData.photo && partenaireData.photo.id && (partenaireData.photo.data == null)) {
+                if (this.identiteTab.partenaire.photo.data && this.identiteTab.partenaire.photo.data.data) {
+                    partenaireData.photo = this.identiteTab.partenaire.photo
+                    partenaireData.photo.data = this.identiteTab.partenaire.photo.data.data
+                } else {
+                    partenaireData.photo = this.identiteTab.partenaire.photo
+                }
+            }
             this.getService().modifier(this.attributes.id, partenaireData, (event) => {
                 logger.trace(event);
             }).then(() => {
@@ -403,7 +411,7 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
                         NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
                     });
                 } else {
-                    this.navigateTo(URL_PARTENAIRES, {criteres: criteres}, () => {
+                    this.navigateTo(URL_PARTENAIRES, { criteres: criteres }, () => {
                         NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
                     });
                 }
@@ -420,7 +428,7 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
         let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : {};
 
         let url = "/partenaires";
-        this.navigateTo(url, {criteres: criteres, dataSource: dataSource}, null);
+        this.navigateTo(url, { criteres: criteres, dataSource: dataSource }, null);
     }
 
 }

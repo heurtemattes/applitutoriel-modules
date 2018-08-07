@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -100,7 +100,7 @@ export class ContactServiceDataImpl extends ServiceRequest implements ContactSer
      * Envoie d'un message sur contacts
      * @param {object} data message à envoyer
      */
-    envoyer(data:any) : Promise<any> {
+    envoyer(data: any): Promise<any> {
         logger.trace("SERVICES - send : ", data);
 
         let valuesToWriteIntoMessage = {
@@ -110,7 +110,7 @@ export class ContactServiceDataImpl extends ServiceRequest implements ContactSer
             content: data.message
         };
 
-        let templatedMessage: string = new Template(HornetComponent.getI18n("contactPage.mailTemplate")).process(valuesToWriteIntoMessage, "?");
+        let templatedMessage = new Template(HornetComponent.getI18n("contactPage.mailTemplate")).process(valuesToWriteIntoMessage, "?");
 
         let mailToSend: NodeMailerMessage = {
             from: Utils.config.getOrDefault("mail.mailSender", undefined),
@@ -121,9 +121,9 @@ export class ContactServiceDataImpl extends ServiceRequest implements ContactSer
 
         return new Promise<any>((resolve) => {
             return Mailer.sendMail(mailToSend, Utils.config.getOrDefault("mail.config", undefined)).then((result) => {
-                resolve({resolve: result});
+                resolve({ resolve: result });
             }).catch((error) => {
-                resolve({errors: error});
+                resolve({ errors: error });
             });
         });
     }

@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -110,19 +110,19 @@ import "src/injector-context-services-page";
                 strict: false,
                 convert_hash_in_init: false,
                 recurse: false,
-                notfound: function() {
+                notfound: function () {
                     logger.error("Erreur. Cette route n'existe pas :'" + this.path + "'");
                 }
             },
-            onbeforeunload:function() {
+            onbeforeunload: function () {
                 logger.trace(Utils.getCls("hornet.navigateData"));
-                if(Utils.getCls("hornet.navigateData") && !_.isUndefined(Utils.getCls("hornet.navigateData"))) {
+                if (Utils.getCls("hornet.navigateData") && !_.isUndefined(Utils.getCls("hornet.navigateData"))) {
                     window.localStorage.setItem("hornet.navigateData", JSON.stringify(Utils.getCls("hornet.navigateData")));
                 }
             },
-            onload: function() {
-                if(window.localStorage.getItem("hornet.navigateData")) {
-                    window.HornetCLS["hornet.navigateData"] = JSON.parse(window.localStorage.getItem("hornet.navigateData"));
+            onload: function () {
+                if (window.localStorage.getItem("hornet.navigateData")) {
+                    window.HornetCLS[ "hornet.navigateData" ] = JSON.parse(window.localStorage.getItem("hornet.navigateData"));
                     window.localStorage.removeItem("hornet.navigateData");
                 }
             }
@@ -130,14 +130,14 @@ import "src/injector-context-services-page";
 
         // On supprime le spinner de chargement de l'application
         // Cela ne gêne pas React car il est en dehors de sa div "app"
-        let readyCallback = function() {
+        let readyCallback = function () {
             var appLoading = document.getElementById("firstLoadingSpinner");
             if (appLoading) {
                 appLoading.parentNode.removeChild(appLoading);
             }
         };
 
-        let clientInit:ReactClientInitializer = new ReactClientInitializer(configClient.appComponent, readyCallback);
+        let clientInit: ReactClientInitializer = new ReactClientInitializer(configClient.appComponent, readyCallback);
 
         Client.initAndStart(configClient, clientInit);
     } catch (exc) {

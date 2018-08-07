@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -90,7 +90,7 @@ import { PartenaireResult } from "applitutoriel-js-common/src/services/type/par/
 import * as tableauDePartenaires from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data.json";
 import * as villes from "applitutoriel-js-common/src/resources/mock/par/par-rpa-villes.json";
 import * as pays from "applitutoriel-js-common/src/resources/mock/par/par-pays-data.json";
-import {ReferentielPaysService} from "src/services/data/ref/ref-pays-service";
+import { ReferentielPaysService } from "src/services/data/ref/ref-pays-service";
 import { Promise } from "hornet-js-utils/src/promise-api";
 const logger: Logger = Utils.getLogger("applitutoriel-js-common.mock.services.data.par.fiche-partenaire-service-data-mock-impl");
 
@@ -120,14 +120,14 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
 
         let idPartenaire: number = parseInt((<any>id), 10);
         logger.debug("Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let partenaire: PartenaireResult = _.find((<any> tableauDePartenaires).data.liste, (item: PartenaireResult) => {
+        let partenaire: PartenaireResult = _.find((<any>tableauDePartenaires).data.liste, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;
             }
         });
 
-        partenaire["ZMOCK"] = true;
+        partenaire[ "ZMOCK" ] = true;
 
         return Promise.resolve(partenaire);
 
@@ -140,7 +140,7 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
     getFormData(): Promise<any> {
         return this.paysService.listerVilles().then((villes: any) => {
             return this.paysService.listerPays().then((pays: any) => {
-                return Promise.resolve({villes: villes, pays: pays});
+                return Promise.resolve({ villes: villes, pays: pays });
             });
         });
     }
@@ -166,10 +166,10 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
      */
     modifier(id: number, partenaire: any): Promise<any> {
 
-        let request: HornetRequest = {method: "put", url: this.buildUrl(URL_PARTENAIRES) + "/" + id};
+        let request: HornetRequest = { method: "put", url: this.buildUrl(URL_PARTENAIRES) + "/" + id };
 
         if (!id) {
-            request = {method: "post", url: this.buildUrl(URL_PARTENAIRES)};
+            request = { method: "post", url: this.buildUrl(URL_PARTENAIRES) };
         }
 
         if (Utils.isServer) {
@@ -188,7 +188,7 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
                 // De plus, si on essaye quand même de l'attacher dans la requête alors que ce n'est pas un fichier,
                 // firefox plante (Argument 2 of FormData.append does not implement interface Blob)
                 request.attach = [];
-                request.attach.push({field: "photo", file: partenaire.photo, fileName: partenaire.photo.name});
+                request.attach.push({ field: "photo", file: partenaire.photo, fileName: partenaire.photo.name });
             }
         }
         return this.fetch(request);
@@ -201,7 +201,7 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
      */
     lirePhoto(id: number, res?: NodeJS.WritableStream): Promise<any> {
         logger.trace("SERVICES - lirePhoto : ", id);
-        let request: HornetRequest = {method: "get", url: this.buildUrl(URL_PARTENAIRES + "/" + id + URL_PAR_PHOTO)};
+        let request: HornetRequest = { method: "get", url: this.buildUrl(URL_PARTENAIRES + "/" + id + URL_PAR_PHOTO) };
         return (res) ? this.fetchOnStream(request, res) : this.fetch(request);
     }
 
@@ -213,7 +213,7 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
     protected convertBufferToArray(buff: any): any {
         var buffer = buff;
         if (buff !== undefined && Buffer.isBuffer(buff)) {
-            buffer = new Buffer(buff).toJSON();
+            buffer = Buffer.from(buff).toJSON();
         }
         return buffer;
     }

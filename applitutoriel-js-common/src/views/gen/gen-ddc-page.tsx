@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -106,7 +106,7 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             conformément à la règlementation.
                             Cette page est obligatoire pour être conforme au RGAA 3.0. Pour des aides relatives à la
                             navigation et aux aménagements particuliers du site,
-                            <a href={this.genUrl("/politiqueAccessibilite")}>visitez la page accessibilité</a>.</p>
+                            <a href={this.genUrl("/aide")}>visitez la page d'aide</a>.</p>
 
                         <p className="texte">La déclaration de conformité du site http://www.url-de-applicationweb a été
                             établie le jj/mm/aaaa.</p>
@@ -120,12 +120,12 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
 
                         <h3>Identité du déclarant</h3>
                         <p className="texte">
-                            Ministère des Affaires Etrangères et du Développement International<br/>
-                            Direction des Systèmes d'Information<br/>
-                            11 r Maison Blanche<br/>
-                            44100 NANTES<br/>
-                            Téléphone :+33 8 26 08 06 04<br/>
-                            Télécopie :+33 2 51 77 36 99<br/>
+                            Ministère des Affaires Etrangères et du Développement International<br />
+                            Direction des Systèmes d'Information<br />
+                            11 r Maison Blanche<br />
+                            44100 NANTES<br />
+                            Téléphone :+33 8 26 08 06 04<br />
+                            Télécopie :+33 2 51 77 36 99<br />
                             Courriel : <a href="mailto:sebastien.heurtematte@diplomatie.gouv.fr">Sébastien
                             Heurtematte</a></p>
 
@@ -159,19 +159,19 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             </tr>
                             <tr>
                                 <th scope="row">Firefox</th>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")}/></td>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")}/></td>
+                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
+                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
 
                             </tr>
                             <tr>
                                 <th scope="row">Chrome</th>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")}/></td>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")}/></td>
+                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
+                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Internet Explorer</th>
-                                <td><img alt="non conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_annuler.svg")}/></td>
-                                <td><img alt="non conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_annuler.svg")}/></td>
+                                <td><img alt="non conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_annuler.svg")} /></td>
+                                <td><img alt="non conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_annuler.svg")} /></td>
 
                             </tr>
                         </table>
@@ -237,9 +237,9 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             <h3>Critères de validation</h3>
                             <p className="texte">
                                 Pour appliquer au mieux l’accessibilité sur le site, 13 critères de succès du <a
-                                href="https://references.modernisation.gouv.fr/sites/default/files/RGAA3_RC2-1/referentiel_technique.htm"
-                                target="_blank"
-                                title="Référentiel Général d'Accessibilté pour les Administrations | nouvelle fenêtre">Référentiel
+                                    href="https://references.modernisation.gouv.fr/sites/default/files/RGAA3_RC2-1/referentiel_technique.htm"
+                                    target="_blank"
+                                    title="Référentiel Général d'Accessibilté pour les Administrations | nouvelle fenêtre">Référentiel
                                 Général d'Accessibilté pour les Administrations</a> ont été appliqué. Les voici :
                             </p>
                             <ul>
@@ -265,6 +265,7 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             <li>Page d'accueil</li>
                             <li>Page contact</li>
                             <li>Page d'aide</li>
+                            <li>Page de recherche d'un partenaire</li>
                             <li>Page édition d'un partenaire</li>
                             <li>Page liste des secteurs</li>
                         </ul>
@@ -302,7 +303,7 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                         <p className="texte">
                             Vous pouvez nous aider à améliorer l'accessibilité du site en nous signalant les problèmes
                             éventuels que vous rencontrez. Pour ce faire, envoyez-nous un courriel via la page <a
-                            href={this.genUrl("/contact")}>contact</a>.</p>
+                                href={this.genUrl("/contact")}>contact</a>.</p>
 
 
                         <h3>Défenseur des droits</h3>
@@ -313,9 +314,9 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             une réponse rapide de notre part, vous êtes en droit de faire parvenir vos doléances ou
                             demande de saisine à :</p>
 
-                        <p className="texte">Le défenseur des droits<br/>
-                            7 rue Saint-Florentin 75409 Paris cedex 08<br/>
-                            Téléphone : 09 69 39 00 00<br/></p>
+                        <p className="texte">Le défenseur des droits<br />
+                            7 rue Saint-Florentin 75409 Paris cedex 08<br />
+                            Téléphone : 09 69 39 00 00<br /></p>
 
                         <p className="texte">Contacter le défenseur des droits <a
                             href="http://www.defenseurdesdroits.fr/contact" target="_blank"

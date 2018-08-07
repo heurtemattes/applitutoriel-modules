@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -104,7 +104,7 @@ const logger: Logger = Utils.getLogger("applitutoriel.views.cnt.gen-cnt-page");
 export class ContactPage extends HornetPage<ContactService, HornetComponentProps, any> {
 
     private formI18n = this.i18n("contactPage.form");
-    
+
     constructor(props?: HornetComponentProps, context?: any) {
         super(props, context);
     }
@@ -124,7 +124,7 @@ export class ContactPage extends HornetPage<ContactService, HornetComponentProps
     onSubmit(data: any) {
         this.getService().envoyer(data).then((result) => {
             if (!result.errors) {
-                NotificationManager.notify(null, "contactForm",null, Notifications.makeSingleNotification("", this.i18n("info.message.IN-GE-CNT-01")));
+                NotificationManager.notify(null, "contactForm", null, Notifications.makeSingleNotification("", this.i18n("info.message.IN-GE-CNT-01")));
             } else {
                 let errors: Notifications = new Notifications();
                 let notif = new NotificationType();
@@ -143,7 +143,7 @@ export class ContactPage extends HornetPage<ContactService, HornetComponentProps
         return (
             <div>
                 <h2>{this.i18n("contactPage.title")}</h2>
-                <Notification id="notif"/>
+                <Notification id="notif" />
                 <Form
                     id="contactForm"
                     schema={schema}
@@ -153,31 +153,31 @@ export class ContactPage extends HornetPage<ContactService, HornetComponentProps
 
                     <Row className="row">
                         <InputField name="nom"
-                                    label={this.formI18n.fields.nom.label}
-                                    required={true}/>
+                            label={this.formI18n.fields.nom.label}
+                            required={true} />
                     </Row>
                     <Row>
                         <InputField name="prenom"
-                                    label={this.formI18n.fields.prenom.label}
-                                    required={true}/>
+                            label={this.formI18n.fields.prenom.label}
+                            required={true} />
                     </Row>
                     <Row>
                         <InputField name="mail"
-                                    label={this.formI18n.fields.mail.label}
-                                    required={true}/>
+                            label={this.formI18n.fields.mail.label}
+                            required={true} />
                     </Row>
                     <Row>
                         <TextAreaField name="message"
-                                       label={this.formI18n.fields.message.label}
-                                       required={true}
-                                       cols={60}
-                                       rows={6}
+                            label={this.formI18n.fields.message.label}
+                            required={true}
+                            cols={60}
+                            rows={6}
                         />
                     </Row>
                     <ButtonsArea>
                         <Button type="submit" id="envoi" name="action:envoi"
-                                value="Valider" className="hornet-button" label={this.i18n("form.valid")}
-                                title={this.i18n("contactPage.form.validTitle")}/>
+                            value="Valider" className="hornet-button" label={this.i18n("form.valid")}
+                            title={this.i18n("contactPage.form.validTitle")} />
                     </ButtonsArea>
                 </Form>
             </div>

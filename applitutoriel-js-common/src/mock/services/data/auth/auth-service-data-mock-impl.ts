@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -93,11 +93,11 @@ const logger: Logger = Utils.getLogger("applitutoriel-js-common.mock.services.da
 const users = [
     {
         "name": "test",
-        "roles": [ { "id": 2, "name": "APPLI_TUTO_USER" }]
+        "roles": [ { "id": 2, "name": "APPLI_TUTO_USER" } ]
     },
     {
         "name": "admin",
-        "roles": [ { "id": 1, "name": "APPLI_TUTO_ADMIN" }, { "id": 2, "name": "APPLI_TUTO_USER" }]
+        "roles": [ { "id": 1, "name": "APPLI_TUTO_ADMIN" }, { "id": 2, "name": "APPLI_TUTO_USER" } ]
     }
 ];
 
@@ -124,6 +124,12 @@ export class AuthServiceDataMockImpl extends AuthService {
      * @param {object} data
      */
     auth(data): Promise<any> {
+        logger.trace("SERVICES MOCK - auth", data);
+        let user = findByUsername(data.login);
+        return Promise.resolve(user);
+    }
+
+    generateToken(data): Promise<any> {
         logger.trace("SERVICES MOCK - auth", data);
         let user = findByUsername(data.login);
         return Promise.resolve(user);

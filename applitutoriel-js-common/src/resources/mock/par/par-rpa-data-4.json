@@ -13,7 +13,7 @@
     },
     "listeCriteres": {
       "partenaire": {
-        "isClient": true
+        "client": true
       },
       "startDate": "2015-03-25T00:00:00.000Z"
     },
@@ -24,7 +24,7 @@
         "prenom": "Sylvestre",
         "proCourriel": "sylvestre.tadio@orange.net",
         "organisme": "Organisme 1",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -51,7 +51,7 @@
         "prenom": "Jean",
         "proCourriel": "jean.tadio@free.fr",
         "organisme": "Organisme 2",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",

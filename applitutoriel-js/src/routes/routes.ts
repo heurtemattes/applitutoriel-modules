@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -94,12 +94,16 @@ import { AccessibilitePage } from "applitutoriel-js-common/src/views/gen/gen-acb
 import { DeclarationconformitePage } from "applitutoriel-js-common/src/views/gen/gen-ddc-page";
 import { NotFoundPage } from "applitutoriel-js-common/src/views/gen/gen-nfe-page";
 
-
 export class Routes extends AbstractRoutes {
     constructor() {
         super();
 
         /* Routes des pages */
+        this.addPageRoute("/",
+            () => new PageRouteInfos(HomePage),
+            PUBLIC_ROUTE
+        );
+
         this.addPageRoute("/accueil",
             () => new PageRouteInfos(HomePage),
             PUBLIC_ROUTE

@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -82,7 +82,7 @@ import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-utils/src/logger";
 import { ServiceRequest } from "hornet-js-core/src/services/service-request";
 import { URL_CONTACT, URL_CONTACT_ENVOYER } from "applitutoriel-js-common/src/utils/urls";
-import {ContactService} from "applitutoriel-js-common/src/services/page/cnt/contact-service-page";
+import { ContactService } from "applitutoriel-js-common/src/services/page/cnt/contact-service-page";
 
 const logger: Logger = Utils.getLogger("applitutoriel.services.gen.contact-service-page");
 
@@ -93,17 +93,17 @@ const logger: Logger = Utils.getLogger("applitutoriel.services.gen.contact-servi
  * @extends {ServiceApi}
  */
 export class ContactServiceImpl extends ServiceRequest implements ContactService {
-    
+
     /**
      * Envoie d'un message sur contacts
      * @param {object} data message à envoyer
      */
-    envoyer(data:any) : Promise<any> {
+    envoyer(data: any): Promise<any> {
         logger.trace("SERVICES - send : ", data);
 
         return this.fetch({
-            method : "post",
-            url : this.buildUrl(URL_CONTACT + URL_CONTACT_ENVOYER),
+            method: "post",
+            url: this.buildUrl(URL_CONTACT + URL_CONTACT_ENVOYER),
             data: data
         });
     }

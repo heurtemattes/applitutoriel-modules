@@ -1,6 +1,6 @@
 {
   "name": "applitutoriel-modules",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "license": "CECILL-2.1",
   "description": "Projet permettant de builder les différents modules de l'applitutoriel",
   "bugs": {
@@ -12,8 +12,8 @@
   },
   "scripts": {
     "init-dev": "hb install",
-    "init-snapshot": "hb dependency:set-snapshot --dependencyVersionFix=hornet-js --module=hornet-js-core && hb dependency:set-snapshot --dependencyVersionFix=hornet-themes-intranet --module=hornet-themes-intranet && hb install",
-    "version": "echo $npm_package_version"
+    "init-snapshot": "hb dependency:set-snapshot --dependencyVersionFix=hornet-js --module=hornet-js-core && hb dependency:set-snapshot --dependencyVersionFix=hornet-themes --module=hornet-themes && hb install"
   },
-  "author": "MEAE - Ministère de l'Europe et des Affaires étrangères"
+  "author": "MEAE - Ministère de l'Europe et des Affaires étrangères",
+  "hornetJsBuilder": "1.5.4"
 }

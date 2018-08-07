@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -101,11 +101,11 @@ export class ReferentielPaysServiceDataMockImpl extends ReferentielPaysService {
      */
     listerPays(): Promise<any> {
         logger.trace("SERVICES - listerPays");
-        return Promise.resolve((<any> pays).data);
+        return Promise.resolve((<any>pays).data);
     }
 
     /**
-     * liste les nationnalités
+     * liste les nationalités
      * Utilisé :
      * - hornet
      * - hornet-lite
@@ -115,7 +115,7 @@ export class ReferentielPaysServiceDataMockImpl extends ReferentielPaysService {
     rechercherNationalites(nationalite?: string): Promise<any> {
         logger.trace("SERVICES - rechercherNationalites : ", nationalite);
 
-        return Promise.resolve((<any> pays).data);
+        return Promise.resolve((<any>pays).data);
     }
 
     /**
@@ -125,6 +125,6 @@ export class ReferentielPaysServiceDataMockImpl extends ReferentielPaysService {
      * @returns {Promise<object>}
      */
     listerVilles(): Promise<any> {
-        return Promise.resolve((<any> villes).data);
+        return Promise.resolve((<any>villes).data);
     }
 }

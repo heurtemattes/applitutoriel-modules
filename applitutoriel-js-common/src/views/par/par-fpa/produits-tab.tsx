@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -117,15 +117,15 @@ export class ProduitsTab extends HornetComponent<ProduitsTabProps, any> {
         return (
             <div className="pts">
                 <Table id="liste-produits">
-                    <Header title={this.i18n("partenaireFichePage.tableauProduits.tableTitle")}/>
+                    <Header title={this.i18n("partenaireFichePage.tableauProduits.tableTitle")} />
                     <Content dataSource={this.props.dataSource}>
                         <Columns>
-                            <Column keyColumn="nom" title={this.tabProdI18n.colonnes.nom} sortable={true}/>
-                            <Column keyColumn="desc" title={this.tabProdI18n.colonnes.desc} sortable={true}/>
+                            <Column keyColumn="nom" title={this.tabProdI18n.colonnes.nom} sortable={true} />
+                            <Column keyColumn="desc" title={this.tabProdI18n.colonnes.desc} sortable={true} />
                         </Columns>
                     </Content>
                     <Footer>
-                        <Pager dataSource={this.props.dataSource} id="maTable-paginate"/>
+                        <Pager dataSource={this.props.dataSource} id="maTable-paginate" />
                     </Footer>
                 </Table>
             </div>

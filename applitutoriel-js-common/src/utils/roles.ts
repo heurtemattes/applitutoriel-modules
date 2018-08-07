@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -86,8 +86,8 @@ export class Roles {
     static USER_STR = "APPLI_TUTO_USER";
     static ADMIN_STR = "APPLI_TUTO_ADMIN";
 
-    static USER = [Roles.USER_STR];
-    static ADMIN = [Roles.ADMIN_STR];
+    static USER = [ Roles.USER_STR ];
+    static ADMIN = [ Roles.ADMIN_STR ];
 
-    static EVERYONE = [Roles.USER_STR, Roles.ADMIN_STR];
+    static EVERYONE = [ Roles.USER_STR, Roles.ADMIN_STR ];
 }

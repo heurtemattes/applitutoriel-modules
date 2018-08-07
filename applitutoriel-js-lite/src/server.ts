@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -153,7 +153,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -269,10 +269,9 @@ export class Server {
                 Utils.config.get("authentication.saml.configuration.hostUrlReturnTo"),
                 // Usually specified as `/shibboleth` from site root
                 Utils.config.get("authentication.saml.configuration.issuer"),
-                // Certificat applicatif
-                fs.readFileSync(__dirname + "/../config/cert/cert.pem", "utf8"),
+                fs.readFileSync(Utils.config.get("authentication.saml.configuration.cert"), "utf8"),
                 // Clé privée de décryptage
-                fs.readFileSync(__dirname + "/../config/cert/key.pem", "utf8"),
+                fs.readFileSync(Utils.config.get("authentication.saml.configuration.key"), "utf8"),
                 Utils.config.get("authentication.saml.configuration.idp")
             );
             authent.initStrategy(new SamlStrategy(configuration));
@@ -302,7 +301,7 @@ export class Server {
                 Database.runScripts([ {
                     configName: databaseConfName,
                     files: files
-                }]).then(() => {
+                } ]).then(() => {
                     Server.start(AuthenticationAPI);
                 });
             } else {

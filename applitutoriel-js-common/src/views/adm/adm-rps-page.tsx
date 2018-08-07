@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -127,7 +127,7 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
                             ctx.textAlign = "center";
                             ctx.textBaseline = "middle";
                             let position = element.tooltipPosition();
-                            ctx.fillText(dataset.data[index].toString(), position.x, position.y - 5);
+                            ctx.fillText(dataset.data[ index ].toString(), position.x, position.y - 5);
                         });
                     }
                 });
@@ -137,22 +137,22 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
 
     prepareClient() {
         this.data = {
-            datasets: [{
+            datasets: [ {
                 data: [],
                 backgroundColor: [],
                 label: RepartitionPage.getI18n("repartitionPage.title")
-            }],
+            } ],
             labels: []
         };
 
         this.getService().repartition().then((data) => {
             //this.Donut.drawDonutWithData(data);
             for (let i = 0; i < data.length; i++) {
-                this.data.datasets[0].data.push(data[i].value);
-                this.data.datasets[0].backgroundColor.push(this.color(data[i].color).alpha(0.5).rgbString());
-                this.data.labels.push(data[i].label);
+                this.data.datasets[ 0 ].data.push(data[ i ].value);
+                this.data.datasets[ 0 ].backgroundColor.push(this.color(data[ i ].color).alpha(0.5).rgbString());
+                this.data.labels.push(data[ i ].label);
             }
-            this.setState({data: this.data});
+            this.setState({ data: this.data });
         });
     }
 
@@ -164,7 +164,7 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
 
         let maxWidth = 550;
         let maxHeight = 550;
-        let style = {maxWidth, maxHeight, padding: "20px"};
+        let style = { maxWidth, maxHeight, padding: "20px" };
 
         return (
             <div>
@@ -174,19 +174,19 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
                     <div id="chartdiv" style={style}>
                         <canvas ref={(element) => {
                             this.element = element;
-                        }} width={500} height={500} style={style}/>
+                        }} width={500} height={500} style={style} />
                     </div>
                 </div>
                 <ButtonsArea>
                     <Button id="doughnut" className="hornet-button" onClick={(e) => {
-                        this.setState({type: "doughnut"});
-                    }} label={this.i18n("repartitionPage.type.doughnut")}/>
+                        this.setState({ type: "doughnut" });
+                    }} label={this.i18n("repartitionPage.type.doughnut")} />
                     <Button id="pie" className="hornet-button" onClick={(e) => {
-                        this.setState({type: "pie"});
-                    }} label={this.i18n("repartitionPage.type.pie")}/>
+                        this.setState({ type: "pie" });
+                    }} label={this.i18n("repartitionPage.type.pie")} />
                     <Button id="polarArea" className="hornet-button" onClick={(e) => {
-                        this.setState({type: "polarArea"});
-                    }} label={this.i18n("repartitionPage.type.polarArea")}/>
+                        this.setState({ type: "polarArea" });
+                    }} label={this.i18n("repartitionPage.type.polarArea")} />
                 </ButtonsArea>
             </div>
         );

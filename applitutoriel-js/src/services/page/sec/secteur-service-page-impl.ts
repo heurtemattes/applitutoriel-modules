@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -98,9 +98,9 @@ export class SecteurServiceImpl extends AdministrationSecteurService {
      * liste tous les secteurs
      * @return Promise
      */
-    lister() : Promise<any> {
+    lister(): Promise<any> {
         logger.trace("SERVICES - lister");
-        return this.fetch({method : "get", url : this.buildUrl(URL_SECTEURS)});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_SECTEURS) });
     }
 
     /**
@@ -108,12 +108,13 @@ export class SecteurServiceImpl extends AdministrationSecteurService {
      * @param {number} id identifiant du secteur à supprimer
      * @return Promise
      */
-    supprimer(id:number) : Promise<any> {
+    supprimer(id: number): Promise<any> {
         logger.trace("SERVICES - supprimer : ", id);
         return this.fetch({
-            method : "delete",
-            url : this.buildUrl(URL_SECTEURS + "/" + id),
-            cacheLinkKey: [this.buildUrl(URL_SECTEURS)]});
+            method: "delete",
+            url: this.buildUrl(URL_SECTEURS + "/" + id),
+            cacheLinkKey: [ this.buildUrl(URL_SECTEURS) ]
+        });
     }
 
     /**
@@ -121,12 +122,12 @@ export class SecteurServiceImpl extends AdministrationSecteurService {
      * @param {object} secteur secteur à créer
      * @return Promise
      */
-    creer(secteur:any) : Promise<any> {
+    creer(secteur: any): Promise<any> {
         logger.trace("SERVICES - creer : ", secteur);
 
         return this.fetch({
-            method : "post",
-            url : this.buildUrl(URL_SECTEURS),
+            method: "post",
+            url: this.buildUrl(URL_SECTEURS),
             data: secteur
         });
     }
@@ -137,14 +138,14 @@ export class SecteurServiceImpl extends AdministrationSecteurService {
      * @param {object} secteur secteur à modifier
      * @return Promise
      */
-    modifier(id:number, secteur:any) : Promise<any> {
+    modifier(id: number, secteur: any): Promise<any> {
         logger.trace("SERVICES - modifier : ", id, secteur);
 
         return this.fetch({
-            method : "put",
-            url : this.buildUrl(URL_SECTEURS + "/" + id),
+            method: "put",
+            url: this.buildUrl(URL_SECTEURS + "/" + id),
             data: secteur,
-            cacheLinkKey: [this.buildUrl(URL_SECTEURS)]
+            cacheLinkKey: [ this.buildUrl(URL_SECTEURS) ]
         });
     }
 }

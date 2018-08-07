@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -96,7 +96,7 @@ export abstract class ReferentielPaysService extends ServiceRequest {
     abstract listerPays(): Promise<any>;
 
     /**
-     * liste les nationnalités
+     * liste les nationalités
      * Utilisé :
      * - hornet
      * - hornet-lite

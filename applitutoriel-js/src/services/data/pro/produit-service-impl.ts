@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -91,8 +91,8 @@ export class ProduitServiceImpl extends ServiceRequest implements ProduitService
     /**
      * @inheritDoc
      */
-    lister() : Promise<any> {
+    lister(): Promise<any> {
         logger.trace("SERVICES - lister");
-        return this.fetch({method : "get", url : this.buildUrl(URL_PRODUITS)});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_PRODUITS) });
     }
 }

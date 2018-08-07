@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -107,13 +107,13 @@ export class PartenaireServiceDataMockImpl extends PartenaireService {
      */
     rechercher(criteres: PartenaireRechercheParameter, reqMimeType: MediaType, res?: NodeJS.WritableStream): Promise<any> {
         logger.debug("MOCK- recherche de partenaire", criteres);
-        return Promise.resolve((<any> tableauDePartenaires).data);
+        return Promise.resolve((<any>tableauDePartenaires).data);
     }
 
     supprimer(id): Promise<any> {
         return Promise.resolve(() => {
             logger.debug("MOCK - Suppression du partenaire, id:", id);
-            _.remove((<any> tableauDePartenaires).data, function(item: any) {
+            _.remove((<any>tableauDePartenaires).data, function (item: any) {
                 if (item.id === id) {
                     return true;
                 }
@@ -162,7 +162,7 @@ export class PartenaireServiceDataMockImpl extends PartenaireService {
 
         let idPartenaire: number = parseInt(<any>id, 10);
         logger.debug("MOCK - Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let partenaire: PartenaireResult = _.find((<any> tableauDePartenaires).data.liste, (item: PartenaireResult) => {
+        let partenaire: PartenaireResult = _.find((<any>tableauDePartenaires).data.liste, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;
@@ -172,11 +172,11 @@ export class PartenaireServiceDataMockImpl extends PartenaireService {
         if (partenaire) {
             return Promise.resolve(partenaire);
         } else {
-            throw new NotFoundError({errorMessage: "partenaire non trouvé"});
+            throw new NotFoundError({ errorMessage: "partenaire non trouvé" });
         }
     }
 
     getFormData(): Promise<any> {
-        return Promise.resolve({villes: (<any> villes).data, pays: (<any> pays).data});
+        return Promise.resolve({ villes: (<any>villes).data, pays: (<any>pays).data });
     }
 }

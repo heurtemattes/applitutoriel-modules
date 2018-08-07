@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -116,7 +116,7 @@ export class ReferentielPaysServiceImpl extends ServiceRequest implements Refere
     }
 
     /**
-     * liste les nationnalités
+     * liste les nationalités
      * Utilisé :
      * - hornet
      * - hornet-lite
@@ -134,7 +134,7 @@ export class ReferentielPaysServiceImpl extends ServiceRequest implements Refere
 
         if (nationalite) {
             request.method = "post";
-            request.data = {nationnalite: nationalite};
+            request.data = {nationalite: nationalite};
             request.url = request.url + "/recherche"
         }
 

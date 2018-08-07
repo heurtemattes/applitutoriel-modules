@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -119,21 +119,21 @@ export class SecteursTab extends TabContent<SecteursTabProps, any> {
     render(): JSX.Element {
         return (
             <div className="pts">
-                <Notification id="notif2"/>
+                <Notification id="notif2" />
                 <Table id="liste-secteurs">
                     <Header title={this.secteurI18n.table.tableTitle}>
                     </Header>
                     <Content dataSource={this.props.dataSource} schema={schemaEditionTable}
-                             notifId="notif2">
+                        notifId="notif2">
                         <Columns>
                             <Column keyColumn="nom"
-                                    title={this.secteurI18n.nom}
-                                    sortable={false}
+                                title={this.secteurI18n.nom}
+                                sortable={false}
                             />
-                            <Column keyColumn="desc" title={this.secteurI18n.description} sortable={false}/>
-                            <DateColumn keyColumn="dateCreat" title={this.secteurI18n.dateCr} sortable={false}/>
-                            <DateColumn keyColumn="dateMajEnreg" title={this.secteurI18n.dateMaj} sortable={false}/>
-                            <Column keyColumn="auteurCreat" title={this.secteurI18n.auteur} sortable={false}/>
+                            <Column keyColumn="desc" title={this.secteurI18n.description} sortable={false} />
+                            <DateColumn keyColumn="dateCreat" title={this.secteurI18n.dateCr} sortable={false} />
+                            <DateColumn keyColumn="dateMajEnreg" title={this.secteurI18n.dateMaj} sortable={false} />
+                            <Column keyColumn="auteurCreat" title={this.secteurI18n.auteur} sortable={false} />
                         </Columns>
                     </Content>
                 </Table>
@@ -145,6 +145,6 @@ export class SecteursTab extends TabContent<SecteursTabProps, any> {
      * exemple de tri multicolonnes
      */
     private sortMulti(): void {
-        this.props.dataSource.sort({sortDatas: [new SortData("dateCreat", SortDirection.DESC), new SortData("auteurCreat")]});
+        this.props.dataSource.sort({ sortDatas: [ new SortData("dateCreat", SortDirection.DESC), new SortData("auteurCreat") ] });
     }
 }

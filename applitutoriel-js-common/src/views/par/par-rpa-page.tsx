@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -86,7 +86,7 @@ import { Notification } from "hornet-js-react-components/src/widget/notification
 import {
     NotificationManager,
     Notifications,
-    NotificationType
+    NotificationType,
 } from "hornet-js-core/src/notification/notification-manager";
 import { Form } from "hornet-js-react-components/src/widget/form/form";
 import { Row } from "hornet-js-react-components/src/widget/form/row";
@@ -97,7 +97,7 @@ import { CheckBoxField } from "hornet-js-react-components/src/widget/form/checkb
 import {
     CalendarField,
     CalendarFieldProps,
-    CalendarFieldState
+    CalendarFieldState,
 } from "hornet-js-react-components/src/widget/form/calendar-field";
 import { ParRpaValidateIsVipEndDate } from "src/views/par/par-rpa-validate-end-date";
 import { ParRpaValidateSectorStartDate } from "src/views/par/par-rpa-validate-start-date";
@@ -161,8 +161,10 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     /** Composant CheckBox isVip */
     private checkBoxIsVip: CheckBoxField;
 
+    radio: RadiosField;
+
     /** Liste permettant d'alimenter la liste déroulante des secteurs */
-    private listeSecteurs = [ { nom: this.i18n("partenairesListePage.form.fields.criteres.idSecteur.tous") }];
+    private listeSecteurs = [ { nom: this.i18n("partenairesListePage.form.fields.criteres.idSecteur.tous") } ];
     private dataSourceSecteurs: DataSource<any> = new DataSource([]);
     /** Formulaire de recherche */
     private formRecherche: Form;
@@ -175,26 +177,23 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     private defaultValues = {
         criteres: {
             partenaire: {
-                isClient: true,
-                isVIP: ""
+                client: true
             },
             idSecteur: "",
-            startDate: new Date("2015-03-25"),
-            endDate: ""
+            startDate: new Date("2015-03-25")
         }
     };
 
     /** Liste des types de client */
     private LISTE_IS_CLIENT: any[] = [
         {
-            isClient: true,
-            libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.clientLabel")
+            client: true,
+            libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.client.clientLabel"),
         },
         {
-            isClient: false,
-            libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.isClient.fournisseurLabel"),
-        }
-    ];
+            client: false,
+            libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.client.fournisseurLabel"),
+        } ];
 
     /** Objet des critères initiaux (provenant du CLS ou de la session dans le cas d'un F5) */
     private currentCriteres: any;
@@ -203,13 +202,13 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         super(props, context);
 
         this.paginateDataSource = this.initDataSource(props);
-        this.dataSourceIsClient = new DataSource(this.LISTE_IS_CLIENT, { value: "isClient", label: "libelle" });
+        this.dataSourceIsClient = new DataSource(this.LISTE_IS_CLIENT, { value: "client", label: "libelle" });
         this.state = {
             ...this.state, pagination: {
                 pageIndex: 0,
                 itemsPerPage: 10,
-                totalItems: 0
-            } as PaginationProps
+                totalItems: 0,
+            } as PaginationProps,
         };
 
         /* Récupération des données provenant du CLS */
@@ -222,20 +221,31 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         /* Valeurs par défaut du formulaire de recherche */
         this.currentCriteres = {
             partenaire: {
-                isVIP: _.get(criteres, "partenaire.isVIP") != null ?
-                    _.get(criteres, "partenaire.isVIP") : _.get(this.defaultValues, "criteres.partenaire.isVIP")
+                vip: _.get(criteres, "partenaire.vip") != null ?
+                    _.get(criteres, "partenaire.vip") : _.get(this.defaultValues, "criteres.partenaire.vip"),
             },
             idSecteur: (_.get(criteres, "idSecteur") != null) ?
                 _.get(criteres, "idSecteur").toString() : _.get(this.defaultValues, "criteres.idSecteur"),
             startDate: _.get(criteres, "startDate") ?
                 this.getDateFormatee(_.get(criteres, "startDate")) : _.get(this.defaultValues, "criteres.startDate"),
             endDate: _.get(criteres, "endDate") ?
-                this.getDateFormatee(_.get(criteres, "endDate")) : _.get(this.defaultValues, "criteres.endDate")
+                this.getDateFormatee(_.get(criteres, "endDate")) : _.get(this.defaultValues, "criteres.endDate"),
         };
         this.dataSourceSecteurs.on("add", () => {
             // Valorisation des champs du formulaire de recherche
             this.secteurSelect.setCurrentValue(this.currentCriteres.idSecteur);
-        })
+        });
+
+
+        // this.paginateDataSource.on("fetch", (results) => {
+        //     const selected = [];
+        //     results.map((result) => {
+        //         if(result.vip) {
+        //             selected.push(result);
+        //         }
+        //     });
+        //     this.paginateDataSource.select(selected);
+        // });
     }
 
     /**
@@ -243,22 +253,20 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
      * @override
      */
     prepareClient(): void {
-        // Récupération de la liste des secteurs
-        let self: RecherchePartenairesPage = this;
 
         this.getService().listerSecteurs().then((secteurs) => {
             // Alimentation de la liste déroulante des secteurs
-            self.dataSourceSecteurs.add(true, this.listeSecteurs.concat(secteurs));
+            this.dataSourceSecteurs.add(true, this.listeSecteurs.concat(secteurs));
         });
 
         this.formRecherche.updateFields({ criteres: this.currentCriteres });
         this.dataSourceIsClient.select(this.dataSourceIsClient.results[ 0 ]);
-        if (this.currentCriteres.partenaire.isVIP) {
-            this.checkBoxIsVip.setCurrentChecked(this.currentCriteres.partenaire.isVIP);
+        if (this.currentCriteres.partenaire.vip) {
+            this.checkBoxIsVip.setCurrentChecked(this.currentCriteres.partenaire.vip);
         }
 
-        let formData: PartenaireRechercheParameter = { criteres: this.props.navigateData && this.props.navigateData.criteres };
-        let forceReload: boolean = this.props.navigateData && this.props.navigateData.forceReload;
+        const formData: PartenaireRechercheParameter = { criteres: this.props.navigateData && this.props.navigateData.criteres };
+        const forceReload: boolean = this.props.navigateData && this.props.navigateData.forceReload;
         if (formData.criteres) {
             this.maTable.setState({ isVisible: true }, () => {
                 this.paginateDataSource.reload(true, forceReload);
@@ -270,21 +278,22 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
      * @inheritDoc
      */
     render(): JSX.Element {
+
         logger.trace("RecherchePartenairesPage render");
 
         const intlTab: any = this.i18n("partenairesListePage.tableau");
         const isAdmin: boolean = this.isAdmin();
 
-        let checkColumn = isAdmin ? <CheckColumn keyColumn="id" altSelect={intlTab.colonnes.checkTitle} altUnselect={intlTab.colonnes.uncheckTitle} /> : null;
-
+        const checkColumn = isAdmin ? <CheckColumn keyColumn="id" altSelect={intlTab.colonnes.checkTitle} altUnselect={intlTab.colonnes.uncheckTitle} /> : null;
 
         return (
+
             <div>
                 <span>{this.attributes.forceSearch}</span>
                 <h2>{this.i18n("partenairesListePage.form.titreFormulaire")}</h2>
                 <Notification id="notifRpaPage" />
                 {this.renderFormCriteres()}
-                <Table ref={(table) => { this.maTable = table }} id="liste-partenaires" isVisible={this.isTableVisible}>
+                <Table ref={(table) => { this.maTable = table; }} id="liste-partenaires" isVisible={this.isTableVisible}>
                     <Header id={"monHeaderRPA"} title={this.i18n("partenairesListePage.tableau.tableTitle")}
                         showIconInfo={true}>
                         <ToggleColumnsButton hiddenColumns={{ organisme: true, prenom: true }} />
@@ -328,11 +337,12 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                         <Columns>
 
                             {checkColumn}
-                            <Column keyColumn="nom" title={intlTab.colonnes.nom} sortable={true} hiddenable={false} style={{ "width": "5em" }} />
+                            <Column titleCell={(value) => { return value.nom; }}
+                                keyColumn="nom" title={intlTab.colonnes.nom} sortable={true} hiddenable={false} style={{ width: "5em" }} />
                             <Column keyColumn="prenom" title={intlTab.colonnes.prenom} sortable={true} />
-                            <Column keyColumn="proCourriel" title={intlTab.colonnes.courriel} sortable={true} style={{ "width": "13em" }} />
-                            <Column keyColumn="organisme" title={intlTab.colonnes.organisme} sortable={false} />
-                            <YesNoColumn keyColumn="isVIP" title={intlTab.colonnes.labelIsVIP} sortable={true} />
+                            <Column keyColumn="proCourriel" title={intlTab.colonnes.courriel} sortable={true} style={{ width: "13em" }} />
+                            <Column keyColumn="organisme" title={intlTab.colonnes.organisme} sortable={false} style={{ background: "red" }} />
+                            <YesNoColumn keyColumn="vip" title={intlTab.colonnes.labelIsVIP} sortable={true} />
                             <DateColumn keyColumn="dateModif" title={intlTab.colonnes.dateModif} sortable={true} />
                             <ActionColumn keyColumn="consulter"
                                 alt={intlTab.colonnes.consultationTitle}
@@ -354,15 +364,17 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                                 disabled={() => !this.isAdmin()}
                                 hasPopUp={true}
                             />
-                            <MoreInfoColumn keyColumn="idMore" visible={(value) => value.isVIP === true} alt={intlTab.colonnes.moreInfoTitle} headers={[ "nom", "prenom", "proCourriel", "organisme" ]}>
-                                <LineAfter visible={(value) => value.isVIP === true}>
+                            <MoreInfoColumn keyColumn="idMore" visible={(value) => value.vip === true}
+                                alt={intlTab.colonnes.moreInfoTitle}
+                                headers={[ "nom", "prenom", "proCourriel", "organisme" ]}>
+                                <LineAfter visible={(value) => value.vip === true}>
                                     <DivExpandable className="mm-expandable" />
                                 </LineAfter>
                             </MoreInfoColumn>
                         </Columns>
                     </Content>
                     <Footer>
-                        <Pager dataSource={this.paginateDataSource} id="maTable-paginate" />
+                        <Pager dataSource={this.paginateDataSource} id="maTable-paginate" summary={intlTab.pagerSummary} />
                     </Footer>
                 </Table>
             </div>
@@ -381,7 +393,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         return new PaginateDataSource<any>(
             new DataSourceConfigPage(this, this.getService().rechercher), { itemsPerPage: 10 }, {}, [ new DefaultSort([ {
                 key: "nom",
-                dir: 0
+                dir: 0,
             } as SortData ]) ]);
     }
 
@@ -423,7 +435,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     private renderFormCriteres(): JSX.Element {
         logger.trace("RecherchePartenairesPage render");
 
-        let context = Utils.getCls("hornet.internationalization");
+        const context = Utils.getCls("hornet.internationalization");
 
         const intlMessages = this.i18n("partenairesListePage.form");
         return (
@@ -436,25 +448,26 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                     onSubmit={this.onSubmit}
                     text={intlMessages.textIntroForm}
                     textLang={"la"}
-                    ref={(form) => { this.formRecherche = form }}
+                    ref={(form) => { this.formRecherche = form; }}
                     customValidators={[ new ParRpaValidateIsVipEndDate(), new ParRpaValidateSectorStartDate() ]}
                     defaultValues={{ criteres: this.currentCriteres }}
                 >
                     <Row>
-                        <RadiosField name="criteres.partenaire.isClient"
+                        <RadiosField name="criteres.partenaire.client"
                             dataSource={this.dataSourceIsClient}
-                            label={intlMessages.fields.criteres.partenaire.isClient.label}
+                            label={intlMessages.fields.criteres.partenaire.client.label}
                             toolTip={intlMessages.fields.criteres.partenaire.typePartenaire.tooltip}
                             labelClass="blocLabelUp"
                             inline={RadiosField.Inline.FIELD}
                             currentChecked={true}
+                            ref={(e) => this.radio = e}
                         />
-                        <CheckBoxField name="criteres.partenaire.isVIP"
-                            label={intlMessages.fields.criteres.partenaire.isVIP.label}
+                        <CheckBoxField name="criteres.partenaire.vip"
+                            label={intlMessages.fields.criteres.partenaire.vip.label}
                             lang="en"
-                            abbr={intlMessages.fields.criteres.partenaire.isVIP.title}
-                            toolTip={intlMessages.fields.criteres.partenaire.isVIP.tooltip}
-                            ref={(checkbox) => { this.checkBoxIsVip = checkbox }}
+                            abbr={intlMessages.fields.criteres.partenaire.vip.title}
+                            toolTip={intlMessages.fields.criteres.partenaire.vip.tooltip}
+                            ref={(checkbox) => { this.checkBoxIsVip = checkbox; }}
                             onChange={this.changeLabelEndDate}
                             switch={true}
                             inline={CheckBoxField.Inline.ALL}
@@ -463,10 +476,11 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                     <Row>
                         <SelectField name="criteres.idSecteur"
                             label={intlMessages.fields.criteres.idSecteur.label}
-                            ref={(select) => { this.secteurSelect = select }}
+                            ref={(select) => { this.secteurSelect = select; }}
                             valueKey="id"
                             labelKey="nom"
                             dataSource={this.dataSourceSecteurs}
+                            onChange={() => { logger.trace("onChnage Custom sur Selectfield"); }}
                         />
                     </Row>
 
@@ -479,7 +493,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                                 title={intlMessages.fields.criteres.startDate.title}
                             />
                             <CalendarField
-                                ref={(date) => { this.endDate = date }}
+                                ref={(date) => { this.endDate = date; }}
                                 label={intlMessages.fields.criteres.endDate.label}
                                 name="criteres.endDate"
                                 title={intlMessages.fields.criteres.endDate.title}
@@ -538,8 +552,8 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
             pagination: {
                 pageIndex: 0,
                 itemsPerPage: 10,
-                totalItems: 0
-            }
+                totalItems: 0,
+            },
         });
 
         this.formRecherche.cleanFormErrors();
@@ -555,7 +569,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
      */
     private onExport(mediaType: MediaType, value): void {
         logger.trace("onExport");
-        if (mediaType == MediaTypes.ODS || mediaType == MediaTypes.ODT) {
+        if (mediaType === MediaTypes.ODS || mediaType === MediaTypes.ODT) {
             this.getService().exporterODF(mediaType, { criteres: this.criteresRecherche });
         } else {
             this.getService().exporter(mediaType, { criteres: this.criteresRecherche });
@@ -569,20 +583,20 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     private supprimer(partenaire: PartenaireResult): void {
         logger.trace("Utilisateur est OK pour supprimer l item id:", partenaire.id);
 
-        let notifSuccessText: string = this.i18n("info.message.IN-PA-RPA-01", {
-            "$0": partenaire.prenom,
-            "$1": partenaire.nom
+        const notifSuccessText: string = this.i18n("info.message.IN-PA-RPA-01", {
+            $0: partenaire.prenom,
+            $1: partenaire.nom,
         });
-        let notifErrorText: string = this.i18n("error.message.ER-PA-RPA-07", {
-            "$0": partenaire.prenom,
-            "$1": partenaire.nom
+        const notifErrorText: string = this.i18n("error.message.ER-PA-RPA-07", {
+            $0: partenaire.prenom,
+            $1: partenaire.nom,
         });
-        let errors: Notifications = new Notifications();
-        let notif = new NotificationType();
-        let confirmations: Notifications = new Notifications();
+        const errors: Notifications = new Notifications();
+        const notif = new NotificationType();
+        const confirmations: Notifications = new Notifications();
         notif.id = "DEL_PARTNER_" + partenaire.id;
 
-        if (partenaire.isVIP) {
+        if (partenaire.vip) {
             notif.text = notifErrorText;
             errors.addNotification(notif);
             NotificationManager.notify("notifRpaPage", "rpaForm", errors, confirmations);
@@ -611,33 +625,33 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
 
         this.getService().supprimerEnMasse(partenaires).then((ids: number[] | {}) => {
 
-            let confirmations: Notifications = new Notifications();
-            let errors: Notifications = new Notifications();
+            const confirmations: Notifications = new Notifications();
+            const errors: Notifications = new Notifications();
             partenaires.forEach((partenaire: PartenaireResult) => {
                 if (ids && (ids as number[]).indexOf && (ids as number[]).indexOf(partenaire.id) >= 0) {
-                    let notif = new NotificationType();
+                    const notif = new NotificationType();
                     notif.id = "DEL_PARTNER_" + partenaire.id;
                     notif.text = this.i18n("info.message.IN-PA-RPA-01", {
-                        "$0": partenaire.prenom,
-                        "$1": partenaire.nom
+                        $0: partenaire.prenom,
+                        $1: partenaire.nom,
                     });
 
                     confirmations.addNotification(notif);
-                } else if (partenaire.isVIP) {
-                    let notif = new NotificationType();
+                } else if (partenaire.vip) {
+                    const notif = new NotificationType();
                     notif.id = "DEL_PARTNER_" + partenaire.id;
                     notif.text = this.i18n("error.message.ER-PA-RPA-03", {
-                        "nom": partenaire.nom,
-                        "prenom": partenaire.prenom
+                        nom: partenaire.nom,
+                        prenom: partenaire.prenom,
                     });
 
                     errors.addNotification(notif);
                 } else {
-                    let notif = new NotificationType();
+                    const notif = new NotificationType();
                     notif.id = "DEL_PARTNER_" + partenaire.id;
                     notif.text = this.i18n("error.message.ER-PA-RPA-07", {
-                        "$0": partenaire.prenom,
-                        "$1": partenaire.nom
+                        $0: partenaire.prenom,
+                        $1: partenaire.nom,
                     });
 
                     errors.addNotification(notif);
@@ -656,12 +670,12 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
      * @param partenaire
      */
     private editerPartenaire(partenaire: PartenaireResult) {
-        let url = "/partenaires/editer/" + partenaire.id;
+        const url = "/partenaires/editer/" + partenaire.id;
         this.navigateTo(url, {
-            "isVIP": partenaire.isVIP,
+            vip: partenaire.vip,
             criteres: this.criteresRecherche,
-            dataSource: this.paginateDataSource
-        }, null);
+            dataSource: this.paginateDataSource,
+        },              null);
     }
 
     /**
@@ -670,12 +684,12 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
      * @param partenaire
      */
     private consulterPartenaire(partenaire: PartenaireResult) {
-        let url = "/partenaires/consulter/" + partenaire.id;
+        const url = "/partenaires/consulter/" + partenaire.id;
         this.navigateTo(url, {
-            "isVIP": partenaire.isVIP,
+            vip: partenaire.vip,
             criteres: this.criteresRecherche,
-            dataSource: this.paginateDataSource
-        }, null);
+            dataSource: this.paginateDataSource,
+        },              null);
     }
 
     /**
@@ -696,7 +710,10 @@ const DivExpandable = (props) => {
     return (
         <div className="grid" key={"card-container-" + props.value.nom + "-" + props.value.prenom}>
             <div style={{ float: "left", width: "10%" }} className="one-fifth">
-                <img src={Picto.grey.userCircle} style={{ width: "200%" }} alt={HornetPage.getI18n("partenairesListePage.form.titreImage")} />
+                <img src={Picto.grey.userCircle}
+                    style={{ width: "200%" }}
+                    alt={HornetPage.getI18n("partenairesListePage.form.titreImage")}
+                />
             </div>
             <div className={props.className}
                 key={"card-content-" + props.value.nom + "-" + props.value.prenom}>

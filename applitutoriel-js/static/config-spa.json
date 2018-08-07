@@ -9,7 +9,7 @@
     "host": "http://localhost/",
     "name": "applitutoriel-service"
   },
-  "themeName": "hornet-themes-intranet",
+  "themeName": "hornet-themes",
   "localeI18n": {
     "locale": "fr-FR",
     "lang": "fr"

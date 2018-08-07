@@ -65,7 +65,7 @@
     "secure": true
     //"alwaysSetCookie": false
   },
-  "themeName": "hornet-themes-intranet",
+  "themeName": "hornet-themes",
   "security": {
     "enabled": true,
     "hpp": true,
@@ -99,9 +99,12 @@
       "disableAndroid": false
     },
     "frameguard": {
-      "enabled": true,
-      "mode": "deny",
-      "allowFromPattern": ""
+      "enabled": true
+      /*
+      ,action: "",
+      domain: ""
+      */
+
     },
     "xss": {
       "enabled": true,
@@ -239,7 +242,9 @@
     //            "shibbolethUrl": "./config/idp/arobas/idp-metadata.xml",
     //            "httpsCert": "./config/cert/arobas/arobas.dev.diplomatie.gouv.fr"
     //          }
-    //        ]
+    //        ],
+    // "cert": "./config/cert/cert.pem",
+    // "key": "./config/cert/key.pem"
     //      }
   },
   "request": {

@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -96,24 +96,26 @@ import { Dropdown, Position } from "hornet-js-react-components/src/widget/dropdo
 import * as ChangeLanguageService from "hornet-js-core/src/services/default/change-language";
 import { NavigationUtils } from "hornet-js-components/src/utils/navigation-utils";
 import { NotificationSessionFooter } from "hornet-js-react-components/src/widget/notification/notification-session-footer";
+import { SessionIdpExpireNotification } from "hornet-js-react-components/src/widget/notification/notification-session-idp";
 import { MenuAccessibilite } from "hornet-js-react-components/src/widget/navigation/menu-accessibilite";
 
 
 import * as _ from "lodash";
 import * as classNames from "classnames";
+import { UPDATE_PAGE_EXPAND } from "hornet-js-react-components/src/widget/screen/layout-switcher";
 
 const logger: Logger = Utils.getLogger("applitutoriel.views.layouts.hornet-app");
 
 const users = {
     "user":
-    {
-        "name": "user",
-        "roles": [ { "id": 2, "name": "APPLI_TUTO_USER" }]
-    }, "admin":
-    {
-        "name": "admin",
-        "roles": [ { "id": 1, "name": "APPLI_TUTO_ADMIN" }, { "id": 2, "name": "APPLI_TUTO_USER" }]
-    }
+        {
+            "name": "user",
+            "roles": [ { "id": 2, "name": "APPLI_TUTO_USER" } ]
+        }, "admin":
+        {
+            "name": "admin",
+            "roles": [ { "id": 1, "name": "APPLI_TUTO_ADMIN" }, { "id": 2, "name": "APPLI_TUTO_USER" } ]
+        }
 };
 
 export interface HornetAppProps extends HornetPageProps, HornetComponentProps {
@@ -126,7 +128,9 @@ export interface HornetAppProps extends HornetPageProps, HornetComponentProps {
 
 export class HornetApp extends HornetPage<any, HornetAppProps, any> {
 
+    layoutSwitcher: any;
     menu: Menu;
+    layoutSwitcherSticky: any;
 
     static defaultProps = {
         composantPage: null,
@@ -139,6 +143,10 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
         super(props, context);
         this.service = new ChangeLanguageService.ChangeLanguage();
         this.listenUrlChangeEvent();
+        this.listen(UPDATE_PAGE_EXPAND, (ev) => {
+            this.layoutSwitcher.setState({ modeFullscreen: !ev.detail });
+            this.layoutSwitcherSticky.setState({ modeFullscreen: !ev.detail });
+        })
     }
 
 
@@ -184,7 +192,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
         let lang = <ChangeLanguage handleChangeLanguage={this.handleChangeLanguage} position={Position.BOTTOMRIGHT} />;
         let user = Utils.config.getOrDefault("fullSpa.enabled", false) && Utils.config.getOrDefault("mock.enabled", false) ? <Dropdown
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
-            { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" }]}
+            { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
             icon="picto-user"
             className="profil-content"
@@ -196,7 +204,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
         let langBanner = <ChangeLanguage id="Change-Language-banner" handleChangeLanguage={this.handleChangeLanguage} position={Position.BOTTOMRIGHT} />;
         let userBanner = Utils.config.getOrDefault("fullSpa.enabled", false) && Utils.config.getOrDefault("mock.enabled", false) ? <Dropdown
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
-            { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" }]}
+            { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
             icon="picto-user"
             className="profil-content"
@@ -211,15 +219,21 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             <div className="userlang fr full-height">
                 {userBanner}
                 {langBanner}
-                <LayoutSwitcher />
+                <LayoutSwitcher ref={(ref) => {
+                    this.layoutSwitcherSticky = ref
+                }} />
             </div>
         );
+
+        let sessionIdpExpireNotification = Utils.getCls("hornet.user") && Utils.getCls("hornet.user")["SessionNotOnOrAfter"]?
+        <SessionIdpExpireNotification expireIn={60} expireInDate={Utils.getCls("hornet.user")["SessionNotOnOrAfter"] - new Date(Utils.getCls("currenDate")).getTime()} />
+        : null;
 
         return (
             <div id="site" className={classNames(classes)}>
                 <HeaderPage scrollHeight={35}>
                     <div id="header">
-                        <MenuAccessibilite/>
+                        <MenuAccessibilite />
                         <div id="header-expanded-zone" className={"inside " + this.state.classNameExpanded}
                             style={{ maxWidth: this.state.currentWorkingZoneWidth }}>
                             <div className="fl full-height">
@@ -230,14 +244,16 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
                             <div className="fr full-height user" style={{ display: "inline-flex" }}>
                                 {user}
                                 {lang}
-                                <LayoutSwitcher />
+                                <LayoutSwitcher ref={(ref) => {
+                                    this.layoutSwitcher = ref
+                                }} />
                             </div>
                         </div>
                     </div>
                     <div id="banner">
                         <div id="banner-expanded-zone"
-                             className={"inside " + this.state.classNameExpanded}
-                             style={{ maxWidth: this.state.currentWorkingZoneWidth }}>
+                            className={"inside " + this.state.classNameExpanded}
+                            style={{ maxWidth: this.state.currentWorkingZoneWidth }}>
                             <div className="fl menu-main-conteneur ">
                                 <Menu showIconInfo={true} workingZoneWidth={this.state.currentWorkingZoneWidth}
                                     var={(menu: any) => {
@@ -262,9 +278,12 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
                         <Spinner />
                     </div>
                 </HeaderPage>
+                <React.StrictMode>
                 <HornetContent content={this.state.content} workingZoneWidth={this.state.workingZoneWidth}
                     error={this.state.error} />
                 <NotificationSessionFooter />
+                    {sessionIdpExpireNotification}
+                </React.StrictMode>
                 <FooterPage workingZoneWidth={this.state.currentWorkingZoneWidth}>
                     <div className="fl mll">
                         <ul className="footer-links">

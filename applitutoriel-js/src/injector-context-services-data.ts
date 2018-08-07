@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -86,36 +86,32 @@ import { PartenaireService } from "applitutoriel-js-common/src/services/data/par
 import { FichePartenaireService } from "applitutoriel-js-common/src/services/data/par/fiche-partenaire-service";
 import { ReferentielPaysService } from "applitutoriel-js-common/src/services/data/ref/ref-pays-service";
 import { FicheProduitService } from "applitutoriel-js-common/src/services/data/adm/adm-fpo-service-page";
-import { AdministrationSecteurServiceData } from 'applitutoriel-js-common/src/services/data/adm/adm-secteur-service-data';
+import { AdministrationSecteurServiceData } from "applitutoriel-js-common/src/services/data/adm/adm-secteur-service-data";
+
+import { AuthServiceImpl } from "src/services/data/auth/auth-service-impl";
+import { SecteurServiceImpl } from "src/services/data/sec/secteur-service-impl";
+import { PartenaireServiceImpl } from "src/services/data/par/partenaire-service-impl";
+import { ReferentielPaysServiceImpl } from "src/services/data/ref/ref-pays-service-impl";
+import { FicheProduitServiceImpl } from "src/services/page/adm/adm-fpo-service-page-impl";
+
+import { AuthServiceDataMockImpl } from "applitutoriel-js-common/src/mock/services/data/auth/auth-service-data-mock-impl";
+import { SecteurServiceDataMockImpl } from "applitutoriel-js-common/src/mock/services/data/adm/secteur-service-data-mock-impl";
+import { PartenaireServiceDataMockImpl } from "applitutoriel-js-common/src/mock/services/data/par/partenaire-service-data-mock-impl";
+import { ReferentielPaysServiceDataMockImpl } from "applitutoriel-js-common/src/mock/services/data/ref/ref-pays-service-data-mock-impl";
+import { FicheProduitServiceDataMockImpl } from "applitutoriel-js-common/src/mock/services/data/pro/fpo-service-data-mock-impl";
 
 if (Utils.config.getOrDefault("mock.enabled", false) && Utils.config.getOrDefault("mock.serviceData.enabled", false)) {
-    Promise.all([
-        import("applitutoriel-js-common/src/mock/services/data/auth/auth-service-data-mock-impl"),
-        import("applitutoriel-js-common/src/mock/services/data/adm/secteur-service-data-mock-impl"),
-        import("applitutoriel-js-common/src/mock/services/data/par/partenaire-service-data-mock-impl"),
-        import("applitutoriel-js-common/src/mock/services/data/ref/ref-pays-service-data-mock-impl"),
-        import("applitutoriel-js-common/src/mock/services/data/pro/fpo-service-data-mock-impl")
-    ]).then(([AuthServiceDataMockImpl, SecteurServiceDataMockImpl, PartenaireServiceDataMockImpl, ReferentielPaysServiceDataMockImpl, FicheProduitServiceDataMockImpl]) => {
-        Injector.register(AuthService, AuthServiceDataMockImpl.AuthServiceDataMockImpl, Scope.SINGLETON);
-        Injector.register(AdministrationSecteurServiceData, SecteurServiceDataMockImpl.SecteurServiceDataMockImpl);
-        Injector.register(PartenaireService, PartenaireServiceDataMockImpl.PartenaireServiceDataMockImpl);
-        Injector.register(ReferentielPaysService, ReferentielPaysServiceDataMockImpl.ReferentielPaysServiceDataMockImpl);
-        Injector.register(FicheProduitService, FicheProduitServiceDataMockImpl.FicheProduitServiceDataMockImpl);
-        //Injector.register(FichePartenaireService, FichePartenaireServiceMockImpl.FichePartenaireServiceMockImpl);
-    });
+    Injector.register(AuthService, AuthServiceDataMockImpl, Scope.SINGLETON);
+    Injector.register(AdministrationSecteurServiceData, SecteurServiceDataMockImpl, Scope.SINGLETON);
+    Injector.register(PartenaireService, PartenaireServiceDataMockImpl, Scope.SINGLETON);
+    Injector.register(ReferentielPaysService, ReferentielPaysServiceDataMockImpl, Scope.SINGLETON);
+    Injector.register("FicheProduitServiceData", FicheProduitServiceDataMockImpl, Scope.SINGLETON);
 } else {
-    Promise.all([
-        import("src/services/data/auth/auth-service-impl"),
-        import("src/services/data/sec/secteur-service-impl"),
-        import("src/services/data/par/partenaire-service-impl"),
-        import("src/services/data/ref/ref-pays-service-impl"),
-        import("src/services/data/par/partenaire-service-impl")
-    ]).then(([AuthServiceImpl, SecteurServiceImpl, PartenaireServiceImpl, ReferentielPaysServiceImpl, FichePartenaireServiceImpl]) => {
-        Injector.register(AuthService, AuthServiceImpl.AuthServiceImpl, Scope.SINGLETON);
-        Injector.register(AdministrationSecteurServiceData, SecteurServiceImpl.SecteurServiceImpl);
-        Injector.register(PartenaireService, PartenaireServiceImpl.PartenaireServiceImpl);
-        Injector.register(ReferentielPaysService, ReferentielPaysServiceImpl.ReferentielPaysServiceImpl);
-        Injector.register(FichePartenaireService, PartenaireServiceImpl.PartenaireServiceImpl);
-    });
+    Injector.register(AuthService, AuthServiceImpl, Scope.SINGLETON);
+    Injector.register(AdministrationSecteurServiceData, SecteurServiceImpl, Scope.SINGLETON);
+    Injector.register(PartenaireService, PartenaireServiceImpl, Scope.SINGLETON);
+    Injector.register(ReferentielPaysService, ReferentielPaysServiceImpl, Scope.SINGLETON);
+    Injector.register(FichePartenaireService, PartenaireServiceImpl, Scope.SINGLETON);
+    Injector.register("FicheProduitServiceData", FicheProduitServiceImpl, Scope.SINGLETON);
 }
 

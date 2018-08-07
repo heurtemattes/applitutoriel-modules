@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -103,8 +103,8 @@ export class NotFoundPage extends HornetPage<any, HornetComponentProps, any> {
         logger.trace("VIEW NotFoundPage render");
         let error = Utils.getCls("hornet.currentError");
         let messIntl = this.i18n("nfePage");
-        let title = messIntl.title ;
-        let link = messIntl.backToHome ;
+        let title = messIntl.title;
+        let link = messIntl.backToHome;
         return (
             <div id="nfe-page">
                 <div id="nf-img"></div>

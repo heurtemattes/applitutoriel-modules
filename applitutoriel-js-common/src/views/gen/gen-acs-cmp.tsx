@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -96,7 +96,7 @@ export interface AccessibleComponentProps extends HornetComponentProps {
     changeInternationalization: Function
 }
 
-export class AccessibleComponent extends HornetComponent<AccessibleComponentProps ,any> {
+export class AccessibleComponent extends HornetComponent<AccessibleComponentProps, any> {
     /**
      * @inheritDoc
      */
@@ -108,11 +108,11 @@ export class AccessibleComponent extends HornetComponent<AccessibleComponentProp
         let lienContact = (this.state.linkContactVisible) ?
             <li><a href={this.genUrl("/contact")}>{messIntl.contact}</a></li>
             : null;
-            let lienAide = (this.state.linkHelpVisible) ?
+        let lienAide = (this.state.linkHelpVisible) ?
             <li><a href={this.genUrl("/aide")}>{messIntl.help}</a></li>
             : null;
 
-            let lienFullscreen = (this.props.linkFullscreenVisible === true) ?
+        let lienFullscreen = (this.props.linkFullscreenVisible === true) ?
             <li className="fullscreen">
                 <a onClick={this.props.onClickLinkFullscreen} className="icone_action">
                     <img
@@ -128,10 +128,10 @@ export class AccessibleComponent extends HornetComponent<AccessibleComponentProp
             <nav id="infos">
                 <div className="logoDiplo">
                     <a id="img_menu_acces"
-                       title={this.i18n("application.headerTitle")}
-                       href="http://intranet.diplomatie.gouv.fr/">
+                        title={this.i18n("application.headerTitle")}
+                        href="http://intranet.diplomatie.gouv.fr/">
                         <img src={AccessibleComponent.genUrlTheme("/img/header/logo_diplonet_barre.png")}
-                             alt={this.i18n("application.headerTitle")}/>
+                            alt={this.i18n("application.headerTitle")} />
                     </a>
                 </div>
                 <ul id="access_liens">
@@ -143,21 +143,21 @@ export class AccessibleComponent extends HornetComponent<AccessibleComponentProp
                     </li>
                     <li>
                         <a href={this.genUrl("/planAppli")}
-                           title={messIntl.planTitle + applicationTitle}>{messIntl.plan}</a>
+                            title={messIntl.planTitle + applicationTitle}>{messIntl.plan}</a>
                     </li>
                     <li>
                         <a href={this.genUrl("/politiqueAccessibilite")}
-                           title={messIntl.accessTitle + applicationTitle}>{messIntl.access}</a>
+                            title={messIntl.accessTitle + applicationTitle}>{messIntl.access}</a>
                     </li>
                     {lienContact}
                     {lienAide}
                     <li>
                         <a href="#"
-                           title="langue fr" onClick={this.props.changeInternationalization.bind(this, "fr-FR")}>FR</a>
+                            title="langue fr" onClick={this.props.changeInternationalization.bind(this, "fr-FR")}>FR</a>
                     </li>
                     <li>
                         <a href="#"
-                           title="langue en" onClick={this.props.changeInternationalization.bind(this, "en-EN")}>EN</a>
+                            title="langue en" onClick={this.props.changeInternationalization.bind(this, "en-EN")}>EN</a>
                     </li>
                     {lienFullscreen}
                 </ul>

@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -153,7 +153,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -176,8 +176,8 @@ export interface PartenaireAttributes extends HornetSequelizeAttributes {
     civilite?: number;
     pays?: number;
     photo?: number;
-    isClient?: boolean;
-    isVIP?: boolean;
+    client?: boolean;
+    vip?: boolean;
     nom?: string;
     prenom?: string;
     nomLocal?: string;
@@ -234,9 +234,9 @@ export class PartenaireDTO {
     @Alias("photo.id")
     photo: number;
     @Map()
-    isClient: boolean;
+    client: boolean;
     @Map()
-    isVIP: boolean;
+    vip: boolean;
     @Map()
     nom: string;
     @Map()
@@ -325,11 +325,11 @@ export let PartenaireModel: Sequelize.DefineAttributes = {
             key: "id"
         }
     },
-    isClient: {
+    client: {
         type: Sequelize.BOOLEAN,
         field: "par_is_client"
     },
-    isVIP: {
+    vip: {
         type: Sequelize.BOOLEAN,
         field: "par_is_vip"
     },

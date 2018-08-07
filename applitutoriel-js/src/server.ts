@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -106,11 +106,15 @@ import { HornetMiddlewareList } from "hornet-js-core/src/middleware/middlewares"
 
 import * as Menu from "applitutoriel-js-common/src/resources/navigation.json";
 import "src/injector-context-services-data";
+import "src/injector-context-services-page";
 import { FeaturePageRenderingMiddleware } from "applitutoriel-js-common/src/middleware/featuresflipping";
+import { AuthService } from "applitutoriel-js-common/src/services/data/auth/auth-service";
 
+import { Injector } from "hornet-js-core/src/inject/injector";
 
 async function initContext() {
     await import("src/injector-context-services-data");
+    await import("src/injector-context-services-page");
     return await import("applitutoriel-js-common/src/middleware/authentication-api");
 }
 
@@ -177,11 +181,38 @@ export class Server {
                 // Usually specified as `/shibboleth` from site root
                 Utils.config.get("authentication.saml.configuration.issuer"),
                 // Certificat applicatif
-                fs.readFileSync(__dirname + "/../config/cert/cert.pem", "utf8"),
+                (fs.readFileSync(Utils.config.get("authentication.saml.configuration.cert"), "utf8") as any).toString("ascii"),
                 // Clé privée de décryptage
-                fs.readFileSync(__dirname + "/../config/cert/key.pem", "utf8"),
-                Utils.config.get("authentication.saml.configuration.idp")
+                (fs.readFileSync(Utils.config.get("authentication.saml.configuration.key"), "utf8") as any).toString("ascii"),
+                Utils.config.get("authentication.saml.configuration.idp"),true, (user, done) => {
+
+                    let profilsTmp = [];
+                    if (user.Profil) {
+                        profilsTmp = user.Profil.replace('[', "").replace(']', "").replace(/ /gi, "").split(";");
+                    }
+                    
+                    let roles = [];
+                    profilsTmp.map((role) => {
+                        roles.push({name: role});
+                    });
+                    
+                    user.name = user.Login;
+                    user.roles = roles;
+
+                    let api: AuthService = Injector.getRegistered(AuthService);
+
+                    api.generateToken({
+                        username: user.name,
+                        roles: roles
+                    }).then(() => {
+                        return done(null, user);
+                    }
+                    );
+
+                }
+
             );
+            configuration.signatureAlgorithm = "sha256";
             authent.initStrategy(new SamlStrategy(configuration));
 
             hornetMiddlewareList.addAfter(authent.getMiddleware(), HornetMiddlewares.ChangeI18nLocaleMiddleware);

@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -105,27 +105,27 @@ export class ReferentielPaysServiceImpl extends ServiceRequest implements Refere
      * - hornet
      * @returns {Promise<object>}
      */
-    listerPays() : Promise<any> {
+    listerPays(): Promise<any> {
         logger.trace("SERVICES - listerPays");
-        return this.fetch({method : "get", url : this.buildUrl(URL_REF + URL_PAYS), timeToLiveInCache : 3600});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_REF + URL_PAYS), timeToLiveInCache: 3600 });
     }
 
     /**
-     * liste les nationnalités
+     * liste les nationalités
      * Utilisé :
      * - hornet
      * - hornet-lite
      * @param {string} nationalite
      * @returns {Promise<object>}
      */
-    rechercherNationalites(nationalite?: string) : Promise<any> {
+    rechercherNationalites(nationalite?: string): Promise<any> {
         logger.trace("SERVICES - rechercherNationalites : ", nationalite);
-        
-        let request:HornetRequest = {method: "get", url: this.buildUrl(URL_REF + URL_REF_NATIONALITE)};
-        
+
+        let request: HornetRequest = { method: "get", url: this.buildUrl(URL_REF + URL_REF_NATIONALITE) };
+
         if (nationalite) {
             request.method = "post";
-            request.data = {nationnalite : nationalite};
+            request.data = {nationalite: nationalite};
             request.url = request.url + "/recherche"
         }
 
@@ -138,8 +138,8 @@ export class ReferentielPaysServiceImpl extends ServiceRequest implements Refere
      * - hornet
      * @returns {Promise<object>}
      */
-    listerVilles() : Promise<any> {
+    listerVilles(): Promise<any> {
         logger.trace("SERVICES - listerVilles");
-        return this.fetch({method : "get", url : this.buildUrl(URL_REF + URL_REF_VILLES), timeToLiveInCache : 3600});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_REF + URL_REF_VILLES), timeToLiveInCache: 3600 });
     }
 }

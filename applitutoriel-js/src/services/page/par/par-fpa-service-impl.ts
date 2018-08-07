@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -197,7 +197,7 @@ export class FichePartenaireServiceImpl extends FichePartenairePageService {
     protected convertBufferToArray(buff: any): any {
         var buffer = buff;
         if (buff !== undefined && Buffer.isBuffer(buff)) {
-            buffer = new Buffer(buff).toJSON();
+            buffer = Buffer.from(buff).toJSON();
         }
         return buffer;
     }
@@ -234,9 +234,9 @@ export class FichePartenaireServiceImpl extends FichePartenairePageService {
      * liste tous les secteurs
      * @return Promise
      */
-    listerSecteurs() : Promise<any> {
+    listerSecteurs(): Promise<any> {
         logger.trace("SERVICES - lister");
-        return this.fetch({method : "get", url : this.buildUrl(URL_SECTEURS)});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_SECTEURS) });
     }
 
 }

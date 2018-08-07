@@ -66,7 +66,7 @@
     "defaultDuration": 3600 // in second
     //"alwaysSetCookie": false
   },
-  "themeName": "hornet-themes-intranet",
+  "themeName": "hornet-themes",
   "security": {
     "enabled": true,
     "hpp": true,
@@ -100,9 +100,9 @@
       "disableAndroid": false
     },
     "frameguard": {
-      "enabled": true,
-      "mode": "deny",
-      "allowFromPattern": ""
+      "enabled": true
+      /*,"action": "sameorigin",*/
+      /*"domain": ""*/
     },
     "xss": {
       "enabled": true,
@@ -202,22 +202,23 @@
   },
   "authentication": {
     "loginUrl": "/login",
-    "logoutUrl": "/logout"
-    //    "saml": {
-    //      "enabled": false,
-    //      "configuration": {
-    //        "hostUrlReturnTo": "http://localhost:8888",
-    //        "callbackUrl": "/login",
-    //        "logoutCallbackUrl": "/logout",
-    //        "issuer": "http://localhost:8888/applitutoriel",
-    //        "idp": [
-    //          {
-    //            "name": "idp",
-    //            "shibbolethUrl": "./config/idp/arobas/idp-metadata.xml",
-    //            "httpsCert": "./config/cert/arobas/arobas.dev.diplomatie.gouv.fr"
-    //          }
-    //        ]
-    //      }
+    "logoutUrl": "/logout",
+    //"saml": {
+    //"enabled": true,
+    //"configuration": {
+    //"hostUrlReturnTo": "http://localhost:8888",
+    //"callbackUrl": "/login",
+    //"logoutCallbackUrl": "/logout",
+    //"issuer": "http://localhost:8888/applitutoriel",
+    //"idp": [{
+    // "name": "idp",
+    // "shibbolethUrl": "./config/idp/arobas/idp-metadata.xml",
+    // "httpsCert": "./config/cert/arobas/arobas.dev.diplomatie.gouv.fr"
+    // }],
+    // "cert": "./config/cert/cert.pem",
+    // "key": "./config/cert/key.pem"
+    // }
+    //}
   },
   "request": {
     "cache": {
@@ -229,6 +230,10 @@
         "enabled": false,
         "timetolive": 120
       }
+    },
+    "timeout": {
+      "response": 10000,
+      "deadline": 60000
     }
   }
 }

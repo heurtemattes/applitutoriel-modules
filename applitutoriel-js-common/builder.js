@@ -12,12 +12,13 @@ module.exports = {
     externalModules: {
 
         enabled: false,
-        directories: [ ]
+        directories: []
     },
-        config: {
-            typescript: {
-                bin: __dirname + "/node_modules/build/typescript"
-            }
-        }
+    config: {
+        autoGenerateIndex: false
+        /*typescript: {
+            bin: __dirname + "/node_modules/build/typescript"
+        }*/
+    }
 
 };

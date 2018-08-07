@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -120,12 +120,12 @@ export class AuthenticationMiddleware extends AbstractHornetMiddleware {
                         }).catch(err => {
                             AuthenticationMiddleware.logger.warn("Retour en erreur:", err);
                             if (err.code == "ERR_AUTHENTICATION_FAILED") {
-                                done(null, false, {message: "Votre identifiant ou votre mot de passe est incorrect"});
+                                done(null, false, { message: "Votre identifiant ou votre mot de passe est incorrect" });
                             } else {
-                                done(null, false, {message: "Une erreur technique est survenue : " + err.toString()});
+                                done(null, false, { message: "Une erreur technique est survenue : " + err.toString() });
                             }
                         }
-                    );
+                        );
                 };
             }(this.api)
         ));
@@ -156,7 +156,7 @@ export class AuthenticationMiddleware extends AbstractHornetMiddleware {
         app.use(passport.session());
 
         app.post(loginUrl,
-            passport.authenticate("local", {failureRedirect: Utils.buildContextPath(loginUrl), failureFlash: true}),
+            passport.authenticate("local", { failureRedirect: Utils.buildContextPath(loginUrl), failureFlash: true }),
             function (req: Request, res, next) {
                 AuthenticationMiddleware.logger.trace("Authentification ok, redirection vers la page d'accueil");
                 let previousUrl = req.body.previousUrl || req.getSession().getAttribute("previousUrl") || Utils.buildContextPath(welcomePageUrl);
@@ -164,9 +164,9 @@ export class AuthenticationMiddleware extends AbstractHornetMiddleware {
             }
         );
         app.all(loginUrl, function (req, res) {
-            let errors = req["flash"]("error");
-            if (errors.length > 0 && errors[0] === "Missing credentials") {
-                errors = ["Votre identifiant ou votre mot de passe est incorrect"];
+            let errors = req[ "flash" ]("error");
+            if (errors.length > 0 && errors[ 0 ] === "Missing credentials") {
+                errors = [ "Votre identifiant ou votre mot de passe est incorrect" ];
             }
 
             let props = {
@@ -180,7 +180,7 @@ export class AuthenticationMiddleware extends AbstractHornetMiddleware {
             }
 
             // cas d'une perte de connexion liée à un timeout + F5
-            if (req.getSession().getAttribute("previousUrl") && !props["previousUrl"]) {
+            if (req.getSession().getAttribute("previousUrl") && !props[ "previousUrl" ]) {
                 props.previousUrl = req.getSession().getAttribute("previousUrl");
                 req.getSession().removeAttribute("previousUrl");
             }

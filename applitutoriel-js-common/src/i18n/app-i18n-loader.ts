@@ -73,17 +73,23 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { I18nLoader } from "hornet-js-core/src/i18n/i18n-loader";
+import { I18nLoaderSubDirectory } from "hornet-js-core/src/i18n/i18n-loader-sub-directory";
 import * as path from "path";
 
-export class AppliI18nLoader extends I18nLoader {
+
+const paths = [
+    path.join(__dirname, "..", "resources"),
+    path.join(__dirname, "..", "views"),
+];
+
+export class AppliI18nLoader extends I18nLoaderSubDirectory {
 
     constructor() {
-        super(path.join(__dirname, "..", "resources"));
+        super(paths);
     }
 }

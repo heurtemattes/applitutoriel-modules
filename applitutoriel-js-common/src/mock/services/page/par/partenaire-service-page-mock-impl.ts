@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -112,11 +112,11 @@ export class PartenaireServicePageMockImpl extends RecherchePartenaireService {
     rechercher(criteres: PartenaireRechercheParameter, reqMimeType: MediaType, res?: NodeJS.WritableStream): Promise<any> {
         logger.debug("MOCK- recherche de partenaire", criteres);
         let result;
-        switch (criteres.pagination.pageIndex){
-            case 1 : result = (<any>tableauDePartenaires1).data; break;
-            case 2 : result = (<any>tableauDePartenaires2).data; break;
-            case 3 : result = (<any>tableauDePartenaires3).data; break;
-            case 4 : result = (<any>tableauDePartenaires4).data; break;
+        switch (criteres.pagination.pageIndex) {
+            case 1: result = (<any>tableauDePartenaires1).data; break;
+            case 2: result = (<any>tableauDePartenaires2).data; break;
+            case 3: result = (<any>tableauDePartenaires3).data; break;
+            case 4: result = (<any>tableauDePartenaires4).data; break;
         }
         return Promise.resolve(result);
     }
@@ -139,12 +139,21 @@ export class PartenaireServicePageMockImpl extends RecherchePartenaireService {
 
     //todo: à supprimer ?
     exporter(reqMimeType: MediaType): Promise<any> {
-        return Promise.resolve();
+        return this.fetch({
+            method: "get",
+            url: Utils.buildStaticPath("static/mock/export/export." + reqMimeType.SHORT),
+            typeMime: reqMimeType
+        });
     }
 
     exporterODF(reqMimeType: MediaType): Promise<any> {
-        return Promise.resolve();
+        return this.fetch({
+            method: "get",
+            url: Utils.buildStaticPath("static/mock/export/export." + reqMimeType.SHORT),
+            typeMime: reqMimeType
+        });
     }
+
 
     /**
      * Cration / Modifiaction d'un partenaire existant
@@ -153,7 +162,7 @@ export class PartenaireServicePageMockImpl extends RecherchePartenaireService {
      * @return Promise<object>
      */
     modifier(id: number, partenaire: any): Promise<any> {
-        return Promise.resolve( (<any>consulterPartenaire).data);
+        return Promise.resolve((<any>consulterPartenaire).data);
     }
 
     /**

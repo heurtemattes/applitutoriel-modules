@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -94,18 +94,19 @@ import { RecherchePartenaireServiceImpl } from "src/services/page/par/par-rpa-se
 import { FicheProduitServiceImpl } from "src/services/page/adm/adm-fpo-service-page-impl";
 import { FicheProduitService } from "applitutoriel-js-common/src/services/page/adm/adm-fpo-service-page";
 import { SecteurRepartitionProduitServicePageMockImpl } from "applitutoriel-js-common/src/mock/services/page/adm/secteur-repartition-service-page-mock-impl";
+import { Scope } from "hornet-js-core/src/inject/injectable";
 
 
 if (Utils.config.getOrDefault("mock.enabled", false) && Utils.config.getOrDefault("mock.servicePage.enabled", false)) {
     // Mock des services Page
-    Injector.register(AdministrationSecteurService, SecteurServicePageMockImpl);
-    Injector.register(FichePartenairePageService, FichePartenaireServicePageMockImpl);
-    Injector.register(RecherchePartenaireService, PartenaireServicePageMockImpl);
-    Injector.register(FicheProduitService, SecteurRepartitionProduitServicePageMockImpl);
+    Injector.register(AdministrationSecteurService, SecteurServicePageMockImpl, Scope.SINGLETON);
+    Injector.register(FichePartenairePageService, FichePartenaireServicePageMockImpl, Scope.SINGLETON);
+    Injector.register(RecherchePartenaireService, PartenaireServicePageMockImpl, Scope.SINGLETON);
+    Injector.register(FicheProduitService, SecteurRepartitionProduitServicePageMockImpl, Scope.SINGLETON);
 
 } else {
-    Injector.register(AdministrationSecteurService, SecteurServiceImpl);
-    Injector.register(FichePartenairePageService, FichePartenaireServiceImpl);
-    Injector.register(RecherchePartenaireService, RecherchePartenaireServiceImpl);
-    Injector.register(FicheProduitService, FicheProduitServiceImpl);
+    Injector.register(AdministrationSecteurService, SecteurServiceImpl, Scope.SINGLETON);
+    Injector.register(FichePartenairePageService, FichePartenaireServiceImpl, Scope.SINGLETON);
+    Injector.register(RecherchePartenaireService, RecherchePartenaireServiceImpl, Scope.SINGLETON);
+    Injector.register(FicheProduitService, FicheProduitServiceImpl, Scope.SINGLETON);
 }

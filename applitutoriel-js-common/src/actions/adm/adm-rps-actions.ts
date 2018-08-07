@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -81,14 +81,17 @@
 import { FicheProduitService } from "src/services/page/adm/adm-fpo-service-page";
 import { RouteActionService } from "hornet-js-core/src/routes/abstract-routes";
 
-export class ListerProduits extends RouteActionService<any, FicheProduitService> {
-    execute(): Promise<any> {
-        return this.getService().listerProduits();
-    }
-}
 
-export class Repartition extends RouteActionService<any, FicheProduitService> {
+export const ACTION_LISTER_PRODUITS = "listerProduits";
+export const ACTION_REPARTITION_PRODUITS = "repartitionProduits";
+
+
+export class ProduitAction extends RouteActionService<any, FicheProduitService> {
     execute(): Promise<any> {
-        return this.getService().repartition();
+        if (this.attributes.action === ACTION_LISTER_PRODUITS) {
+            return this.getService().listerProduits();
+        } else if (this.attributes.action === ACTION_REPARTITION_PRODUITS) {
+            return this.getService().repartition();
+        }
     }
-}
+} 

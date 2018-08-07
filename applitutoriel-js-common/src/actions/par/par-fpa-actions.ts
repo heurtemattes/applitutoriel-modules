@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -93,6 +93,7 @@ import { PartenaireService } from "applitutoriel-js-common/src/services/data/par
 
 const logger: Logger = Utils.getLogger("applitutoriel.actions.par.par-fpa-actions");
 import * as parValidationSchema from "src/views/par/par-fpa/validation.json";
+import { DispositionType } from "hornet-js-core/src/result/disposition-type";
 
 /**
  * Charge les données nécessaires à l'écran de fiche partenaire
@@ -116,7 +117,9 @@ export class LirePhoto extends RouteActionService<{ idPartenaire: number }, Fich
 
     execute(): Promise<ResultFile> {
         return this.getService().lirePhoto(this.attributes.idPartenaire).then((retourApi: PhotoMetier) => {
-            return new ResultFile(retourApi, MediaTypes.fromMime(retourApi.mimeType));
+            // change disposition to DispositionType.ATTACHMENT for download
+            return new ResultFile((Object as any).assign({dispositionType: DispositionType.INLINE, filename: (retourApi as any).fileName }, retourApi),
+                                  MediaTypes.fromMime(retourApi.mimetype));
         });
     }
 }

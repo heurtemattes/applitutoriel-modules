@@ -13,7 +13,7 @@
     },
     "listeCriteres": {
       "partenaire": {
-        "isClient": true
+        "client": true
       },
       "startDate": "2015-03-25T00:00:00.000Z"
     },
@@ -24,7 +24,8 @@
         "prenom": "Pierre",
         "proCourriel": "pierre.albert@msn.com",
         "organisme": "Organisme 4",
-        "isVIP": true,
+        "client": false,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -51,7 +52,7 @@
         "prenom": "Renaud",
         "proCourriel": "renaud.albert@msn.com",
         "organisme": "Organisme 2",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -78,7 +79,7 @@
         "prenom": "David",
         "proCourriel": "david.alfred@yahoo.fr",
         "organisme": "Organisme 1",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -105,7 +106,7 @@
         "prenom": "Guillaume",
         "proCourriel": "guillaume.alfred@live.fr",
         "organisme": "Organisme 4",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -132,7 +133,7 @@
         "prenom": "Albert",
         "proCourriel": "albert.alfred@yahoo.fr",
         "organisme": "Organisme 4",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -159,7 +160,7 @@
         "prenom": "Max",
         "proCourriel": "max.bazin@gmail.com",
         "organisme": "Organisme 1",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -186,7 +187,7 @@
         "prenom": "James",
         "proCourriel": "james.deno@hotmail.com",
         "organisme": "Organisme 3",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -213,7 +214,7 @@
         "prenom": "Matthieu",
         "proCourriel": "matthieu.devil@orange.net",
         "organisme": "Organisme 2",
-        "isVIP": false,
+        "vip": false,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -240,7 +241,7 @@
         "prenom": "Jacques",
         "proCourriel": "jacques.devil@hotmail.com",
         "organisme": "Organisme 4",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",
@@ -267,7 +268,7 @@
         "prenom": "Jean-Paul",
         "proCourriel": "jean-paul.dupond@free.fr",
         "organisme": "Organisme 1",
-        "isVIP": true,
+        "vip": true,
         "ville": {
           "id": 2664,
           "libelle": "Paris",

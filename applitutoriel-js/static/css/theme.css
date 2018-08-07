@@ -55,8 +55,14 @@
 
 #header-container #banner {
     background: #429dd6 url("../img/headerAppliTuto.png") no-repeat scroll 0 0;
+    background-size: 100% 4em;
 }
 
 #menu-main button.toggler {
     background-color: transparent;
+}
+
+span.file-info {
+    color: grey;
+    padding-left: 1em;
 }

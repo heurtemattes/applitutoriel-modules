@@ -402,6 +402,43 @@ Type Ajax :
   },
 ```
 
+## Configuration d'une base de données
+
+Il est possible d'ajouter une configuration permettant de se connecter à une base de données.
+
+Les configurations de base de données déclarés dans la configuration peuvent ensuite être utilisées dans une classe implémentant `IModelDAO` du projet `hornet-js-database`.
+
+| Paramètre | Description | Valeur |
+|-----------|-------------|--------|
+|database|Object contenant la liste des bases de données et leur configuration||
+|config| Nom de la base de données avec sa configuration||
+|uri|Chaine de connexion à une bdd [sgbd]://[user]@[host]:[ports]/[name]||
+|options|Options nécessaires ou facultatives pour le sgbd||
+|define|Option Sequelize, timestamps : activation des timestamps dans les tables BDD||
+|loggingLevel|Level de log de sequelize||
+|reload|Indicateur pour exécution des scripts sql à chaque démarrage|false par défaut
+
+```json
+    "database": {
+        "config": {
+          "uri": "postgres://user@localhost:5432/applitutoriel",
+          "options": {
+            "operatorsAliases": false,
+            "pool": {
+              "max": 5,
+              "min": 0,
+              "idle": 1000
+            },
+            "define": {
+              "timestamps": false
+            },
+            "loggingLevel": "INFO"
+          },
+          "reload": true
+        }
+      }
+```
+
 ### Mode mock
 
 | Paramètre | Description | Valeur |
@@ -457,6 +494,8 @@ Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais 
 ### Configuration du Request
 #### Configuration du Cache
 
+La gestion du cache est paramétrable côté client et serveur pour les requêtes.
+
 | Paramètre | Description | Valeur |
 |-----------|-------------|--------|
 |enabled|Activation du cache sur les requêtes de services|true|
@@ -465,8 +504,28 @@ Note : Il ne s'agit pas d'une configuration à proprement parlé de Hornet mais 
 ```json
 "request": {
     "cache": {
-        "enabled": true,
+      "client": {
+        "enabled": false,
         "timetolive": 60
+      },
+      "server": {
+        "enabled": false,
+        "timetolive": 120
       }
+    }
+```
+
+#### Configuration du timeout
+
+| Paramètre | Description | Valeur |
+|-----------|-------------|--------|
+| response  | &nbsp;      | &nbsp; |
+| deadline  | &nbsp;      | &nbsp; |
+
+```json
+"request": {
+    "timeout": {
+      "response": 10000,
+      "deadline": 60000
     }
 ```

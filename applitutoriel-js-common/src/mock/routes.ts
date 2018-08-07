@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -101,17 +101,17 @@ let partenaires = (<any>partenairesData).data.liste;
 let users = [
     {
         "name": "test",
-        "roles": [{"id": 2, "name": "APPLI_TUTO_USER"}]
+        "roles": [ { "id": 2, "name": "APPLI_TUTO_USER" } ]
     },
     {
         "name": "admin",
-        "roles": [{"id": 1, "name": "APPLI_TUTO_ADMIN"}, {"id": 2, "name": "APPLI_TUTO_USER"}]
+        "roles": [ { "id": 1, "name": "APPLI_TUTO_ADMIN" }, { "id": 2, "name": "APPLI_TUTO_USER" } ]
     }
 ];
 
 function findByUsername(username) {
     for (let i = 0, len = users.length; i < len; i++) {
-        let user = users[i];
+        let user = users[ i ];
         if (user.name === username) {
             return user;
         }
@@ -123,7 +123,7 @@ export class BouchonRoutes {
 
     static build(router) {
 
-        router.post("/partenaires/rechercher", function() {
+        router.post("/partenaires/rechercher", function () {
             this.res.send(
                 {
                     "hasTechnicalError": false,
@@ -131,14 +131,14 @@ export class BouchonRoutes {
                     "status": 200,
                     "url": "url",
                     "errors": [],
-                    "data": (<any> partenairesData).data
+                    "data": (<any>partenairesData).data
                 });
         });
 
-        router.get("/partenaires/consulter/:id", function(id) {
+        router.get("/partenaires/consulter/:id", function (id) {
             let idPartenaire = parseInt(id, 10);
             logger.debug("Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-            let partenaire = _.find(partenaires, function(item: Partenaire) {
+            let partenaire = _.find(partenaires, function (item: Partenaire) {
                 logger.debug(item);
                 if (item.id === id) {
                     return true;
@@ -160,10 +160,10 @@ export class BouchonRoutes {
             }
         });
 
-        router.delete("/partenaires/supprimer/:id", function(id) {
+        router.delete("/partenaires/supprimer/:id", function (id) {
             let idPartenaire = parseInt(id, 10);
             logger.debug("Suppression du partenaire, id:", id);
-            _.remove(partenaires, function(item: Partenaire) {
+            _.remove(partenaires, function (item: Partenaire) {
                 if (item.id === id) {
                     return true;
                 }
@@ -174,11 +174,11 @@ export class BouchonRoutes {
             });
         });
 
-        router.post("/partenaires", function() {
+        router.post("/partenaires", function () {
 
         });
 
-        router.put("/partenaires/sauvegarder/:id", function() {
+        router.put("/partenaires/sauvegarder/:id", function () {
             this.res.send({
                 "hasTechnicalError": false,
                 "hasBusinessError": false,
@@ -191,7 +191,7 @@ export class BouchonRoutes {
             });
         });
 
-        router.post("/contact/envoyer", function() {
+        router.post("/contact/envoyer", function () {
             this.res.json({
                 "hasTechnicalError": false,
                 "hasBusinessError": false,
@@ -204,27 +204,27 @@ export class BouchonRoutes {
             });
         });
 
-        router.get("/secteurs", function() {
+        router.get("/secteurs", function () {
             this.res.send(secteurs);
         });
-        router.get("/produits/consulter/:id", function() {
+        router.get("/produits/consulter/:id", function () {
             this.res.json(partenaireProduits);
         });
         /*
                 router.get("/produits", function() {
                     this.res.send(produits);
                 });*/
-        router.get("/partenaires/villes", function() {
+        router.get("/partenaires/villes", function () {
             this.res.send(villes);
         });
-        router.get("/partenaires/pays", function() {
+        router.get("/partenaires/pays", function () {
             this.res.send(pays);
         });
-        router.post("/partenaires/pays/nationalites/rechercher", function() {
+        router.post("/partenaires/pays/nationalites/rechercher", function () {
             this.res.send(pays);
         });
 
-        router.post("/utilisateurs/auth", function() {
+        router.post("/utilisateurs/auth", function () {
             let user = findByUsername(this.req.body.login);
             this.res.json({
                 "hasTechnicalError": false,

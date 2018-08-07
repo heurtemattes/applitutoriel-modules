@@ -22,9 +22,6 @@
     }*/
   },
   "categories": {
-    "default": {
-      "appenders": ["console" /*, "dateFile"*/ ],
-      "level": "INFO"
-    }
+    "default": { "appenders": ["console" /*, "dateFile"*/], "level": "INFO" }
   }
 }

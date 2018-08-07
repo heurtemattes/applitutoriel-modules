@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.1.1
+ * @version v5.2.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -129,7 +129,7 @@ export class PartenaireServiceImpl extends PartenaireService {
 
     supprimer(id): Promise<any> {
         logger.trace("SERVICES - supprimer : ", id);
-        return this.fetch({method: "delete", url: this.buildUrl(URL_PARTENAIRES + "/" + id)});
+        return this.fetch({ method: "delete", url: this.buildUrl(URL_PARTENAIRES + "/" + id) });
     }
 
 
@@ -168,10 +168,10 @@ export class PartenaireServiceImpl extends PartenaireService {
      */
     modifier(id: number, partenaire: any): Promise<any> {
 
-        let request: HornetRequest = {method: "put", url: this.buildUrl(URL_PARTENAIRES) + "/" + id}
+        let request: HornetRequest = { method: "put", url: this.buildUrl(URL_PARTENAIRES) + "/" + id }
 
         if (!id) {
-            request = {method: "post", url: this.buildUrl(URL_PARTENAIRES)}
+            request = { method: "post", url: this.buildUrl(URL_PARTENAIRES) }
         }
 
         if (Utils.isServer) {
@@ -190,23 +190,10 @@ export class PartenaireServiceImpl extends PartenaireService {
                 // De plus, si on essaye quand même de l'attacher dans la requête alors que ce n'est pas un fichier,
                 // firefox plante (Argument 2 of FormData.append does not implement interface Blob)
                 request.attach = [];
-                request.attach.push({field: "photo", file: partenaire.photo, fileName: partenaire.photo.name});
+                request.attach.push({field: "photo", file: partenaire.photo, fileName: partenaire.photo.nom});
             }
         }
         return this.fetch(request);
-    }
-
-    /**
-     * node >v10 does not parse JSON buffer too a buffer so we must detect and create a buffer
-     * @param buff
-     * @returns {*}
-     */
-    protected convertBufferToArray(buff: any): any {
-        var buffer = buff;
-        if (buff !== undefined && Buffer.isBuffer(buff)) {
-            buffer = new Buffer(buff).toJSON();
-        }
-        return buffer;
     }
 
     /**
@@ -221,16 +208,13 @@ export class PartenaireServiceImpl extends PartenaireService {
 
         if (remotePartenaire.photo && remotePartenaire.photo.contenu) {
             let photo: any = remotePartenaire.photo;
-            let buffer = this.convertBufferToArray(photo.contenu);
             remotePartenaire.photo = {
                 id: null,
-                nom: photo.originalname,
-                originalname: photo.originalname,
-                name: photo.originalname,
-                mimeType: photo.mimeType,
+                fileName: photo.nom,
+                mimetype: photo.mimeType,
                 encoding: photo.encoding,
                 size: photo.size,
-                data: buffer.data
+                data: photo.contenu.toJSON().data,
             };
             photo = null;
         }
@@ -241,9 +225,9 @@ export class PartenaireServiceImpl extends PartenaireService {
      * liste tous les secteurs
      * @return Promise
      */
-    listerSecteurs() : Promise<any> {
+    listerSecteurs(): Promise<any> {
         logger.trace("SERVICES - lister");
-        return this.fetch({method : "get", url : this.buildUrl(URL_SECTEURS)});
+        return this.fetch({ method: "get", url: this.buildUrl(URL_SECTEURS) });
     }
 
     /**
@@ -258,7 +242,7 @@ export class PartenaireServiceImpl extends PartenaireService {
             url += "/" + id;
         }
 
-        return this.fetch({method: "get", url: this.buildUrl(url)});
+        return this.fetch({ method: "get", url: this.buildUrl(url) });
     }
 
     /**
@@ -269,7 +253,7 @@ export class PartenaireServiceImpl extends PartenaireService {
     getFormData(): Promise<any> {
         return this.paysApi.listerVilles().then((villes: any) => {
             return this.paysApi.listerPays().then((pays: any) => {
-                return Promise.resolve({villes: villes, pays: pays});
+                return Promise.resolve({ villes: villes, pays: pays });
             });
         });
     }
@@ -281,7 +265,9 @@ export class PartenaireServiceImpl extends PartenaireService {
      */
     lirePhoto(id: number, res?: NodeJS.WritableStream): Promise<any> {
         logger.trace("SERVICES - lirePhoto : ", id);
-        let request: HornetRequest = { method: "get", url: this.buildUrl(URL_PARTENAIRES + "/" + id + URL_PAR_PHOTO) };
+        let request: HornetRequest = { 
+            method: "get",
+            url: this.buildUrl(URL_PARTENAIRES + "/" + id + URL_PAR_PHOTO)};
         return (res) ? this.fetchOnStream(request, res) : this.fetch(request);
     }
 }
