@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.0
+ * @version v5.2.2
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -288,7 +288,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         item.user = this.user.name;
         this.getService().modifier(item.id, item).then(() => {
             NotificationManager.notify(null, "secteurPageForm", null,
-                Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
+                                       Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-01"));
             this.refreshSecteurs();
         });
 
@@ -306,7 +306,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         this.getService().supprimer(item.id).then((result) => {
             if (result) {
                 NotificationManager.notify(null, null, null,
-                    Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
+                                           Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
                 this.refreshSecteurs();
             }
 

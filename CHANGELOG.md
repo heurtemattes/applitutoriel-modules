@@ -1,3 +1,16 @@
+# applitutoriel-modules 5.2.2
+
+- 32ac0bc9 FIX: Ajout de resetTitle pour l'anglais
+- 47812e5e FIX: correction expression régulière numéro de téléphone
+- 1860d5fc FIX: suppression de licences en double
+- f086e0c3 FIX[s281] - hornet-js-core : Format de Log normes ESU
+- 002f5a26 FIX [s279] - Conf SAML : Correction de la configuration
+- e3b961a9 Fix: Correction du problème de connexion à la BDD
+- 9f34b4b7 FIX : Mise à jour de la configuration de la BDD
+- 583262d7 FIX [S281] - Format de Log normes ESU
+- e44e2a99 FIX[S272] - JenkinsFile: modifier gestion branch
+
+
 # applitutoriel-modules 5.2.0
 
 - FIX  - Accessibilité: title dropdownItem toggleColumnButton/Pager

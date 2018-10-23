@@ -14,6 +14,7 @@ istanbul/
 **/static/hornet-themes/
 vendor-manifest.json
 **/static/js/
+**/static/**/**
 **/static/html
 karma_html/
 test_report/

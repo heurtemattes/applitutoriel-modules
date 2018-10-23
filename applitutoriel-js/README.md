@@ -29,17 +29,16 @@ L'applitutoriel est une mise en pratique du RGAA V3 au travers du framework Horn
 npm install -g hornet-js-builder
 ```
 
-* checkout du projet `applitutoriel-modules`
+* checkout du projet `applitutoriel-js`
 
 ## Initialisation #
-Se positionner dans le répertoire du projet `applitutoriel-js-modules` et lancer la commande :
+Se positionner dans le répertoire du projet `applitutoriel-js` et lancer la commande:
 
 ```shell
 hb install
 ```
 
 ## Démarrage de l'application en mode développement #
-Se positionner dans le répertoire du projet `applitutoriel-js`
 
 ### Commande par défaut
 

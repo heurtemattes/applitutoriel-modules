@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.0
+ * @version v5.2.2
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -106,7 +106,7 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             conformément à la règlementation.
                             Cette page est obligatoire pour être conforme au RGAA 3.0. Pour des aides relatives à la
                             navigation et aux aménagements particuliers du site,
-                            <a href={this.genUrl("/aide")}>visitez la page d'aide</a>.</p>
+                            <a href={this.genUrl("/politiqueAccessibilite")}>visitez la page accessibilité</a>.</p>
 
                         <p className="texte">La déclaration de conformité du site http://www.url-de-applicationweb a été
                             établie le jj/mm/aaaa.</p>
@@ -265,7 +265,6 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             <li>Page d'accueil</li>
                             <li>Page contact</li>
                             <li>Page d'aide</li>
-                            <li>Page de recherche d'un partenaire</li>
                             <li>Page édition d'un partenaire</li>
                             <li>Page liste des secteurs</li>
                         </ul>

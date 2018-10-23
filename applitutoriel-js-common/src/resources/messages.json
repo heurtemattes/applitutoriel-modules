@@ -688,7 +688,7 @@
   "info": {
     "message": {
       "IN-PA-RPA-01": "Le partenaire « {$0} {$1} » a bien été supprimé.",
-      "IN-AD-LST-01": "Le secteur a bien été modicreerfié.",
+      "IN-AD-LST-01": "Le secteur a bien été modifié.",
       "IN-AD-LST-02": "Le secteur a bien été supprimé.",
       "IN-AD-LST-03": "Le secteur a bien été créé.",
       "IN-GE-CNT-01": "Le message a bien été envoyé.",

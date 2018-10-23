@@ -1,6 +1,6 @@
 {
   "name": "applitutoriel-js",
-  "version": "5.2.0",
+  "version": "5.2.2",
   "license": "CECILL-2.1",
   "main": "index.js",
   "description": "Application tutoriel utilisant le Framework hornet",
@@ -12,27 +12,27 @@
     "url": "git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git"
   },
   "tsDefinitionDependencies": {
-    "applitutoriel-js-common-dts": "5.2.0",
-    "hornet-js-ts-typings": "5.2.0",
-    "hornet-js-bean-dts": "5.2.0",
-    "hornet-js-utils-dts": "5.2.0",
-    "hornet-js-core-dts": "5.2.0",
-    "hornet-js-components-dts": "5.2.0",
-    "hornet-js-react-components-dts": "5.2.0",
-    "hornet-js-passport-dts": "5.2.0",
-    "hornet-js-test-dts": "5.2.0"
+    "applitutoriel-js-common-dts": "5.2.2",
+    "hornet-js-ts-typings": "5.2.2",
+    "hornet-js-bean-dts": "5.2.2",
+    "hornet-js-utils-dts": "5.2.2",
+    "hornet-js-core-dts": "5.2.2",
+    "hornet-js-components-dts": "5.2.2",
+    "hornet-js-react-components-dts": "5.2.2",
+    "hornet-js-passport-dts": "5.2.2",
+    "hornet-js-test-dts": "5.2.2"
   },
   "appDependencies": {
-    "applitutoriel-js-common": "5.2.0",
-    "hornet-js-bean": "5.2.0",
-    "hornet-js-utils": "5.2.0",
-    "hornet-js-passport": "5.2.0",
-    "hornet-themes": "5.2.0",
+    "applitutoriel-js-common": "5.2.2",
+    "hornet-js-bean": "5.2.2",
+    "hornet-js-utils": "5.2.2",
+    "hornet-js-passport": "5.2.2",
+    "hornet-themes": "5.2.2",
     "jsonwebtoken": "7.3.0"
   },
   "buildDependencies": {},
   "testDependencies": {
-    "hornet-js-test": "5.2.0"
+    "hornet-js-test": "5.2.2"
   },
   "scripts": {
     "init-dev": "hb install",

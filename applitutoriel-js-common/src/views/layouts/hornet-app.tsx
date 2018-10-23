@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.0
+ * @version v5.2.2
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -114,7 +114,7 @@ const users = {
         }, "admin":
         {
             "name": "admin",
-            "roles": [ { "id": 1, "name": "APPLI_TUTO_ADMIN" }, { "id": 2, "name": "APPLI_TUTO_USER" } ]
+            "roles": [ { "id": 1, "name": "APPLI_TUTO_ADMIN" }, { "id": 2, name: "APPLI_TUTO_USER" } ]
         }
 };
 
@@ -176,21 +176,21 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
     render(): JSX.Element {
         logger.trace("VIEW HornetApp render");
 
-        let title = _.concat(this.i18n("header").logoTitle, this.state.applicationTitle).join(" ");
+        const title = _.concat(this.i18n("header").logoTitle, this.state.applicationTitle).join(" ");
 
-        let classes: any = {
+        const classes: any = {
             "mode-fullscreen": this.state.modeFullscreen
         };
 
-        let messIntl = this.i18n("header");
+        const messIntl = this.i18n("header");
 
-        let applicationTitle = this.i18n("applicationTitle");
+        const applicationTitle = this.i18n("applicationTitle");
 
-        let lienAide = (this.state.linkHelpVisible) ?
+        const lienAide = (this.state.linkHelpVisible) ?
             <li><a title={messIntl.help + applicationTitle} href={this.genUrl("/aide")}>{messIntl.help}</a></li>
             : null;
-        let lang = <ChangeLanguage handleChangeLanguage={this.handleChangeLanguage} position={Position.BOTTOMRIGHT} />;
-        let user = Utils.config.getOrDefault("fullSpa.enabled", false) && Utils.config.getOrDefault("mock.enabled", false) ? <Dropdown
+        const lang = <ChangeLanguage handleChangeLanguage={this.handleChangeLanguage} position={Position.BOTTOMRIGHT} />;
+        const user = Utils.config.getOrDefault("fullSpa.enabled", false) && Utils.config.getOrDefault("mock.enabled", false) ? <Dropdown
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
             { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
@@ -201,8 +201,8 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             labelClassName={"profil-label"}
             position={Position.BOTTOMRIGHT}
         /> : <User />;
-        let langBanner = <ChangeLanguage id="Change-Language-banner" handleChangeLanguage={this.handleChangeLanguage} position={Position.BOTTOMRIGHT} />;
-        let userBanner = Utils.config.getOrDefault("fullSpa.enabled", false) && Utils.config.getOrDefault("mock.enabled", false) ? <Dropdown
+        const langBanner = <ChangeLanguage id="Change-Language-banner" handleChangeLanguage={this.handleChangeLanguage} position={Position.BOTTOMRIGHT} />;
+        const userBanner = Utils.config.getOrDefault("fullSpa.enabled", false) && Utils.config.getOrDefault("mock.enabled", false) ? <Dropdown
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
             { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
@@ -215,7 +215,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
         /> : <User id="user-banner" />;
 
         // todo add to banner
-        let wrappedUserLang = (
+        const wrappedUserLang = (
             <div className="userlang fr full-height">
                 {userBanner}
                 {langBanner}
@@ -225,7 +225,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             </div>
         );
 
-        let sessionIdpExpireNotification = Utils.getCls("hornet.user") && Utils.getCls("hornet.user")["SessionNotOnOrAfter"]?
+        const sessionIdpExpireNotification = Utils.getCls("hornet.user") && Utils.getCls("hornet.user")["SessionNotOnOrAfter"] ?
         <SessionIdpExpireNotification expireIn={60} expireInDate={Utils.getCls("hornet.user")["SessionNotOnOrAfter"] - new Date(Utils.getCls("currenDate")).getTime()} />
         : null;
 
@@ -278,12 +278,10 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
                         <Spinner />
                     </div>
                 </HeaderPage>
-                <React.StrictMode>
                 <HornetContent content={this.state.content} workingZoneWidth={this.state.workingZoneWidth}
                     error={this.state.error} />
                 <NotificationSessionFooter />
                     {sessionIdpExpireNotification}
-                </React.StrictMode>
                 <FooterPage workingZoneWidth={this.state.currentWorkingZoneWidth}>
                     <div className="fl mll">
                         <ul className="footer-links">
@@ -314,7 +312,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
      */
     onClickLinkFullscreen() {
         this.setState({
-            modeFullscreen: !this.state.modeFullscreen
+            modeFullscreen: !this.state.modeFullscreen,
         });
     }
 
@@ -324,7 +322,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
      */
     private handleChangeLanguage(i18nLocale: string) {
 
-        this.service.changeLanguage({ "hornetI18n": i18nLocale }).then((retourApi) => {
+        this.service.changeLanguage({ hornetI18n: i18nLocale }).then((retourApi) => {
             logger.trace("Retour service changeLanguage :", retourApi.body);
             Utils.setCls("hornet.internationalization", retourApi.body);
             window.location.reload();
@@ -337,7 +335,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
      */
     private handleWakeUpNode(i18nLocale: string) {
 
-        this.service.changeLanguage({ "hornetI18n": i18nLocale }).then((retourApi) => {
+        this.service.changeLanguage({ hornetI18n: i18nLocale }).then((retourApi) => {
             logger.trace("Retour API PartenaireApi.rechercher :", retourApi.body);
             Utils.setCls("hornet.internationalization", retourApi.body);
             window.location.reload();

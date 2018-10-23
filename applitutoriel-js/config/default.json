@@ -202,23 +202,25 @@
   },
   "authentication": {
     "loginUrl": "/login",
-    "logoutUrl": "/logout",
-    //"saml": {
-    //"enabled": true,
-    //"configuration": {
-    //"hostUrlReturnTo": "http://localhost:8888",
-    //"callbackUrl": "/login",
-    //"logoutCallbackUrl": "/logout",
-    //"issuer": "http://localhost:8888/applitutoriel",
-    //"idp": [{
-    // "name": "idp",
-    // "shibbolethUrl": "./config/idp/arobas/idp-metadata.xml",
-    // "httpsCert": "./config/cert/arobas/arobas.dev.diplomatie.gouv.fr"
-    // }],
-    // "cert": "./config/cert/cert.pem",
-    // "key": "./config/cert/key.pem"
-    // }
-    //}
+    "logoutUrl": "/logout"/*,
+    "saml": {
+      "enabled": true,
+      "configuration": {
+        "hostUrlReturnTo": "http://localhost:8888",
+        "callbackUrl": "/login",
+        "logoutCallbackUrl": "/logout",
+        "issuer": "http://localhost:8888/applitutoriel",
+        "idp": [
+          {
+            "name": "idp",
+            "shibbolethUrl": "./config/idp/arobas/idp-metadata.xml",
+            "httpsCert": "./config/cert/arobas/arobas.dev.diplomatie.gouv.fr"
+          }
+        ],
+        "cert": "./config/cert/cert.pem",
+        "key": "./config/cert/key.pem"
+      }
+    }*/
   },
   "request": {
     "cache": {
