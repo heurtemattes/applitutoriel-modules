@@ -11,7 +11,7 @@ npm-debug.log
 target/
 istanbul/
 .vscode
-**/static/hornet-themes/
+**/static/hornet-themes-intranet/
 vendor-manifest.json
 **/static/js/
 **/static/**/**

@@ -65,7 +65,7 @@
     "secure": true
     //"alwaysSetCookie": false
   },
-  "themeName": "hornet-themes",
+  "themeName": "hornet-themes-intranet",
   "security": {
     "enabled": true,
     "hpp": true,

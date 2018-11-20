@@ -272,6 +272,10 @@
       "creation": {
         "text": "Create",
         "title": "Create a partner"
+      },
+      "creationparonglet": {
+        "text": "Tab creation",
+        "title": "Create a partner"
       }
     },
     "administration": {

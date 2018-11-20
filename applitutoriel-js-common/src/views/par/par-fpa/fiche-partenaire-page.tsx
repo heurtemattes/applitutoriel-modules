@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.2
+ * @version v5.2.3
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -304,9 +304,9 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
             this.tabAddedNumber = 0
         }
 
-        let index = "newSecteurTab" + this.tabAddedNumber;
-        let cb: any = (e: Element): void => {
-            let tabInserted = this.tabs.getTabById(index);
+        const index = "newSecteurTab" + this.tabAddedNumber;
+        const cb: any = (e: Element): void => {
+            const tabInserted = this.tabs.getTabById(index);
             if (tabInserted && tabInserted.props && tabInserted.props.index) {
                 this.tabs.showPanel(tabInserted.props.index);
             }

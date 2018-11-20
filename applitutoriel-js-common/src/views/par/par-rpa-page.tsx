@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.2
+ * @version v5.2.3
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -138,6 +138,7 @@ import { DefaultSort } from "hornet-js-core/src/component/datasource/options/dat
 import { SortData } from "hornet-js-core/src/component/sort-data";
 
 import * as schema from "src/views/par/par-rpa-validation.json";
+import { timingSafeEqual } from 'crypto';
 
 const logger: Logger = Utils.getLogger("applitutoriel.views.par.par-rpa-page");
 
@@ -348,6 +349,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                                 alt={intlTab.colonnes.consultationTitle}
                                 srcImg={Picto.blue.consulter}
                                 action={this.consulterPartenaire}
+                                visible={this.isVisible} 
                             />
                             <ActionColumn keyColumn="editer"
                                 srcImg={Picto.blue.editer}
@@ -379,6 +381,10 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                 </Table>
             </div>
         );
+    }
+
+    isVisible(value) {
+        return value.nom !== "ALBERT";
     }
 
     /**

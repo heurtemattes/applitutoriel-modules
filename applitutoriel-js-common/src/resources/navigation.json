@@ -70,6 +70,16 @@
         "rolesAutorises": [
           "APPLI_TUTO_ADMIN"
         ]
+      }, {
+        "featureFlipping": "partenaire",
+        "text": "navigation.partenaire.creationparonglet.text",
+        "title": "navigation.partenaire.creationparonglet.title",
+        "url": "/partenaires/creerparonglet",
+        "visibleDansMenu": true,
+        "visibleDansPlan": true,
+        "rolesAutorises": [
+          "APPLI_TUTO_ADMIN"
+        ]
       }]
     },
     {

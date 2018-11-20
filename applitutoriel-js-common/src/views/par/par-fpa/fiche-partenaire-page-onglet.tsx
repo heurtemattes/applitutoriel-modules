@@ -81,6 +81,10 @@
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-utils/src/logger";
 import * as React from "react";
+import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widget/component/hornet-page";
+import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
+import { Tabs, TabsProps } from "hornet-js-react-components/src/widget/tab/tabs";
+import { Tab } from "hornet-js-react-components/src/widget/tab/tab";
 import * as _ from "lodash";
 import { Form } from "hornet-js-react-components/src/widget/form/form";
 import { Row } from "hornet-js-react-components/src/widget/form/row";
@@ -97,7 +101,6 @@ import {
 import { AutoCompleteMultiField } from "hornet-js-react-components/src/widget/form/auto-complete-multi-field";
 import { TextAreaField } from "hornet-js-react-components/src/widget/form/textarea-field";
 import { Button } from "hornet-js-react-components/src/widget/button/button";
-import { UploadedFile } from "hornet-js-core/src/data/file";
 import { CalendarField } from "hornet-js-react-components/src/widget/form/calendar-field";
 import { Table } from "hornet-js-react-components/src/widget/table/table";
 import { Columns } from "hornet-js-react-components/src/widget/table/columns";
@@ -107,10 +110,7 @@ import { ActionButton } from "hornet-js-react-components/src/widget/table/action
 import { Header } from "hornet-js-react-components/src/widget/table/header";
 import { Content } from "hornet-js-react-components/src/widget/table/content";
 import { ActionColumn } from "hornet-js-react-components/src/widget/table/column/action-column";
-import { Accordions } from "hornet-js-react-components/src/widget/accordion/accordions";
-import { Accordion } from "hornet-js-react-components/src/widget/accordion/accordion";
 import { ButtonsArea } from "hornet-js-react-components/src/widget/form/buttons-area";
-import { TabContentProps } from "hornet-js-react-components/src/widget/tab/tab-content";
 import { InputTextColumn } from "hornet-js-react-components/src/widget/table/column/input-text-column";
 import { DataSource } from "hornet-js-core/src/component/datasource/datasource";
 import { PaysMetier } from "src/models/ref/ref-pay-mod";
@@ -119,53 +119,24 @@ import { DataSourceMaster } from "hornet-js-core/src/component/datasource/dataso
 import { DefaultSort } from "hornet-js-core/src/component/datasource/options/datasource-option";
 import { SortData } from "hornet-js-core/src/component/sort-data";
 import { PartenaireMetier } from "src/models/par/par-mod";
-import { TabContent } from "hornet-js-react-components/src/widget/tab/tab-content";
-import SyntheticEvent = React.SyntheticEvent;
+import { FichePartenairePageService } from "src/services/page/par/par-fpa-service";
+import { DataSourceConfigPage } from "hornet-js-core/src/component/datasource/config/service/datasource-config-page";
 
 import * as schema from "src/views/par/par-fpa/validation.json";
 
 const logger: Logger = Utils.getLogger("applitutoriel.views.par.par-fpa.identite-tab");
+import { FichePartenaireResult } from "src/services/type/par/par-fpa-res";
+import { NotificationManager, Notifications } from "hornet-js-core/src/notification/notification-manager";
+import { URL_PARTENAIRES } from "src/utils/urls";
 
 export const PAR_MODE_CONSULTER: string = "consulter";
 export const PAR_MODE_EDITER: string = "editer";
 export const PAR_MODE_CREER: string = "creer";
 
 /**
- * Collection des datasources de la page fiche partenaire
+ * Ecran de détail de partenaire en lecture ou en édition
  */
-export class IdentiteTabDatasourcesService {
-    constructor(public dataSourceNationalite?: DataSource<PaysMetier>) {
-    }
-}
-
-/**
- * interface du formulaire d'identité d'un partenaire.
- */
-export interface IdentiteTabProps extends TabContentProps {
-    /**
-     * collection des datasources service initialiser dans la Page
-     */
-    dataSourcesService: IdentiteTabDatasourcesService;
-    /**
-     * Fonction de navigation transmisse par la page lors de soumission
-     */
-    onSubmit: (data: any) => void;
-    /**
-     * Fonction de navigation transmisse par la page de l'annulation
-     */
-    onCancel: React.MouseEventHandler<HTMLElement>;
-
-    /**
-     * Mode edition ou consultation du formulaire
-     */
-    pageAttributes: { id: string, mode: string, vip: boolean };
-
-}
-
-/**
- * Page d'administration des secteurs. L'ajout ou l'édition d'un secteur se fait dans une fenêtre modale.
- */
-export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
+export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageService, HornetPageProps, any> {
 
     /* Liste de choix des civilités */
     private listeCivilites: any[];
@@ -178,15 +149,9 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
 
     partenaire: any = {};
     private formPartenaire: Form;
-
-    private fieldSetCivilite: FieldSet;
-    private fieldSetAdresses: FieldSet;
-    private fieldSetCoordAssist: FieldSet;
-    private fieldSetDivers: FieldSet;
-    private fieldSetSatisfaction: FieldSet;
-    private fieldSetCoordonnees: FieldSet;
     private villeAutoComplete: AutoCompleteField<AutoCompleteFieldProps>;
-
+    private formI18n = this.i18n("partenaireFichePage.form");
+    private uploadFileI18n = this.i18n("uploadFile");
     private dataSourceNationalite: DataSource<PaysMetier>;
     private dataSourcePays: DataSourceMaster<PaysMetier>;
     private dataSourceVille: DataSource<VilleMetier>;
@@ -195,26 +160,25 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     private dataSourceIsClient: DataSource<any>;
     private dataSourceOtherTelephones: DataSource<any>;
 
-
-    public readonly props: Readonly<IdentiteTabProps>;
-
-    private formI18n = this.i18n("partenaireFichePage.form");
-    private uploadFileI18n = this.i18n("uploadFile");
-
-    constructor(props: IdentiteTabProps, context) {
+    constructor(props?: HornetComponentProps, context?: any) {
         super(props, context);
+
+        this.dataSourceNationalite = new DataSource<PaysMetier>(new DataSourceConfigPage(this, this.getService().rechercherNationalites), {
+            value: "id",
+            text: "nationalite",
+        });
 
         const intlMess = this.i18n("partenaireFichePage");
         const fieldMessages = intlMess.form.fields;
 
         this.state = {
             ...this.state,
-            readOnly: this.props.pageAttributes.mode === PAR_MODE_CONSULTER,
-            mode: this.props.pageAttributes.mode,
+            readOnly: false,
+            mode: "CREER",
             nationalites: [],
             schema,
         };
-        this.dataSourceNationalite = this.props.dataSourcesService.dataSourceNationalite;
+        // this.dataSourceNationalite = new IdentiteTabDatasourcesService(this.dataSourceNationalite);
         this.dataSourcePays = new DataSourceMaster<PaysMetier>([], { value: "id", text: "libelle" });
         this.dataSourceVille = new DataSource<VilleMetier>([], { value: "id", text: "libelle", idPays: "pays.id" });
         this.dataSourcePays.addSlave(this.dataSourceVille);
@@ -227,7 +191,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
             if (object) {
                 this.dataSourceVille.filter(function (ville) {
                     return (ville.value == null || ville.idPays === object.value);
-                },                          true);
+                }, true);
             }
         });
 
@@ -245,7 +209,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
             },
         ];
 
-        this.dataSourceIsClient = new DataSource(this.listeIsClient, {value: "client", label: "libelle"});
+        this.dataSourceIsClient = new DataSource(this.listeIsClient, { value: "client", label: "libelle" });
 
         /* Alimentation des listes de choix de Civilités.
          Sert d'exemple d'utilisation de clés customisées autres que "value" et "label" */
@@ -256,7 +220,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         this.dataSourceCivilite = new DataSource<any>(this.listeCivilites, {
             value: "id",
             text: "libelle",
-        },                                            [ new DefaultSort([ { key: "text" } as SortData ]) ]);
+        }, [ new DefaultSort([ { key: "text" } as SortData ]) ]);
 
         // Alimentation des listes de choix Satisfaction
         this.listeSatisfactions = [
@@ -269,91 +233,63 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
             { id: "7", label: fieldMessages.satisfaction.autres },
         ];
         this.dataSourceSatisfactions = new DataSource(this.listeSatisfactions, { value: "id", text: "label" });
-
-        this.partenaire.vip = this.props.pageAttributes && this.props.pageAttributes.vip || false;
-
-        this.state = {...this.state, vip: this.partenaire.vip};
+        this.state = { ...this.state, vip: this.partenaire.vip };
     }
 
-    componentDidUpdate(prevProps: any, prevState: any, prevContext: any): void {
-        super.componentDidUpdate(prevProps, prevState, prevContext);
-        this.formPartenaire.updateFields(this.partenaire);
+    updateClient() {
+
     }
 
-    componentDidMount() {
-        super.componentDidMount();
-        this.dataSourceOtherTelephones.reload();
+    /** @inheritDoc */
+    prepareClient(): void {
+
+        const p: Promise<any> = this.getService().getFormData();
+
+        p.then((result: FichePartenaireResult) => {
+            if (result.partenaire) {
+                this.setPartenaire(result.partenaire, this.attributes.mode);
+            }
+
+            this.dataSourceNationalite.init(null);
+            this.setPays(result.pays);
+            this.setVilles(result.villes);
+            this.selectIntoIsClientDataSource(result.partenaire.client);
+
+        }).catch((error) => {
+            logger.warn(error.message);
+        });
     }
 
-    /**
-     * @inheritDoc
-     */
-    render(): JSX.Element {
+    render() {
         return (
-            <div>
+            <div className="partenaireOnglet">
+                <h2>{this.i18n("partenaireFichePage.titre", {nom: "", prenom: ""}) + this.i18n("partenaireFichePage.suffixeCreation")}</h2>
                 <Form
                     id="identiteForm"
                     ref={(form) => {
                         this.formPartenaire = form;
                     }}
-                    onSubmit={this.props.onSubmit}
+                    onSubmit={this.onSubmit}
                     readOnly={this.state.readOnly}
-                    className=""
+                    className="no-background"
                     schema={this.state.schema}
                     formMessages={this.i18n("partenaireFichePage.form")}
-                    onFormChange={this.onFormChangeFn}>
-                    {this.renderFieldsetType()}
-                    {(this.state.vip) ? this.renderPartenaireVip() : this.renderPartenaire()}
+                    isMandatoryFieldsHidden={true}
+                >
+                    <Tabs id="tabsPartenaire" selectedTabIndex={0}
+                    >
+                        <Tab title={this.formI18n.civilite} > {this.renderFieldsetCivilite()} </Tab>
+                        <Tab title={this.formI18n.sectionCoordPro} > {this.renderFieldsetCoordonnee()} </Tab>
+                        <Tab title={this.formI18n.sectionAdresse} > {this.renderFieldsetAdresse()} </Tab>
+                        <Tab title={this.formI18n.sectionCoordAssistance} > {this.renderFieldsetCoordAssistance()} </Tab>
+                        <Tab title={this.formI18n.sectionDivers} > {this.renderFieldsetDivers()} </Tab>
+                        <Tab title={this.formI18n.sectionSatisfactionClient} > {this.renderFieldsetSatisfaction()} </Tab>
+                    </Tabs>
                     {this.renderButton()}
                     {this.renderButtonCancel()}
                 </Form>
             </div>
         );
-    }
-
-    onFormChangeFn(event) {
-        // console.log("Déclenchement de la méthode gerrant les changements dans le form !");
-    }
-
-    /**
-     * Alimente le datasource des pays
-     */
-    setPays(pays: PaysMetier[]): void {
-        this.dataSourcePays.add(false, pays);
-    }
-
-    /**
-     * Alimente le datasource des villes
-     */
-    setVilles(villes: VilleMetier[]): void {
-        this.dataSourceVille.add(false, villes);
-    }
-
-    /**
-     * Alimente la fiche de partenaire
-     */
-    setPartenaire(partenaire: PartenaireMetier, mode: string) {
-        this.partenaire = partenaire;
-        if (partenaire.ville && partenaire.ville.pays && partenaire.ville.pays.id) {
-            this.dataSourceVille.on("add", () => {
-                this.dataSourceVille.filter(function (ville) {
-                    return (ville.value !== null && ville.idPays === partenaire.ville.pays.id);
-                },                          true);
-            });
-        }
-
-
-        if (this.partenaire.satisfaction && this.partenaire.satisfaction.split) {
-            partenaire.satisfaction = { ids: this.partenaire.satisfaction.split(",") };
-        }
-        /* MaJ de chacun des champs */
-        this.dataSourceOtherTelephones.reload();
-        this.setState({vip: partenaire.vip, mode, readOnly: (mode === PAR_MODE_CONSULTER)}, () => {
-            this.formPartenaire.updateFieldsAndClean(partenaire);
-            /* Toggle Des champs en readOnly */
-            this.toggleReadOnly(this.isNonContactFieldDisabled());
-        });
-
     }
 
     /**
@@ -373,92 +309,77 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     }
 
     /**
-     * Rendu des boutons de bas de page
-     * @returns {any}
+     * Alimente la fiche de partenaire
      */
-    renderButton() {
+    setPartenaire(partenaire: PartenaireMetier, mode: string) {
+        this.partenaire = partenaire;
+        if (partenaire.ville && partenaire.ville.pays && partenaire.ville.pays.id) {
+            this.dataSourceVille.on("add", () => {
+                this.dataSourceVille.filter(function (ville) {
+                    return (ville.value !== null && ville.idPays === partenaire.ville.pays.id);
+                }, true);
+            });
+        }
 
-        const prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
-        const bodyCancelButtonLbl = (!this.state.readOnly) ?
-            this.i18n("partenaireFichePage.form.backTitle") : this.i18n("partenaireFichePage.form.cancelTitle");
-        const cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
-
-        return (
-            <div>
-                {!this.state.readOnly ?
-                    <ButtonsArea>
-                        <Button type="submit" id="envoi" name="action:envoi" className="hornet-button"
-                            value={this.i18n("form.valid")}
-                            label={this.i18n("form.valid")}
-                            title={this.i18n("partenaireFichePage.form.validTitle")} />
-                        <Button type="button" id="annuler" name="action:annuler" className="hornet-button"
-                            value={this.i18n("form.cancel")}
-                            label={this.i18n("form.cancel")}
-                            title={cancelButtonLbl}
-                            onClick={this.props.onCancel} />
-                    </ButtonsArea>
-                    : null
-                }
-            </div>
-        );
-    }
-
-    /**
-     * Rendu du bouton Annuler
-     * @returns {any}
-     */
-    renderButtonCancel() {
-        const prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
-        const bodyCancelButtonLbl = (!this.state.readOnly) ?
-            this.i18n("partenaireFichePage.form.backTitle") : this.i18n("partenaireFichePage.form.cancelTitle");
-        const cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
-
-        return (
-            <div>
-                {!this.state.readOnly ? null :
-                    <ButtonsArea width={50}>
-                        <Button type="button" id="annuler" name="action:annuler" className="hornet-button"
-                            value={this.i18n("form.cancel")}
-                            label={this.i18n("form.cancel")}
-                            title={cancelButtonLbl}
-                            onClick={this.props.onCancel} />
-                    </ButtonsArea>
-                }
-            </div>
-        );
-    }
-
-    /**
-     * Bloc global  fieldset du formulaire
-     */
-    getFieldset(): any[] {
-
-        const res: any[] = [];
-        res.push({ element: this.renderFieldsetCivilite(), title: this.formI18n.civilite });
-        res.push({ element: this.renderFieldsetCoordonnee(), title: this.formI18n.sectionCoordPro });
-        res.push({ element: this.renderFieldsetAdresse(), title: this.formI18n.sectionAdresse });
-        res.push({ element: this.renderFieldsetCoordAssistance(), title: this.formI18n.sectionCoordAssistance });
-        res.push({ element: this.renderFieldsetDivers(), title: this.formI18n.sectionDivers });
-        res.push({ element: this.renderFieldsetSatisfaction(), title: this.formI18n.sectionSatisfactionClient });
-
-        return res;
-    }
-
-    /**
-     * Ajout des blocs accordions au formulaire
-     *
-     */
-    getAccordions(fieldsets): JSX.Element[] {
-
-        const accordions: JSX.Element[] = [];
-        _.forEach(fieldsets, (item, index) => {
-            const accordion: JSX.Element = (
-                <Accordion title={item.title} isOpen={(index === "0") ? true : false} key={"identite-accordion-" + index}>{item.element}</Accordion>
-            );
-
-            accordions.push(accordion);
+        if (this.partenaire.satisfaction && this.partenaire.satisfaction.split) {
+            partenaire.satisfaction = { ids: this.partenaire.satisfaction.split(",") };
+        }
+        /* MaJ de chacun des champs */
+        this.dataSourceOtherTelephones.reload();
+        this.setState({ vip: partenaire.vip, mode, readOnly: (mode === PAR_MODE_CONSULTER) }, () => {
+            this.formPartenaire.updateFieldsAndClean(partenaire);
+            /* Toggle Des champs en readOnly */
         });
-        return accordions;
+
+    }
+
+/**
+     * Méthode de Navigation exécutée lors de la soumission du formulaire du Tab1
+     * @param partenaireData
+     */
+    private onSubmit(partenaireData: any): void {
+        logger.trace("Submit du formulaire fiche partenaire");
+        if (this.attributes.mode == PAR_MODE_CREER || this.attributes.mode == PAR_MODE_EDITER) {
+            this.getService().modifier(this.attributes.id, partenaireData, (event) => {
+                logger.trace(event);
+            }).then(() => {
+                let notifText: string = (this.i18n("info.message.IN-PA-FPA-01") as string)
+                    .replace("{nom}", partenaireData.nom)
+                    .replace("{prenom}", partenaireData.prenom);
+                logger.trace("Retour écran de recherche de partenaires");
+
+                let criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
+                let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : null;
+                if (dataSource != null) {
+                    this.navigateTo(URL_PARTENAIRES, {
+                        criteres: criteres,
+                        dataSource: dataSource,
+                        forceReload: true
+                    }, () => {
+                        NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
+                    });
+                } else {
+                    this.navigateTo(URL_PARTENAIRES, { criteres: criteres }, () => {
+                        NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
+                    });
+                }
+
+            });
+        }
+    }
+
+    /**
+     * Alimente le datasource des pays
+     */
+    setPays(pays: PaysMetier[]): void {
+        this.dataSourcePays.add(false, pays);
+    }
+
+    /**
+     * Alimente le datasource des villes
+     */
+    setVilles(villes: VilleMetier[]): void {
+        this.dataSourceVille.add(false, villes);
     }
 
     /**
@@ -466,34 +387,31 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      */
     renderFieldsetType(): JSX.Element {
         return (
-            <FieldSet legend={this.formI18n.type} key="fieldsetType">
+            <div key="fieldsetType">
                 <Row>
                     {/*Exemple d'application de la propriété readOnly directement sur un champ*/}
                     <RadiosField name="client"
-                                 label={this.formI18n.fields.client.label}
-                                 dataSource={this.dataSourceIsClient}
-                                 currentChecked={true}
-                                 currentValue={this.listeIsClient[ 1 ]}
-                                 inline={RadiosField.Inline.FIELD}
+                        label={this.formI18n.fields.client.label}
+                        dataSource={this.dataSourceIsClient}
+                        currentChecked={true}
+                        currentValue={this.listeIsClient[ 1 ]}
+                        inline={RadiosField.Inline.FIELD}
                     />
                     <CheckBoxField name="vip"
-                                   label={this.formI18n.fields.vip.label}
-                                   toolTip={this.formI18n.fields.vip.tooltip}
-                                   abbr={this.formI18n.fields.vip.title}
-                                   onChange={this.handleIsVIPChange}
-                                   inline={CheckBoxField.Inline.ALL}
+                        label={this.formI18n.fields.vip.label}
+                        toolTip={this.formI18n.fields.vip.tooltip}
+                        abbr={this.formI18n.fields.vip.title}
+                        inline={CheckBoxField.Inline.ALL}
                     />
                 </Row>
-            </FieldSet>);
+            </div>);
     }
 
     /**
      * bloc Fieldset Civilite
      */
     renderFieldsetCivilite(): JSX.Element {
-        return (<FieldSet legend={this.formI18n.civilite} ref={(fieldset) => {
-            this.fieldSetCivilite = fieldset;
-        }} key="fieldSetCivilite">
+        return (<div key="fieldSetCivilite">
             <Row>
                 <AutoCompleteField dataSource={this.dataSourceCivilite}
                     maxHeight={200}
@@ -538,7 +456,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                     name="dateNaissance"
                 />
             </Row>
-        </FieldSet>
+        </div>
         );
     }
 
@@ -548,9 +466,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     renderFieldsetCoordonnee(): JSX.Element {
 
         return (
-            <FieldSet legend={this.formI18n.sectionCoordPro} key="fiedsetCoordonnee" ref={(fieldset) => {
-                this.fieldSetCoordonnees = fieldset;
-            }}>
+            <div key="fiedsetCoordonnee">
                 <Row>
                     {/* Exemple d'utilisation du composant input standard dans le même formulaire */}
                     <InputField
@@ -562,11 +478,11 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                 </Row>
                 <Row>
                     <InputField name="fonction"
-                            label={this.formI18n.fields.fonction.label}
-                            maxLength={50}
-                            maxChar={25}
-                            displayCharNumber={true}
-                            showAlert={true}/>
+                        label={this.formI18n.fields.fonction.label}
+                        maxLength={50}
+                        maxChar={25}
+                        displayCharNumber={true}
+                        showAlert={true} />
                 </Row>
                 <Row>
                     <InputField name="proTelFixe"
@@ -597,7 +513,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                     />
                 </Row>
                 {this.renderOtherPhones()}
-            </FieldSet>
+            </div>
         );
     }
 
@@ -661,9 +577,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     renderFieldsetAdresse(): JSX.Element {
 
         return (
-            <FieldSet legend={this.formI18n.sectionAdresse} ref={(fieldset) => {
-                this.fieldSetAdresses = fieldset;
-            }} key="fieldSetAdresses">
+            <div key="fieldSetAdresses">
                 <Row>
                     <InputField
                         name="proAdrRue"
@@ -703,7 +617,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         valueKey="id"
                     />
                 </Row>
-            </FieldSet>
+            </div>
         );
     }
 
@@ -713,9 +627,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     renderFieldsetCoordAssistance(): JSX.Element {
 
         return (
-            <FieldSet legend={this.formI18n.sectionCoordAssistance} ref={(fieldset) => {
-                this.fieldSetCoordAssist = fieldset;
-            }} key="fieldSetCoordAssist">
+            <div key="fieldSetCoordAssist">
                 <Row>
                     <InputField name="assistNom"
                         label={this.formI18n.fields.assistNom.label}
@@ -742,7 +654,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         maxLength={80}
                     />
                 </Row>
-            </FieldSet>
+            </div>
         );
     }
 
@@ -753,9 +665,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
 
         return (
 
-            <FieldSet legend={this.formI18n.sectionDivers} ref={(fieldset) => {
-                this.fieldSetDivers = fieldset;
-            }} key="fieldSetDivers">
+            <div key="fieldSetDivers">
                 <Row>
                     <TextAreaField name="commentaire"
                         label={this.formI18n.fields.commentaire.label}
@@ -778,7 +688,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         fileSelectedLabel={this.uploadFileI18n.selectedFile}
                     />
                 </Row>
-            </FieldSet>
+            </div>
         );
     }
 
@@ -789,9 +699,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
 
         return (
 
-            <FieldSet legend={this.formI18n.sectionSatisfactionClient} ref={(fieldset) => {
-                this.fieldSetSatisfaction = fieldset;
-            }} key="fieldSetSatisfaction">
+            <div key="fieldSetSatisfaction">
                 <Row>
                     <AutoCompleteMultiField
                         dataSource={this.dataSourceSatisfactions}
@@ -805,38 +713,6 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         cleanFilterOnBlur={true}
                     />
                 </Row>
-            </FieldSet>
-        );
-    }
-
-    /**
-     * Rendu fiche partenaire avec accordions
-     * @param formI18n
-     * @param uploadFile
-     * @returns {any}
-     */
-    private renderPartenaireVip(): JSX.Element {
-        const accordions = this.getAccordions(this.getFieldset());
-        return (
-            <Accordions id="id-accordions-partenaire-vip"
-                multiSelectable={true}>{accordions}</Accordions>
-        );
-    }
-
-    /**
-     * Rendu fiche partenaire sans accordions
-     * @param formI18n
-     * @param uploadFile
-     * @returns {any}
-     */
-    renderPartenaire(): JSX.Element {
-
-        const fieldset: JSX.Element[] = this.getFieldset().map((fieldsetElement) => {
-            return fieldsetElement.element;
-        });
-        return (
-            <div>
-                {fieldset}
             </div>
         );
     }
@@ -850,50 +726,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      * @return {boolean} true lorsque les champs qui ne font pas partie du bloc des coordonnées doivent être désactivés
      */
     private isNonContactFieldDisabled(): boolean {
-        return (this.state.readOnly || (this.partenaire.vip && this.props.pageAttributes.mode !== PAR_MODE_CREER));
-    }
-
-    /**
-     * Gestion du changement d'état de la case à cocher "VIP"
-     * @param e évènement
-     */
-    handleIsVIPChange(e?: SyntheticEvent<HTMLElement>): void {
-
-        if (e) {
-            const isVIPInput: HTMLInputElement = e.target as HTMLInputElement;
-            this.partenaire = IdentiteTab.mergeObjects(this.formPartenaire.extractData(), {vip: isVIPInput.checked});
-        }
-        this.setState({vip: this.partenaire.vip}, () => this.toggleReadOnly(this.isNonContactFieldDisabled()));
-
-    }
-
-    /**
-     * Bascule des champs en mode readONly/Modification
-     * @param isReadOnly
-     */
-    private toggleReadOnly(isReadOnly: boolean): void {
-        if (this.state.mode === PAR_MODE_CREER) {
-            isReadOnly = false;
-        }
-        if (this.fieldSetCivilite) {
-            this.fieldSetCivilite.setDisabled(isReadOnly).setReadOnly(isReadOnly);
-        }
-        if (this.fieldSetAdresses) {
-            this.fieldSetAdresses.setDisabled(isReadOnly).setReadOnly(isReadOnly);
-        }
-        if (this.fieldSetCoordAssist) {
-            this.fieldSetCoordAssist.setDisabled(isReadOnly).setReadOnly(isReadOnly);
-        }
-        if (this.fieldSetDivers) {
-            this.fieldSetDivers.setDisabled(isReadOnly).setReadOnly(isReadOnly);
-        }
-        if (this.fieldSetSatisfaction) {
-            this.fieldSetSatisfaction.setReadOnly(isReadOnly);
-        }
-
-        if (this.fieldSetCoordonnees) {
-            this.fieldSetCoordonnees.setDisabled(isReadOnly).setReadOnly(isReadOnly);
-        }
+        return (this.state.readOnly);
     }
 
     /**
@@ -909,13 +742,13 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         let size;
         if (file) {
             const split = file.filename.split(".");
-            format = split ? split[split.length - 1].toUpperCase() : "";
+            format = split ? split[ split.length - 1 ].toUpperCase() : "";
             size = this.formatBytes(file.size, 2);
         }
 
-        const info =  format && size ? <span className="file-info">{"( " + format + " - " + size + " ) "}</span> : null;
+        const info = format && size ? <span className="file-info">{"( " + format + " - " + size + " ) "}</span> : null;
         if (file && file.id > -1) {
-            const urlfile: string = Utils.buildContextPath("/services/partenaires/" + this.props.pageAttributes.id + "/photo");
+            const urlfile: string = Utils.buildContextPath("/services/partenaires/" + "/photo");
 
             // Lorsque le fichier Photo n'est pas une image, on affiche simplement un lien
             // L'attribut data-pass-thru="true" est nécessaire pour court-circuiter le routeur client
@@ -959,13 +792,126 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
      * @param bytes 
      * @param decimals 
      */
-    formatBytes(bytes,decimals: number) {
+    formatBytes(bytes, decimals: number) {
         if (bytes === 0) return "0 Bytes";
         const k = 1000;
         const dm = decimals || 2;
-        const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-        
-       const  i = Math.floor(Math.log(bytes) / Math.log(k));
-     return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[i];
-     }
+        const sizes = [ "Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" ];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[ i ];
+    }
+
+
+    /**
+     * Rendu des boutons de bas de page
+     * @returns {any}
+     */
+    renderButton() {
+
+        const prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
+        const bodyCancelButtonLbl = (!this.state.readOnly) ?
+            this.i18n("partenaireFichePage.form.backTitle") : this.i18n("partenaireFichePage.form.cancelTitle");
+        const cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
+
+        return (
+            <div>
+                {!this.state.readOnly ?
+                    <ButtonsArea>
+                        <Button type="submit" id="envoi" name="action:envoi" className="hornet-button"
+                            value={this.i18n("form.valid")}
+                            label={this.i18n("form.valid")}
+                            title={this.i18n("partenaireFichePage.form.validTitle")} />
+                        <Button type="button" id="annuler" name="action:annuler" className="hornet-button"
+                            value={this.i18n("form.cancel")}
+                            label={this.i18n("form.cancel")}
+                            title={cancelButtonLbl}
+                            onClick={this.onCancel} />
+                    </ButtonsArea>
+                    : null
+                }
+            </div>
+        );
+    }
+
+    /**
+     * Rendu du bouton Annuler
+     * @returns {any}
+     */
+    renderButtonCancel() {
+        const prefixCancelButtonLbl = this.i18n("form.cancel") + " - ";
+        const bodyCancelButtonLbl = (!this.state.readOnly) ?
+            this.i18n("partenaireFichePage.form.backTitle") : this.i18n("partenaireFichePage.form.cancelTitle");
+        const cancelButtonLbl = prefixCancelButtonLbl + bodyCancelButtonLbl;
+
+        return (
+            <div>
+                {!this.state.readOnly ? null :
+                    <ButtonsArea width={50}>
+                        <Button type="button" id="annuler" name="action:annuler" className="hornet-button"
+                            value={this.i18n("form.cancel")}
+                            label={this.i18n("form.cancel")}
+                            title={cancelButtonLbl}
+                            onClick={this.onCancel} />
+                    </ButtonsArea>
+                }
+            </div>
+        );
+    }
+
+    /**
+     * méthode de Navigation exécutée lors du clic sur le bouton Annuler Tab1
+     */
+    private onCancel(): void {
+        const criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
+        const dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : {};
+
+        const url = "/partenaires";
+        this.navigateTo(url, { criteres, dataSource }, null);
+    }
+
+
+    /**
+     * Méthode de Navigation exécutée lors de la soumission du formulaire du Tab1
+     * @param partenaireData
+     */
+    // private onSubmit(partenaireData: any): void {
+    //     logger.trace("Submit du formulaire fiche partenaire");
+    //     if (this.attributes.mode == PAR_MODE_CREER || this.attributes.mode == PAR_MODE_EDITER) {
+    //         if (this.attributes.mode == PAR_MODE_EDITER && partenaireData.photo && partenaireData.photo.id && (partenaireData.photo.data == null)) {
+    //             if (this.identiteTab.partenaire.photo.data && this.identiteTab.partenaire.photo.data.data) {
+    //                 partenaireData.photo = this.identiteTab.partenaire.photo
+    //                 partenaireData.photo.data = this.identiteTab.partenaire.photo.data.data
+    //             } else {
+    //                 partenaireData.photo = this.identiteTab.partenaire.photo
+    //             }
+    //         }
+    //         this.getService().modifier(this.attributes.id, partenaireData, (event) => {
+    //             logger.trace(event);
+    //         }).then(() => {
+    //             let notifText: string = (this.i18n("info.message.IN-PA-FPA-01") as string)
+    //                 .replace("{nom}", partenaireData.nom)
+    //                 .replace("{prenom}", partenaireData.prenom);
+    //             logger.trace("Retour écran de recherche de partenaires");
+
+    //             let criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
+    //             let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : null;
+    //             if (dataSource != null) {
+    //                 this.navigateTo(URL_PARTENAIRES, {
+    //                     criteres: criteres,
+    //                     dataSource: dataSource,
+    //                     forceReload: true
+    //                 }, () => {
+    //                     NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
+    //                 });
+    //             } else {
+    //                 this.navigateTo(URL_PARTENAIRES, { criteres: criteres }, () => {
+    //                     NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
+    //                 });
+    //             }
+
+    //         });
+    //     }
+    // }    
+
 }

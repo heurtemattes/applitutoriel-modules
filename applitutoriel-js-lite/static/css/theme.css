@@ -1,28 +1,78 @@
 .content-modal-body {
     overflow: auto;
     max-height: 28em;
-    
 }
 
-.green-background-row td, .green-background-row td.hornet-datatable-sorted {
-    background-color: #54c08b /*!important*/
-}
-.red-background-row td, .red-background-row td.hornet-datatable-sorted  {
-    background-color: #f5716e /*!important*/
+.green-background-row td,
+.green-background-row td.hornet-datatable-sorted {
+    background-color: #54c08b/*!important*/
 }
 
-.yellow-background-row td, .yellow-background-row td.hornet-datatable-sorted  {
-    background-color: #dbf163 /*!important*/
+.red-background-row td,
+.red-background-row td.hornet-datatable-sorted {
+    background-color: #f5716e/*!important*/
 }
 
-#monHeaderRPA .datatable-title {
+.yellow-background-row td,
+.yellow-background-row td.hornet-datatable-sorted {
+    background-color: #dbf163/*!important*/
+}
+
+.testModal {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 900px;
+}
+
+.partenaireOnglet .form{
+    background: none; 
+}
+
+.badge-selected-items-before-tab::before {
+    align-content: center;
+    align-items: center;
+    background: #e6151d;
+    border-radius: 50%;
+    color: #fff;
+    content: attr(data-badge);
+    display: flex;
+    flex-flow: row wrap;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 0.75em;
+    font-weight: 600;
+    height: 1.8em;
+    justify-content: center;
+    position: absolute;
+    top: 0.2em;
+    right: 0.2em;
+    width: 1.8em;
+}
+/*#tabsPartenaire-3, #tabsPartenaire-3 a{*/
+
+
+/*width: 2em !important;*/
+
+
+/*min-width: 2em;*/
+
+
+/*color:#03476e;*/
+
+
+/*}*/
+
+.onglet-secteur-header-title {
+    display: inline-flex;
     width: 70%;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    overflow: hidden;
-    white-space: nowrap;
+}
+
+.onglet-secteur-header-action {
+    display: inline-flex;
+}
+
+.tab-selected .onglet-secteur-header-action a {
     color: white;
-    flex: 1;
 }
 
 #header-container #banner {
@@ -30,7 +80,7 @@
     background-size: 100% 4em;
 }
 
-#menu-main button.toggler{
+#menu-main button.toggler {
     background-color: transparent;
 }
 

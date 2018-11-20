@@ -278,7 +278,7 @@
 - 53280 - Regression de version de dépendances et nouvelles dépendancs
 - 53267 - reorganisation des resources json
 - 53268 - Version de l'application
-- 53295 - Barre d'accessibilité : fixe sur le thème
+- 53295 - Barre d'accessibilité : fixe sur le thème intranet
 - 53283 - Ecran recherche partenaire : Vip doit être en majuscule
 - 53353 - Ecran recherche partenaire : I18N liste des secteurs
 - 53354 - Ecran liste des secteurs : Modale avec style en dur
@@ -395,7 +395,7 @@
 - 51791  -  DEV_APT_HAN  -  En tant que Developpeur je peux utiliser React pour le template de page
 - 51792  -  DEV_DEV_DTS  -  En tant que Developpeur je peux mettre des point d'arret dans les TS 
 - 51793  -  DEV_DEV_SCO  -  En tant que Developpeur je peux Lancer les application sans ligne de commande
-- 51794  -  DEV_TEM_TJS  -  En tant que Developpeur je peux Constuire une application Node JS basée sur yeoman (thème)
+- 51794  -  DEV_TEM_TJS  -  En tant que Developpeur je peux Constuire une application Node JS basée sur yeoman (thème Intranet)
 - 51795  -  DEV_TEM_TJA  -  En tant que Developpeur je peux Constuire une application Service basée sur Maven (Archetype)
 - 51796  -  UTI_APT_ECS  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format CSV
 - 51797  -  UTI_APT_EXL  -  En tant que Utilisateur je peux Exporter les données du tableau partenaire au format EXL

@@ -251,9 +251,14 @@
       "gestionPartenaire": "Gestion des partenaires",
       "editionPartenaire": "Editer un partenaire",
       "creationPartenaire": "Ajouter un partenaire",
+      "creationPartenaireOnglet": "Ajouter un partenaire par onglet",
       "fichePartenaire": "Fiche partenaire",
       "creation": {
         "text": "Création",
+        "title": "Création d'un partenaire"
+      },
+      "creationparonglet": {
+        "text": "Création par onglet",
         "title": "Création d'un partenaire"
       }
     },
@@ -478,7 +483,7 @@
         "nationalite": {
           "label": "Nationalité",
           "required": "Le champ « Nationalité » est obligatoire. Veuillez saisir ce champ.",
-          "dependencies": "La valeur du champ « Nationalité » est incorrecte. ",
+          "dependencies": "La valeur du champ « Nationalité » est incorrecte.",
           "nationalite": {
             "required": "Le champ « Nationalité » est obligatoire. Veuillez saisir ce champ."
           },

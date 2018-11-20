@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.2
+ * @version v5.2.3
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -191,6 +191,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                         <MenuActions>
                             <ActionButton title={this.i18n("administration.secteurs.table.addTitle")}
                                 srcImg={Picto.white.add}
+                                displayedWithoutResult={true}
                                 action={this.ajouterSecteur} priority={true} />
                             <ActionButton title={this.i18n("administration.secteurs.table.sortMultiTitle")}
                                 srcImg={Picto.white.consulter}

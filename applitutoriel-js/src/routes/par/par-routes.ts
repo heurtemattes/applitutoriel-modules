@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.2
+ * @version v5.2.3
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -86,6 +86,7 @@ import {
     FichePartenairePage,
     PAR_MODE_CREER
 } from "applitutoriel-js-common/src/views/par/par-fpa/fiche-partenaire-page";
+import { FichePartenairePageOnglet } from "applitutoriel-js-common/src/views/par/par-fpa/fiche-partenaire-page-onglet";
 
 import {
     URL_PAR_CREER,
@@ -93,7 +94,8 @@ import {
     URL_PAR_EXPORTER_OFD,
     URL_PAR_PHOTO,
     URL_PAR_SUPPRESSION_MASSE,
-    URL_RECHERCHE
+    URL_RECHERCHE,
+    URL_PAR_CREER_PAR_ONGLET
 } from "applitutoriel-js-common/src/utils/urls";
 
 import { PartenaireService } from "applitutoriel-js-common/src/services/data/par/partenaire-service";
@@ -126,6 +128,12 @@ export default class PartenairesRoutes extends AbstractRoutes {
         /* Page de création de partenaire*/
         this.addPageRoute(URL_PAR_CREER,
             () => new PageRouteInfos(FichePartenairePage, { mode: PAR_MODE_CREER }, Injector.getRegistered(FichePartenairePageService)),
+            Roles.ADMIN
+        );
+
+        /* Page de création de partenaire*/
+        this.addPageRoute(URL_PAR_CREER_PAR_ONGLET,
+            () => new PageRouteInfos(FichePartenairePageOnglet, { mode: PAR_MODE_CREER }, Injector.getRegistered(FichePartenairePageService)),
             Roles.ADMIN
         );
 

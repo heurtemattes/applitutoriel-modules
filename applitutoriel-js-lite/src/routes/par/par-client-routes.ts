@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.2
+ * @version v5.2.3
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -87,12 +87,14 @@ import { RecherchePartenairesPage } from "applitutoriel-js-common/src/views/par/
 import { FichePartenairePage, PAR_MODE_CREER } from "applitutoriel-js-common/src/views/par/par-fpa/fiche-partenaire-page";
 import {
     URL_PAR_CREER,
-    URL_PAR_RECHERCHER
+    URL_PAR_RECHERCHER,
+    URL_PAR_CREER_PAR_ONGLET
 } from "applitutoriel-js-common/src/utils/urls";
 
 import { Injector } from "hornet-js-core/src/inject/injector";
 import { FichePartenairePageService } from "applitutoriel-js-common/src/services/page/par/par-fpa-service";
 import { RecherchePartenaireService } from "applitutoriel-js-common/src/services/page/par/par-rpa-service";
+import { FichePartenairePageOnglet } from 'applitutoriel-js-common/src/views/par/par-fpa/fiche-partenaire-page-onglet';
 
 const logger: Logger = Utils.getLogger("applitutoriel.routes.par.par-routes");
 
@@ -121,6 +123,12 @@ export default class PartenairesRoutesClient extends AbstractRoutes {
         /* Page de création de partenaire */
         this.addPageRoute(URL_PAR_CREER,
             () => new PageRouteInfos(FichePartenairePage, { mode: PAR_MODE_CREER }, Injector.getRegistered(FichePartenairePageService)),
+            Roles.ADMIN
+        );
+
+        /* Page de création de partenaire*/
+        this.addPageRoute(URL_PAR_CREER_PAR_ONGLET,
+            () => new PageRouteInfos(FichePartenairePageOnglet, { mode: PAR_MODE_CREER }, Injector.getRegistered(FichePartenairePageService)),
             Roles.ADMIN
         );
     }

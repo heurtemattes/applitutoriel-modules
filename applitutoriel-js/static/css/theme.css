@@ -25,7 +25,13 @@
     width: 900px;
 }
 
+.partenaireOnglet .form{
+    background: none; 
+}
 
+.no-background .form-content {
+    background-color:transparent !important;
+}
 /*#tabsPartenaire-3, #tabsPartenaire-3 a{*/
 
 

@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.2
+ * @version v5.2.3
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -107,6 +107,8 @@ export const URL_PAR_RECHERCHE: string = "/recherche";
 export const URL_PAR_RECHERCHER: string = "/rechercher";
 /** Création d'un nouveau partenaire */
 export const URL_PAR_CREER: string = "/creer";
+/** Création d'un nouveau partenaire par onglet */
+export const URL_PAR_CREER_PAR_ONGLET = "/creerparonglet";
 /** Consulation d'une fiche partenaire */
 export const URL_PAR_CONSULTER: string = "/consulter";
 /** Modification d'une fiche partenaire */
