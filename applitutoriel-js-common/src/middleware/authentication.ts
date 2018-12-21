@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.3
+ * @version v5.2.4
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -84,7 +84,7 @@ import { Logger } from "hornet-js-utils/src/logger";
 const sha1 = require("sha1");
 const flash = require("connect-flash");
 
-import { Request, Application } from "express";
+import {Request, Application } from "express";
 import * as ReactDOMServer from "react-dom/server";
 import * as passport from "passport";
 import { Strategy } from "passport-local";

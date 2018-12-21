@@ -369,7 +369,15 @@
         "supprimer": {
           "title": "Delete partner",
           "message": "Are you sure you want to delete this ${nom} - ${prenom} partner?"
-        }
+        },
+        "exportPdf" : "Export of partner list as PDF",
+        "exportCsv" : "Export of partner list as CSV",
+        "exportOdt" : "Export of partner list as ODT",
+        "exportOds" : "Export of partner list as ODS",
+        "exportPdfLabel" : "Export as PDF",
+        "exportCsvLabel" : "Export as CSV",
+        "exportOdtLabel" : "Export as ODT",
+        "exportOdsLabel" : "Export as ODS"
       },
       "tableTitle": "Partner list matching criteria",
       "emptyResult": "No data found",

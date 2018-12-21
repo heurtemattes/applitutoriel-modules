@@ -1,6 +1,6 @@
 {
   "name": "applitutoriel-js-batch",
-  "version": "5.2.3",
+  "version": "5.2.4",
   "license": "CECILL-2.1",
   "main": "index.js",
   "description": "Application tutoriel utilisant le Framework hornet",
@@ -12,30 +12,30 @@
     "url": "git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git"
   },
   "tsDefinitionDependencies": {
-    "hornet-js-ts-typings": "5.2.3",
-    "hornet-js-utils-dts": "5.2.3",
-    "hornet-js-core-dts": "5.2.3",
-    "hornet-js-components-dts": "5.2.3",
-    "hornet-js-database-dts": "5.2.3",
-    "hornet-js-bean-dts": "5.2.3",
-    "hornet-js-batch-dts": "5.2.3",
-    "hornet-js-test-dts": "5.2.3"
+    "hornet-js-ts-typings": "5.2.4",
+    "hornet-js-utils-dts": "5.2.4",
+    "hornet-js-core-dts": "5.2.4",
+    "hornet-js-components-dts": "5.2.4",
+    "hornet-js-database-dts": "5.2.4",
+    "hornet-js-bean-dts": "5.2.4",
+    "hornet-js-batch-dts": "5.2.4",
+    "hornet-js-test-dts": "5.2.4"
   },
   "appDependencies": {
-    "hornet-js-components": "5.2.3",
-    "hornet-js-core": "5.2.3",
-    "hornet-js-utils": "5.2.3",
-    "hornet-js-database": "5.2.3",
-    "hornet-js-bean": "5.2.3",
-    "hornet-js-batch": "5.2.3",
+    "hornet-js-components": "5.2.4",
+    "hornet-js-core": "5.2.4",
+    "hornet-js-utils": "5.2.4",
+    "hornet-js-database": "5.2.4",
+    "hornet-js-bean": "5.2.4",
+    "hornet-js-batch": "5.2.4",
     "pg": "7.3.0",
     "pg-hstore": "2.3.2",
     "pg-native": "2.2.0",
-    "sqlite3": "3.1.8"
+    "sqlite3": "3.1.13"
   },
   "buildDependencies": {},
   "testDependencies": {
-    "hornet-js-test": "5.2.3"
+    "hornet-js-test": "5.2.4"
   },
   "scripts": {
     "init-dev": "hb install",

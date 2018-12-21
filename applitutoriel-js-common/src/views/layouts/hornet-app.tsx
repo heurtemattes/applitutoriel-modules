@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.3
+ * @version v5.2.4
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -197,7 +197,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             icon="picto-user"
             className="profil-content"
             id={"dropdown-user-mock" + "-drop"}
-            label={"Users"}
+            label={(Utils.getCls("hornet.user") && Utils.getCls("hornet.user").name) ? Utils.getCls("hornet.user").name : "Connexion"}
             labelClassName={"profil-label"}
             position={Position.BOTTOMRIGHT}
         /> : <User />;

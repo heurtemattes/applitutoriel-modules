@@ -9,11 +9,11 @@ Ajouter la définition dans le fichier `package.json` du projet en plus de l'imp
 
 ```json
 "tsDefinitionDependencies": {
-    "applitutoriel-js-common-dts": "5.1.X"
+    "applitutoriel-js-common-dts": "5.3.X"
 }
 
 "appDependencies": {
-    "applitutoriel-js-common": "5.1.X"
+    "applitutoriel-js-common": "5.3.X"
 }
 ```
 

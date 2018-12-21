@@ -353,7 +353,15 @@
         "supprimer": {
           "title": "Suppression partenaire",
           "message": "Etes-vous sûr(e) de vouloir supprimer le partenaire ${nom} - ${prenom} ?"
-        }
+        },
+        "exportPdf" : "Export PDF de la liste des partenaires",
+        "exportCsv" : "Export CSV de la liste des partenaires",
+        "exportOdt" : "Export ODT de la liste des partenaires",
+        "exportOds" : "Export ODS de la liste des partenaires",
+        "exportPdfLabel" : "Export PDF",
+        "exportCsvLabel" : "Export CSV",
+        "exportOdtLabel" : "Export ODT",
+        "exportOdsLabel" : "Export ODS"
       },
       "tableTitle": "Liste des partenaires correspondant à la recherche",
       "emptyResult": "Aucun partenaire présent.",

@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.3
+ * @version v5.2.4
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -165,7 +165,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     radio: RadiosField;
 
     /** Liste permettant d'alimenter la liste déroulante des secteurs */
-    private listeSecteurs = [ { nom: this.i18n("partenairesListePage.form.fields.criteres.idSecteur.tous") } ];
+    private listeSecteurs = [{ nom: this.i18n("partenairesListePage.form.fields.criteres.idSecteur.tous") }];
     private dataSourceSecteurs: DataSource<any> = new DataSource([]);
     /** Formulaire de recherche */
     private formRecherche: Form;
@@ -194,7 +194,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         {
             client: false,
             libelle: this.i18n("partenairesListePage.form.fields.criteres.partenaire.client.fournisseurLabel"),
-        } ];
+        }];
 
     /** Objet des critères initiaux (provenant du CLS ou de la session dans le cas d'un F5) */
     private currentCriteres: any;
@@ -261,7 +261,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         });
 
         this.formRecherche.updateFields({ criteres: this.currentCriteres });
-        this.dataSourceIsClient.select(this.dataSourceIsClient.results[ 0 ]);
+        this.dataSourceIsClient.select(this.dataSourceIsClient.results[0]);
         if (this.currentCriteres.partenaire.vip) {
             this.checkBoxIsVip.setCurrentChecked(this.currentCriteres.partenaire.vip);
         }
@@ -299,16 +299,20 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                         showIconInfo={true}>
                         <ToggleColumnsButton hiddenColumns={{ organisme: true, prenom: true }} />
                         <MenuActions>
-                            <ActionButton title="Export CSV" label="Export CSV"
+                            <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportCsv")}
+                                label={this.i18n("partenairesListePage.tableau.colonnes.exportCsvLabel")}
                                 srcImg={Picto.export.csv}
                                 action={this.onExport.bind(this, MediaTypes.CSV)} />
-                            <ActionButton title="Export PDF" label="Export PDF"
+                            <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportPdf")}
+                                label={this.i18n("partenairesListePage.tableau.colonnes.exportPdfLabel")}
                                 srcImg={Picto.export.pdf}
                                 action={this.onExport.bind(this, MediaTypes.PDF)} />
-                            <ActionButton title="Export ODT" label="Export ODT"
+                            <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOdt")}
+                                label={this.i18n("partenairesListePage.tableau.colonnes.exportOdtLabel")}
                                 srcImg={Picto.export.odt}
                                 action={this.onExport.bind(this, MediaTypes.ODT)} />
-                            <ActionButton title="Export ODS" label="Export ODS"
+                            <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOds")}
+                                label={this.i18n("partenairesListePage.tableau.colonnes.exportOdsLabel")}
                                 srcImg={Picto.export.ods}
                                 action={this.onExport.bind(this, MediaTypes.ODS)} />
                             <ActionButton typeAction={TypeAction.ACTION_UNITAIRE} title={intlTab.colonnes.edition}
@@ -349,7 +353,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                                 alt={intlTab.colonnes.consultationTitle}
                                 srcImg={Picto.blue.consulter}
                                 action={this.consulterPartenaire}
-                                visible={this.isVisible} 
+                                visible={this.isVisible}
                             />
                             <ActionColumn keyColumn="editer"
                                 srcImg={Picto.blue.editer}
@@ -368,7 +372,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                             />
                             <MoreInfoColumn keyColumn="idMore" visible={(value) => value.vip === true}
                                 alt={intlTab.colonnes.moreInfoTitle}
-                                headers={[ "nom", "prenom", "proCourriel", "organisme" ]}>
+                                headers={["nom", "prenom", "proCourriel", "organisme"]}>
                                 <LineAfter visible={(value) => value.vip === true}>
                                     <DivExpandable className="mm-expandable" />
                                 </LineAfter>
@@ -397,10 +401,10 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
             return props.navigateData.dataSource;
         }
         return new PaginateDataSource<any>(
-            new DataSourceConfigPage(this, this.getService().rechercher), { itemsPerPage: 10 }, {}, [ new DefaultSort([ {
+            new DataSourceConfigPage(this, this.getService().rechercher), { itemsPerPage: 10 }, {}, [new DefaultSort([{
                 key: "nom",
                 dir: 0,
-            } as SortData ]) ]);
+            } as SortData])]);
     }
 
     /**
@@ -455,7 +459,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                     text={intlMessages.textIntroForm}
                     textLang={"la"}
                     ref={(form) => { this.formRecherche = form; }}
-                    customValidators={[ new ParRpaValidateIsVipEndDate(), new ParRpaValidateSectorStartDate() ]}
+                    customValidators={[new ParRpaValidateIsVipEndDate(), new ParRpaValidateSectorStartDate()]}
                     defaultValues={{ criteres: this.currentCriteres }}
                 >
                     <Row>
@@ -550,7 +554,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         this.maTable.setState({ isVisible: false });
 
         this.paginateDataSource.deleteAll();
-        this.dataSourceIsClient.select(this.dataSourceIsClient.results[ 0 ]);
+        this.dataSourceIsClient.select(this.dataSourceIsClient.results[0]);
 
         this.criteresRecherche = {};
 
@@ -681,7 +685,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
             vip: partenaire.vip,
             criteres: this.criteresRecherche,
             dataSource: this.paginateDataSource,
-        },              null);
+        }, null);
     }
 
     /**
@@ -695,7 +699,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
             vip: partenaire.vip,
             criteres: this.criteresRecherche,
             dataSource: this.paginateDataSource,
-        },              null);
+        }, null);
     }
 
     /**

@@ -1,3 +1,9 @@
+# applitutoriel-modules 5.2.4
+
+- 0c35cacd EVOL[S366]: i18n colonnes export dans la recherche partenaires
+- 52f28635 FIX - modification pictogramme tri multiple
+- 774243b5 FIX - Modification bouton connexion mode Mock
+
 # applitutoriel-modules 5.2.2
 
 - 32ac0bc9 FIX: Ajout de resetTitle pour l'anglais
