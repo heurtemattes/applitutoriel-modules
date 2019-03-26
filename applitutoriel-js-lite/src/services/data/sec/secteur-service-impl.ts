@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -84,11 +84,7 @@ import { BusinessError } from "hornet-js-utils/src/exception/business-error";
 import { SecteurMetier } from "applitutoriel-js-common/src/models/adm/sec-mod";
 import { Promise } from "hornet-js-utils/src/promise-api";
 import { AdministrationSecteurServiceData } from "applitutoriel-js-common/src/services/data/adm/adm-secteur-service-data";
-import { HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
-import { SecteurAttributes } from "src/models/adm/seq-sec-mod";
 import { SecteursDAO } from "src/dao/secteurs-dao";
-import { ModelDAO } from "src/dao/model-dao";
-import { BeanUtils } from "hornet-js-bean/src/bean-utils";
 
 const logger: Logger = Utils.getLogger("applitutoriel.src.services.data.sec.secteur-service-impl");
 
@@ -96,7 +92,7 @@ export class SecteurServiceImpl extends AdministrationSecteurServiceData {
     private secteursDAO: SecteursDAO = new SecteursDAO();
 
     lister(): Promise<SecteurMetier[]> {
-        return this.secteursDAO.findAllGeneric<SecteurMetier>(null, SecteurMetier);
+        return this.secteursDAO.lister();
     }
 
     modifier(id: number, data): Promise<any> {
@@ -113,9 +109,7 @@ export class SecteurServiceImpl extends AdministrationSecteurServiceData {
             nom: data.nom,
             desc: data.desc,
             auteurCreat: data.user,
-            auteurMaj: data.user,
-            dateCreat: new Date(),
-            dateMajEnreg: new Date()};
+            auteurMaj: data.user};
         return this.secteursDAO.insertGeneric(obj);
     }
 

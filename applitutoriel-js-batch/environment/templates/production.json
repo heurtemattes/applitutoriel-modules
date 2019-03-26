@@ -1,0 +1,24 @@
+{
+  "contextPath": "#{APPLICATION_CONTEXT_ROOT}",
+  "database": {
+    "config": {
+      "uri": "#{DATABASE_URI}",
+      "options" : {
+        "pool" : {
+          "max" : #{DATABASE_POOL_MAX},
+          "min" : #{DATABASE_POOL_MIN},
+          "idle" : #{DATABASE_POOL_IDLE}
+        },
+        "define": {
+          "timestamps" : false
+        },
+        "loggingLevel" : "#{DATABASE_LOGGING_LEVEL}"
+      }
+    }
+  },
+  "request" : {
+    "cache": {
+      "enabled": false
+    }
+  }
+}

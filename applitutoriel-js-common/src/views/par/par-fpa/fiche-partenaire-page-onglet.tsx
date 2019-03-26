@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -159,6 +159,8 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
     private dataSourceSatisfactions: DataSource<any>;
     private dataSourceIsClient: DataSource<any>;
     private dataSourceOtherTelephones: DataSource<any>;
+
+    private tabs: Tabs<any>;
 
     constructor(props?: HornetComponentProps, context?: any) {
         super(props, context);
@@ -260,6 +262,19 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
         });
     }
 
+    onValidationfail(): void {
+        const elems = document.querySelectorAll("ul.tabview-list li.badge-selected-items-before-tab");
+        if (elems && elems[0]) {
+            const id = elems[0].getAttribute("id");
+            if (id) {
+                const index =  id.split("-");
+                if (index && index.length > 1) {
+                    this.tabs.showPanel(parseInt(index[1], 10));
+                }
+            }
+        }
+    }
+
     render() {
         return (
             <div className="partenaireOnglet">
@@ -276,7 +291,8 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
                     formMessages={this.i18n("partenaireFichePage.form")}
                     isMandatoryFieldsHidden={true}
                 >
-                    <Tabs id="tabsPartenaire" selectedTabIndex={0}
+                    <Tabs id="tabsPartenaire" selectedTabIndex={0} ref = {(tabs) => {this.tabs = tabs; }}
+                    afterNotificationHandle={this.onValidationfail}
                     >
                         <Tab title={this.formI18n.civilite} > {this.renderFieldsetCivilite()} </Tab>
                         <Tab title={this.formI18n.sectionCoordPro} > {this.renderFieldsetCoordonnee()} </Tab>

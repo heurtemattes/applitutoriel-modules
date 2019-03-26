@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -98,5 +98,10 @@ const logger: Logger = Utils.getLogger("applitutoriel.src.dao.secteurs-dao");
 export class SecteursDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceModel<SecteurAttributes>> {
     constructor(entity: string = "secteurEntity", @inject(ModelDAO) modelDAO?: ModelDAO) {
         super(modelDAO[entity], modelDAO);
+    }
+
+    @Map(SecteurMetier)
+    lister() {
+        return this.entity.findAll();
     }
 }

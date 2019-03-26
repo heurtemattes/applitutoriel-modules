@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -277,7 +277,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
 
     componentDidUpdate(prevProps: any, prevState: any, prevContext: any): void {
         super.componentDidUpdate(prevProps, prevState, prevContext);
-        this.formPartenaire.updateFields(this.partenaire);
+        this.formPartenaire.updateFields(this.partenaire, true);
     }
 
     componentDidMount() {
@@ -349,9 +349,13 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         /* MaJ de chacun des champs */
         this.dataSourceOtherTelephones.reload();
         this.setState({vip: partenaire.vip, mode, readOnly: (mode === PAR_MODE_CONSULTER)}, () => {
-            this.formPartenaire.updateFieldsAndClean(partenaire);
+            this.formPartenaire.updateFieldsAndClean(partenaire, true);
             /* Toggle Des champs en readOnly */
             this.toggleReadOnly(this.isNonContactFieldDisabled());
+            const elem = document.getElementById("tabsPartenaire-tabList-item-0");
+            if (elem) {
+                elem.focus();
+            }
         });
 
     }

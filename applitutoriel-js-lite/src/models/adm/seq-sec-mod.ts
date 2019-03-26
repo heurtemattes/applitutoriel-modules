@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -112,7 +112,7 @@ export let SecteurModel: Sequelize.DefineAttributes = {
     dateCreat: {
         type: Sequelize.DATE,
         field: "sec_date_creat",
-        defaultValue: Sequelize.fn("NOW")
+        defaultValue: Sequelize.NOW
     },
     auteurCreat: {
         type: Sequelize.STRING(10),
@@ -121,7 +121,7 @@ export let SecteurModel: Sequelize.DefineAttributes = {
     dateMajEnreg: {
         type: Sequelize.DATE,
         field: "sec_date_maj",
-        defaultValue: Sequelize.fn("NOW")
+        defaultValue: Sequelize.NOW
     },
     auteurMaj: {
         type: Sequelize.STRING(10),

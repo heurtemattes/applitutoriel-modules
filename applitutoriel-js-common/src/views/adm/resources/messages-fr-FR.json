@@ -47,6 +47,9 @@
         },
         "validTitle": "Validation de la saisie du secteur",
         "cancelTitle": "Annulation de la saisie du secteur"
+      },
+      "date": {
+        "format": "YYYY-MM-DD h:mm:ss"
       }
     },
     "modification": "Modification d'un secteur",
@@ -57,6 +60,7 @@
     "cancelTitle": "Annulation de l'ajout d'un secteur"
   },
   "repartitionPage": {
+    "descriptionButton": "Descritpion textuelle",
     "title": "Répartition des secteurs sous forme d'un graphique",
     "description": "Représentation graphique de la répartition des secteurs",
     "type": {

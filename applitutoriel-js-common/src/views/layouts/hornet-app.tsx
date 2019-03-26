@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -264,7 +264,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
                                 <a className="sub-header-link"
                                     href={this.genUrl(Utils.config.getOrDefault("welcomePage", "/"))} title={title}
                                     id="img-logo">
-                                    <img src={this.state.logoUrl} alt={this.i18n("applicationTitle")} />
+                                    <img src={this.state.logoUrl} alt={this.i18n("applicationTitleAlt")} />
                                 </a>
                             </div>
                             <div className="fl mls">

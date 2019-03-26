@@ -1,3 +1,15 @@
+# applitutoriel-modules 5.3.0
+
+e584ec4a FIX[s424] : Accessiblite - gestion focus
+7724883e FIX[t1192]: correction affichage tableau
+2ccf0289 FIX[s425]: accessiblite - suppression aria hasPopup
+6302cdd8 FIX[s305] : affichage des numéros de téléphone autres
+ef79fe53 FIX[s423]: graphique répartition alternative textuelle - style
+41303436 FIX[s423] - Accessibilité : Ajout d'une description textuelle au graphique répartition
+2a1a3530 FIX[s417]: alt peu explicite sur le lien applituto
+063060d9 EVOL[s378-927]: focus tableau editable liste des secteurs
+37d677b4 FIX[s391] - ListSecteur : correction affichage date au format string
+
 # applitutoriel-modules 5.2.4
 
 - 0c35cacd EVOL[S366]: i18n colonnes export dans la recherche partenaires

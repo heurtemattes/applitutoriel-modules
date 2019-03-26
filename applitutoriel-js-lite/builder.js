@@ -4,7 +4,6 @@ const clientContext = [
     [/moment[\/\\]locale$/, /fr|en/],
     [/intl[\/\\]locale-data[\/\\]jsonp$/, /fr|en/],
     [/^\.$/, (context) => {
-        if (!/\/locale-data\//.test(context.context)) console.log("locale-daa", context);
         if (!/\/log4js\/lib$/.test(context.context)) return;
         context.regExp = /^\.\/appenders\/console.*$/;
         context.request = ".";
@@ -91,6 +90,13 @@ module.exports = {
         },
         clientContext: clientContext,
         karma: {
+            browsers: ["FirefoxHeadless"],
+            customLaunchers: {
+              FirefoxHeadless: {
+                base: 'Firefox',
+                flags: [ '-headless' ],
+              },
+            },            
             template: {
                 debug: "./test/template/debug.html",
                 context: "./test/template/context.html",

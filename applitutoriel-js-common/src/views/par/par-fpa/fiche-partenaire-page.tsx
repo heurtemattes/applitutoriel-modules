@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -309,6 +309,10 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
             const tabInserted = this.tabs.getTabById(index);
             if (tabInserted && tabInserted.props && tabInserted.props.index) {
                 this.tabs.showPanel(tabInserted.props.index);
+                const elem = document.querySelector(`#tabsPartenaire-tabList-item-${tabInserted.props.index}`) as any;
+                if (elem) {
+                    elem.focus();
+                }
             }
         };
 
@@ -404,15 +408,22 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
                 let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : null;
                 if (dataSource != null) {
                     this.navigateTo(URL_PARTENAIRES, {
-                        criteres: criteres,
-                        dataSource: dataSource,
-                        forceReload: true
+                        criteres,
+                        dataSource,
+                        forceReload: true,
+                        create: true,
                     }, () => {
                         NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
                     });
                 } else {
-                    this.navigateTo(URL_PARTENAIRES, { criteres: criteres }, () => {
-                        NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
+                    this.navigateTo(URL_PARTENAIRES, { criteres, create: true}, () => {
+                        NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText), null, null, null, ()=>{
+                            const elem = document.querySelector(".messageBox .info-button") as any;
+                            if (elem) {
+                                elem.focus();
+                            }
+                        });
+                        
                     });
                 }
 
@@ -424,11 +435,20 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
      * méthode de Navigation exécutée lors du clic sur le bouton Annuler Tab1
      */
     private onCancel(): void {
-        let criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
-        let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : {};
+        const criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
+        const dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : {};
+        const previous = this.props.navigateData && this.props.navigateData.previous ? this.props.navigateData.previous : null;
 
-        let url = "/partenaires";
-        this.navigateTo(url, { criteres: criteres, dataSource: dataSource }, null);
+        const url = "/partenaires";
+        this.navigateTo(url, { criteres, dataSource, previous }, null);
+    }
+
+    componentDidMount(){
+        super.componentDidMount();
+        const elem = document.getElementById("tabsPartenaire-tabList-item-0");
+        if (elem) {
+            elem.focus();
+        }
     }
 
 }

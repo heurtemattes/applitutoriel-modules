@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.3.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -133,6 +133,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
 
     protected item: SecteurMetier;
 
+    protected focusOnEdition : boolean = false;
+    protected itemEdited: any;
+    protected focusAdd: boolean = false;
+    protected secondRender: boolean = false;
+
+    protected table: Content;
 
     constructor(props?, context?) {
 
@@ -144,12 +150,43 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         this.dataSource = new DataSource<SecteurMetier>([], {}, [ sort ]);
     }
 
+    focusEdition() {
+        if (this.focusOnEdition && this.itemEdited) {
+            const buttonEdition = document.querySelector(`a.edition-button-action-before[aria-label~="${this.itemEdited.nom}"]`);
+            if (buttonEdition && (buttonEdition as HTMLElement).focus) {
+                (buttonEdition as HTMLElement).focus();
+                this.focusOnEdition = false;
+                this.itemEdited = null;
+            }
+        }
+
+        if (this.focusAdd) {
+            if (this.secondRender) {
+                const addButton = document.getElementsByClassName("secteurs-add-button");
+                if (addButton && addButton[0]) {
+                    (addButton[0] as HTMLElement).focus();
+                    this.focusAdd = false;
+                    this.secondRender = false;
+                }
+            }else {
+                this.secondRender = true;
+            }
+        }
+    }
+
     /**
      * Alimente le tableau de liste des secteurs.
      * @override
      */
     public prepareClient(): void {
         this.refreshSecteurs();
+
+        this.dataSource.on("add", () => {
+            const elem = document.getElementById("addSecteur");
+            if (elem && elem.focus) {
+                elem.focus();
+            }
+        });
     }
 
     /**
@@ -183,14 +220,17 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                 <h2>{this.i18n("administration.secteurs.titreSecteur")}</h2>
                 <Notification id="notif2" />
 
-                <Table id="liste-secteurs">
+                <Table id="liste-secteurs" >
                     <Header title={this.i18n("administration.secteurs").table.tableTitle} ref={this.refHeaderTable}>
                         <ToggleColumnsButton hiddenColumns={{ desc: true, nom: false }}
                             onChange={this.onChangeToggleColumns}
                             selectAllItem={false} />
                         <MenuActions>
-                            <ActionButton title={this.i18n("administration.secteurs.table.addTitle")}
+                            <ActionButton
+                                className={"secteurs-add-button"}
+                                title={this.i18n("administration.secteurs.table.addTitle")}
                                 srcImg={Picto.white.add}
+                                id="addSecteur"
                                 displayedWithoutResult={true}
                                 action={this.ajouterSecteur} priority={true} />
                             <ActionButton title={this.i18n("administration.secteurs.table.sortMultiTitle")}
@@ -198,8 +238,13 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                                 action={this.sortMulti} priority={true} />
                         </MenuActions>
                     </Header>
-                    <Content dataSource={this.dataSource} onSubmit={this.submitLineForm} schema={schemaEditionTable} idForm={"secteurPageForm"}
-                        notifId="notif2">
+                    <Content ref={
+                        (ref) =>{
+                            this.table =ref
+                        }
+                    } dataSource={this.dataSource} onSubmit={this.submitLineForm} schema={schemaEditionTable} idForm={"secteurPageForm"}
+                        notifId="notif2"
+                        onRerender={this.focusEdition}>
                         <Columns>
                             <Column keyColumn="nom"
                                 title={intlMessages.nom}
@@ -291,6 +336,8 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
             NotificationManager.notify(null, "secteurPageForm", null,
                                        Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-01"));
             this.refreshSecteurs();
+            this.focusOnEdition = true;
+            this.itemEdited = item;
         });
 
     }
@@ -309,6 +356,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                 NotificationManager.notify(null, null, null,
                                            Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
                 this.refreshSecteurs();
+                this.focusAdd = true;
             }
 
         }).catch((result) => {

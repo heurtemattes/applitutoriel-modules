@@ -1,6 +1,6 @@
 {
-    "labelLanguage": "English",
-    "administration": {
+  "labelLanguage": "English",
+  "administration": {
     "secteurs": {
       "titreSecteur": "Sector list",
       "table": {
@@ -46,6 +46,9 @@
         },
         "validTitle": "Sector entry validation",
         "cancelTitle": "Sector entry cancellation"
+      },
+      "date": {
+        "format": "YYYY-MM-DD h:mm:ss"
       }
     },
     "modification": "Update sector",
@@ -56,6 +59,7 @@
     "cancelTitle": "Cancel sector adding"
   },
   "repartitionPage": {
+    "descriptionButton": "Textual description",
     "title": "Graphical sector allocation",
     "description": "Graphical sector allocation",
     "type": {
