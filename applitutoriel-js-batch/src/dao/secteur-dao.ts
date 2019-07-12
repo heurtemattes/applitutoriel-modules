@@ -73,31 +73,28 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Class } from "hornet-js-utils/src/typescript-utils";
-import { Logger } from "hornet-js-utils/src/logger";
-import { HornetSequelizeEntityAttributes,
-    HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
+import { Logger } from "hornet-js-logger/src/logger";
+import { HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
 import { HornetGenericDAO } from "hornet-js-database/src/sequelize/hornet-generic-dao";
 import { inject } from "hornet-js-core/src/inject/inject";
 import { ModelDAO } from "src/dao/model-dao";
 import { injectable } from "hornet-js-core/src/inject/injectable";
-import { HornetSequelizeModel } from "hornet-js-database/src/sequelize/hornet-sequelize-model";
 import Map from "hornet-js-bean/src/decorators/Map";
 import { SecteurMetier } from "src/models/adm/sec-mod";
 import * as Sequelize from "sequelize";
+import { Promise } from "hornet-js-utils/src/promise-api";
+import { Injector } from "hornet-js-core/src/inject/injector";
 
-const logger: Logger = Utils.getLogger("applitutoriel.src.dao.secteur-dao");
+const logger: Logger = Logger.getLogger("applitutoriel.src.dao.secteur-dao");
 
-@injectable()
 export class SecteurDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceModel<any>> {
-    constructor(entity: string = "secteurEntity", @inject(ModelDAO) modelDAO?: ModelDAO) {
-        super(modelDAO[entity], modelDAO);
+    constructor(entity: string = "secteurEntity") {
+        super(Injector.getRegistered(ModelDAO)[entity], Injector.getRegistered(ModelDAO));
     }
 
     @Map(SecteurMetier)
@@ -118,9 +115,5 @@ export class SecteurDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstan
 
     deleteById(id: number | number[]) {
         return this.entity.destroy({ where: { id } });
-    }
-
-    getEntity(): Sequelize.Model<any, any> {
-        return this.entity;
     }
 }

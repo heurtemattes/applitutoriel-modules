@@ -73,18 +73,18 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.gen.gen-err-page");
+const logger: Logger = Logger.getLogger("applitutoriel.views.gen.gen-err-page");
 
 export class NotFoundPage extends HornetPage<any, HornetComponentProps, any> {
 

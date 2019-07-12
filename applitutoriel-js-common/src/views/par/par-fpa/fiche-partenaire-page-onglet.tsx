@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
@@ -104,7 +104,6 @@ import { Button } from "hornet-js-react-components/src/widget/button/button";
 import { CalendarField } from "hornet-js-react-components/src/widget/form/calendar-field";
 import { Table } from "hornet-js-react-components/src/widget/table/table";
 import { Columns } from "hornet-js-react-components/src/widget/table/columns";
-import { Picto } from "hornet-js-react-components/src/img/picto";
 import { MenuActions } from "hornet-js-react-components/src/widget/table/menu-actions";
 import { ActionButton } from "hornet-js-react-components/src/widget/table/action-button";
 import { Header } from "hornet-js-react-components/src/widget/table/header";
@@ -121,10 +120,12 @@ import { SortData } from "hornet-js-core/src/component/sort-data";
 import { PartenaireMetier } from "src/models/par/par-mod";
 import { FichePartenairePageService } from "src/services/page/par/par-fpa-service";
 import { DataSourceConfigPage } from "hornet-js-core/src/component/datasource/config/service/datasource-config-page";
+import {Promise} from "hornet-js-utils/src/promise-api";
+import { SvgSprites } from 'hornet-js-react-components/src/widget/icon/svg-sprites';
 
 import * as schema from "src/views/par/par-fpa/validation.json";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.par.par-fpa.identite-tab");
+const logger: Logger = Logger.getLogger("applitutoriel.views.par.par-fpa.identite-tab");
 import { FichePartenaireResult } from "src/services/type/par/par-fpa-res";
 import { NotificationManager, Notifications } from "hornet-js-core/src/notification/notification-manager";
 import { URL_PARTENAIRES } from "src/utils/urls";
@@ -355,6 +356,7 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
      */
     private onSubmit(partenaireData: any): void {
         logger.trace("Submit du formulaire fiche partenaire");
+
         if (this.attributes.mode == PAR_MODE_CREER || this.attributes.mode == PAR_MODE_EDITER) {
             this.getService().modifier(this.attributes.id, partenaireData, (event) => {
                 logger.trace(event);
@@ -367,17 +369,17 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
                 let criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
                 let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : null;
                 if (dataSource != null) {
-                    this.navigateTo(URL_PARTENAIRES, {
+                    /*this.navigateTo(URL_PARTENAIRES, {
                         criteres: criteres,
                         dataSource: dataSource,
                         forceReload: true
-                    }, () => {
+                    }, () => {*/
                         NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
-                    });
+                    //});
                 } else {
-                    this.navigateTo(URL_PARTENAIRES, { criteres: criteres }, () => {
+                    //this.navigateTo(URL_PARTENAIRES, { criteres: criteres }, () => {
                         NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
-                    });
+                    //});
                 }
 
             });
@@ -558,7 +560,7 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
                 <Header title={this.i18n("partenaireFichePage.tableauAutresTel.title")}>
                     <MenuActions>
                         <ActionButton title={this.i18n("partenaireFichePage.tableauAutresTel.addTitle")}
-                            srcImg={Picto.white.add}
+                            srcImg={<SvgSprites icon="add" color="#FFF" />}
                             action={this.ajouterAutreTelephone}
                             priority={true}
                             visible={() => !this.isNonContactFieldDisabled()}
@@ -574,7 +576,7 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
                         />
                         <ActionColumn keyColumn="id"
                             alt={this.formI18n.fields.suppressionAlt}
-                            srcImg={Picto.blue.supprimer}
+                            srcImg={<SvgSprites icon="delete" color="#0579BE" />}
                             action={this.supprimerAutreTelephone}
                             messageAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionMessage")}
                             titleAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionTitle")}
@@ -756,7 +758,7 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
         let fileTag: React.ReactElement<any> = null;
         let format;
         let size;
-        if (file) {
+        if (file && file.filename) {
             const split = file.filename.split(".");
             format = split ? split[ split.length - 1 ].toUpperCase() : "";
             size = this.formatBytes(file.size, 2);

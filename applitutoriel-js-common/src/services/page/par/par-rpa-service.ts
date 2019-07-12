@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -82,6 +82,7 @@ import { PartenaireRechercheParameter } from "src/services/type/par/par-rpa-prm"
 import { MediaType } from "hornet-js-core/src/protocol/media-type";
 import { PartenaireResult } from "src/services/type/par/par-types";
 import { ServiceRequest } from "hornet-js-core/src/services/service-request";
+import { Promise } from "hornet-js-utils/src/promise-api";
 
 /**
  * Interface des services pour les partenaires

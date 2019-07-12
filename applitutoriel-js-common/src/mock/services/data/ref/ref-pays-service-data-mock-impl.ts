@@ -73,18 +73,18 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
-import { ReferentielPaysService } from "applitutoriel-js-common/src/services/data/ref/ref-pays-service";
-import * as villes from "applitutoriel-js-common/src/resources/mock/par/par-rpa-villes.json";
-import * as pays from "applitutoriel-js-common/src/resources/mock/par/par-pays-data.json";
+import { Logger } from "hornet-js-logger/src/logger";
+import { ReferentielPaysService } from "src/services/data/ref/ref-pays-service";
+import * as villes from "src/resources/mock/par/par-rpa-villes.json";
+import * as pays from "src/resources/mock/par/par-pays-data.json";
 import { Promise } from "hornet-js-utils/src/promise-api";
-const logger: Logger = Utils.getLogger("applitutoriel-js-common.mock.services.data.ref.ref-pays-service-data-mock-impl");
+const logger: Logger = Logger.getLogger("applitutoriel-js-common.mock.services.data.ref.ref-pays-service-data-mock-impl");
 
 /**
  * Implementation des services pour les referentiels

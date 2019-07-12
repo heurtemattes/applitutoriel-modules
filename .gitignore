@@ -6,12 +6,13 @@ node_modules/
 hb_version
 !builder.js
 !trigger-rundeck.js
-!test.webpack.js
+!karma.addons.config.js
+!webpack.addons.config.js
+!tests.webpack.js
 npm-debug.log
 target/
 istanbul/
 .vscode
-**/static/hornet-themes-intranet/
 vendor-manifest.json
 **/static/js/
 **/static/**/**
@@ -21,3 +22,4 @@ test_report/
 *.sqlite
 *.d.ts
 **/log/
+.history

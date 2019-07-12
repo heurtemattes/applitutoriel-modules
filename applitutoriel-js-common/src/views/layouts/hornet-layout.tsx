@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
@@ -87,7 +87,7 @@ import { NavigationUtils } from "hornet-js-components/src/utils/navigation-utils
 import * as fs from "fs";
 import * as path from "path";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.layouts.hornet-layout");
+const logger: Logger = Logger.getLogger("applitutoriel.views.layouts.hornet-layout");
 
 const styleLoader: any = ".loader-page:before {display: block;position: absolute;content: '';left: -12.5em;width: 12.5em;height: 0.25em;background-color: #00d468;animation: loadingPage 2s linear infinite;}@keyframes loadingPage {from {left: -12.5em; width: 30%;}50% {width: 30%;}70% {width: 70%;}80% { left: 50%;}95% {left: 120%;}to {left: 100%;}}";
 
@@ -110,8 +110,6 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
 
     static defaultProps = {
         appLogo: "/img/logoHornet.png",
-        appTheme: "/css/theme.css",
-        fwkTheme: process.env.NODE_ENV === "production" ? "/css/theme-min.css" : "/css/theme.css",
         appStatic: "/js/client.js",
         appStaticDll: "/js/dll",
         nojavascript: false,
@@ -150,7 +148,6 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
             zIndex: 9999,
         };
 
-
         const loadingOverlayStyle: React.CSSProperties = {
             background: "black",
             position: "fixed",
@@ -182,8 +179,7 @@ export class HornetLayout extends HornetPage<any, HornetLayoutProps, any> {
                         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                         <link rel="icon" type="image/png" href={this.genUrlStatic(this.state.appLogo)} />
                         <title>{this.state.applicationTitle}</title>
-                         <link rel="stylesheet" type="text/css" href={HornetLayout.genUrlTheme(this.state.fwkTheme)} />
-                        <link rel="stylesheet" type="text/css" href={this.genUrlStatic(this.state.appTheme)} />
+                        <link rel="stylesheet" type="text/css" href={this.genUrlStatic("/css/appli.min.css")} />
                     </head>
                     <body>
                         {

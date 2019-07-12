@@ -86,7 +86,7 @@ export class ProduitPartenaireDTO {
     idPartenaire: number;
 }
 
-export let ProduitPartenaireModel: Sequelize.DefineAttributes = {
+export let ProduitPartenaireModel: Sequelize.ModelAttributes = {
     idProduit: {
         type: Sequelize.INTEGER,
         field: "id_produit",

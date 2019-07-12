@@ -73,7 +73,7 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -83,11 +83,9 @@ import {
     ListerSecteurs,
     ModifierSecteur,
     SupprimerSecteur,
-    CreerSecteur
-} from "applitutoriel-js-common/src/actions/adm/adm-lst-actions";
+    CreerSecteur} from "applitutoriel-js-common/src/actions/adm/adm-lst-actions";
 import { SecteursPage } from "applitutoriel-js-common/src/views/adm/adm-lst-page";
 import { Roles } from "applitutoriel-js-common/src/utils/roles";
-import { SecteurServiceImpl } from "src/services/page/sec/secteur-service-page-impl";
 import { AdministrationSecteurService } from "applitutoriel-js-common/src/services/page/adm/adm-secteur-service";
 import { AdministrationSecteurServiceData } from "applitutoriel-js-common/src/services/data/adm/adm-secteur-service-data";
 import { Injector } from "hornet-js-core/src/inject/injector";

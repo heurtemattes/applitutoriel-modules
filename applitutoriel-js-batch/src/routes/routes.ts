@@ -73,7 +73,7 @@
  * applitutoriel-js-batch - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -84,7 +84,7 @@ import { AbstractRoutes, PUBLIC_ROUTE, DataRouteInfos } from "hornet-js-core/src
 import {
     CreerSecteurBatch, DeleteAllSecteursByForEachBatch, GenererSecteurBatch, ModifierSecteurBatch,
     ModifierSecteurByForEachBatch,
-    NettoyerSecteurBatch, SupprimerSecteurByForEachBatch
+    NettoyerSecteurBatch, SupprimerSecteurByForEachBatch,
 } from "src/actions/adm/secteurs-batch";
 
 export class Routes extends AbstractRoutes {

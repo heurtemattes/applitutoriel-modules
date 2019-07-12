@@ -73,14 +73,14 @@
  * applitutoriel-js-batch - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import * as Sequelize from "sequelize";
 
-export let SecteurModel: Sequelize.DefineAttributes = {
+export let SecteurModel: Sequelize.ModelAttributes = {
     id: {
         type: Sequelize.INTEGER,
         field: "id_secteur",

@@ -65,7 +65,6 @@
     "secure": true
     //"alwaysSetCookie": false
   },
-  "themeName": "hornet-themes-intranet",
   "security": {
     "enabled": true,
     "hpp": true,
@@ -161,7 +160,6 @@
       "username": "test",
       "password": "test",
       "options": {
-        "operatorsAliases": false,
         "dialect": "sqlite",
         "storage": "./database/database.sqlite",
         "pool": {
@@ -179,7 +177,6 @@
     "configPostgres": {
       "uri": "postgres://hornetjs@localhost:5433/applitutorielDB",
       "options": {
-        "operatorsAliases": false,
         "pool": {
           "max": 5,
           "min": 0,

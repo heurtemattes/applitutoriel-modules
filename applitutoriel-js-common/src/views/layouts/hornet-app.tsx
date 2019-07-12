@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { Class } from "hornet-js-utils/src/typescript-utils";
 import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widget/component/hornet-page";
@@ -98,13 +98,17 @@ import { NavigationUtils } from "hornet-js-components/src/utils/navigation-utils
 import { NotificationSessionFooter } from "hornet-js-react-components/src/widget/notification/notification-session-footer";
 import { SessionIdpExpireNotification } from "hornet-js-react-components/src/widget/notification/notification-session-idp";
 import { MenuAccessibilite } from "hornet-js-react-components/src/widget/navigation/menu-accessibilite";
-
+import { SvgSprites } from "hornet-js-react-components/src/widget/icon/svg-sprites";
 
 import * as _ from "lodash";
 import * as classNames from "classnames";
 import { UPDATE_PAGE_EXPAND } from "hornet-js-react-components/src/widget/screen/layout-switcher";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.layouts.hornet-app");
+import "hornet-js-react-components/src/widget/sass/gen.scss";
+import "src/views/layouts/sass/_auth.scss";
+//import "src/views/layouts/sass/_header.scss";
+
+const logger: Logger = Logger.getLogger("applitutoriel.views.layouts.hornet-app");
 
 const users = {
     "user":
@@ -194,7 +198,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
             { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
-            icon="picto-user"
+            srcImg={<SvgSprites icon="account" />}
             className="profil-content"
             id={"dropdown-user-mock" + "-drop"}
             label={(Utils.getCls("hornet.user") && Utils.getCls("hornet.user").name) ? Utils.getCls("hornet.user").name : "Connexion"}
@@ -206,7 +210,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
             { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
-            icon="picto-user"
+            srcImg={<SvgSprites icon="account" />}
             className="profil-content"
             id={"dropdown-user-banner-mock" + "-drop"}
             label={"Users"}

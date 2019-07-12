@@ -73,7 +73,7 @@
  * applitutoriel-js-batch - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -85,11 +85,13 @@ Injector.register("databaseConfigName", "config");
 import { Utils } from "hornet-js-utils";
 import { SecteurServiceImpl } from "src/services/data/sec/secteur-service-impl";
 import { SecteurService } from "src/services/data/sec/secteur-service";
+import { ModelDAO } from "src/dao/model-dao";
 
 if (Utils.config.getOrDefault("mock.enabled", false)) {
     // Mock des serviceData
 
 } else {
+    Injector.register(ModelDAO, new ModelDAO() );
     Injector.register(SecteurService, SecteurServiceImpl);
 }
 

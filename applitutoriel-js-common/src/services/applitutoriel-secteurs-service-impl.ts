@@ -73,16 +73,16 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { ServiceRequest } from "hornet-js-core/src/services/service-request";
 
-const logger: Logger = Utils.getLogger("applitutoriel-js-common.services.applitutoriel-secteurs-service-impl");
+const logger: Logger = Logger.getLogger("applitutoriel-js-common.services.applitutoriel-secteurs-service-impl");
 
 /**
  * Exemple de surcharge de la classe ServiceApi fournie par le framework

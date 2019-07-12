@@ -73,13 +73,12 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { DataRouteInfos, PUBLIC_ROUTE } from "hornet-js-core/src/routes/abstract-routes";
 import { ListerProduits } from "applitutoriel-js-common/src/actions/pro/pro-actions";
 import { ProduitAction, ACTION_REPARTITION_PRODUITS } from "applitutoriel-js-common/src/actions/adm/adm-rps-actions";
@@ -89,7 +88,7 @@ import ProduitsRoutesClient from "src/routes/adm/adm-rps-client-routes";
 import { URL_PRODUITS } from "applitutoriel-js-common/src/utils/urls";
 import { Injector } from "hornet-js-core/src/inject/injector";
 
-const logger: Logger = Utils.getLogger("applitutoriel.src.routes.adm.adm-rps-server-routes");
+const logger: Logger = Logger.getLogger("applitutoriel.src.routes.adm.adm-rps-server-routes");
 
 export default class ProduitsRoutesServer extends ProduitsRoutesClient {
 

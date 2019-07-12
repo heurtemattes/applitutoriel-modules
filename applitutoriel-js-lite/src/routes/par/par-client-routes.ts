@@ -73,13 +73,12 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 
 import { AbstractRoutes, PageRouteInfos } from "hornet-js-core/src/routes/abstract-routes";
 import { Roles } from "applitutoriel-js-common/src/utils/roles";
@@ -96,7 +95,7 @@ import { FichePartenairePageService } from "applitutoriel-js-common/src/services
 import { RecherchePartenaireService } from "applitutoriel-js-common/src/services/page/par/par-rpa-service";
 import { FichePartenairePageOnglet } from 'applitutoriel-js-common/src/views/par/par-fpa/fiche-partenaire-page-onglet';
 
-const logger: Logger = Utils.getLogger("applitutoriel.routes.par.par-routes");
+const logger: Logger = Logger.getLogger("applitutoriel.routes.par.par-routes");
 
 export default class PartenairesRoutesClient extends AbstractRoutes {
     constructor() {

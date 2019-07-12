@@ -73,12 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { ApplitutorielSecteursServiceImpl } from "applitutoriel-js-common/src/services/applitutoriel-secteurs-service-impl";
+import { ApplitutorielSecteursServiceImpl } from "src/services/applitutoriel-secteurs-service-impl";
+import { Promise } from "hornet-js-utils/src/promise-api";
 
 /**
  * Interface des services pour les secteurs

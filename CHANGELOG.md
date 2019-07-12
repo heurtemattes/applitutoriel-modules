@@ -1,3 +1,32 @@
+# applitutoriel-modules 5.4.0
+
+- 9ae0fa67 PROJ[] : Fix erreur de récupération du fichier
+- b93b23df FIX[] : tri nationalité porté par le datasource
+- 3be9fe25 EVOL[] : ajout tri nationalité côté serveur
+- 6f9981cc FIX[] : correction retour à la liste partenaire après submit
+- 5febb0be PROJ[] : comment exemple feature flipping
+- f9373339 PROJ[]: Utilisation de la conf npm_rc pour le build et les tests
+- 4d1a198d PROJ[] : Update Jenkinsfile
+- bae9d3f0 PROJ[] : update sequelize
+- 833b7973 PROJ[] : passage node 10
+- 25695b4e PROJ[] : pour éviter de trop nombreux petit chunk
+- c3d2ea55 PROJ[] : ajout sass gen pour la partie global dans le layout
+- 7d438b39 EVOL[] : changements fichiers scss new tree
+- cccfcdab FIX[] : externalisation conf webpack + appenders + svg et sass
+- 83df02ec FIX[] : import sass vers layouts
+- eeb857ca PROJ[] : passage sass en webpack loader
+- adc9cc83 EVOL[] : retrait des occurrences picto
+- 2c216845 PROJ[]: Externalisation de la conf webpack clientContexte du builder.js et construction de dll en mode dev
+- 236e2f16 PROJ[]: Simplification des index.ts suite au nouveau builder
+- 209bdcb2 PROJ[] : Ajout tests.webpack.js
+- 709205a7 PROJ[]: Simplification du builder.js en externalisant la partie karma dans un nouveau fichier.
+- 12489a2b PROJ[]: Ajout des dépendences utilisées par le module
+- 31dd631a PROJ[]: suppression des imports non utilisés
+- 837ec875 PROJ[] : Fix problème de navigation depuis le menu
+- 2dfae74a PROJ[] : Configuration dans le fichier webpack.addons.config.js
+- ababfb26 PROJ[] : ajout conf contexte template html
+- 1a90a99e EVOL[s433] : Utilisation du builder new generation
+
 # applitutoriel-modules 5.3.0
 
 e584ec4a FIX[s424] : Accessiblite - gestion focus

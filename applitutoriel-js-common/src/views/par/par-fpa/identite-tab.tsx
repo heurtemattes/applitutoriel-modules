@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import * as _ from "lodash";
 import { Form } from "hornet-js-react-components/src/widget/form/form";
@@ -101,7 +101,6 @@ import { UploadedFile } from "hornet-js-core/src/data/file";
 import { CalendarField } from "hornet-js-react-components/src/widget/form/calendar-field";
 import { Table } from "hornet-js-react-components/src/widget/table/table";
 import { Columns } from "hornet-js-react-components/src/widget/table/columns";
-import { Picto } from "hornet-js-react-components/src/img/picto";
 import { MenuActions } from "hornet-js-react-components/src/widget/table/menu-actions";
 import { ActionButton } from "hornet-js-react-components/src/widget/table/action-button";
 import { Header } from "hornet-js-react-components/src/widget/table/header";
@@ -121,10 +120,11 @@ import { SortData } from "hornet-js-core/src/component/sort-data";
 import { PartenaireMetier } from "src/models/par/par-mod";
 import { TabContent } from "hornet-js-react-components/src/widget/tab/tab-content";
 import SyntheticEvent = React.SyntheticEvent;
+import { SvgSprites } from 'hornet-js-react-components/src/widget/icon/svg-sprites';
 
 import * as schema from "src/views/par/par-fpa/validation.json";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.par.par-fpa.identite-tab");
+const logger: Logger = Logger.getLogger("applitutoriel.views.par.par-fpa.identite-tab");
 
 export const PAR_MODE_CONSULTER: string = "consulter";
 export const PAR_MODE_EDITER: string = "editer";
@@ -299,6 +299,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                     onSubmit={this.props.onSubmit}
                     readOnly={this.state.readOnly}
                     className=""
+                    isSticky={true}
                     schema={this.state.schema}
                     formMessages={this.i18n("partenaireFichePage.form")}
                     onFormChange={this.onFormChangeFn}>
@@ -630,7 +631,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                 <Header title={this.i18n("partenaireFichePage.tableauAutresTel.title")}>
                     <MenuActions>
                         <ActionButton title={this.i18n("partenaireFichePage.tableauAutresTel.addTitle")}
-                            srcImg={Picto.white.add}
+                            srcImg={<SvgSprites icon="add" color="#FFF" />}
                             action={this.ajouterAutreTelephone}
                             priority={true}
                             visible={() => !this.isNonContactFieldDisabled()}
@@ -646,7 +647,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         />
                         <ActionColumn keyColumn="id"
                             alt={this.formI18n.fields.suppressionAlt}
-                            srcImg={Picto.blue.supprimer}
+                            srcImg={<SvgSprites icon="delete" color="#0579BE" />}
                             action={this.supprimerAutreTelephone}
                             messageAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionMessage")}
                             titleAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionTitle")}
@@ -911,7 +912,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         let fileTag: React.ReactElement<any> = null;
         let format;
         let size;
-        if (file) {
+        if (file && file.filename) {
             const split = file.filename.split(".");
             format = split ? split[split.length - 1].toUpperCase() : "";
             size = this.formatBytes(file.size, 2);

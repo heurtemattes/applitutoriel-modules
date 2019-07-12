@@ -73,14 +73,15 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
+import * as _ from "lodash";
 import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 import { Modal } from "hornet-js-react-components/src/widget/dialog/modal";
@@ -100,7 +101,6 @@ import { MenuActions } from "hornet-js-react-components/src/widget/table/menu-ac
 import { ActionButton } from "hornet-js-react-components/src/widget/table/action-button";
 import { Header } from "hornet-js-react-components/src/widget/table/header";
 import { Content } from "hornet-js-react-components/src/widget/table/content";
-import { Picto } from "hornet-js-react-components/src/img/picto";
 import { ActionColumn } from "hornet-js-react-components/src/widget/table/column/action-column";
 import { ToggleColumnsButton } from "hornet-js-react-components/src/widget/table/toggle-columns-button";
 import { DataSource } from "hornet-js-core/src/component/datasource/datasource";
@@ -109,10 +109,11 @@ import { DefaultSort } from "hornet-js-core/src/component/datasource/options/dat
 import { EditionActionColumn } from "hornet-js-react-components/src/widget/table/column/edition-action-column";
 import { SortData } from "hornet-js-core/src/component/sort-data";
 import { SortDirection } from "hornet-js-core/src/component/sort-data";
+import { SvgSprites } from 'hornet-js-react-components/src/widget/icon/svg-sprites';
 import * as schema from "src/views/adm/adm-lst-page-validation.json";
 import * as schemaEditionTable from "src/views/adm/adm-lst-table-validation.json";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.adm.adm-lst-page");
+const logger: Logger = Logger.getLogger("applitutoriel.views.adm.adm-lst-page");
 
 /**
  * Page d'administration des secteurs. L'ajout ou l'édition d'un secteur se fait dans une fenêtre modale.
@@ -229,12 +230,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                             <ActionButton
                                 className={"secteurs-add-button"}
                                 title={this.i18n("administration.secteurs.table.addTitle")}
-                                srcImg={Picto.white.add}
+                                srcImg={<SvgSprites icon="add" height="1.5em" width="1.5em" color="#FFF" />}
                                 id="addSecteur"
                                 displayedWithoutResult={true}
                                 action={this.ajouterSecteur} priority={true} />
                             <ActionButton title={this.i18n("administration.secteurs.table.sortMultiTitle")}
-                                srcImg={this.genUrlStatic("/img/sort-down.svg")}
+                                srcImg={ <SvgSprites icon="sort" height="1.5em" width="1.5em" color="#FFF" /> }
                                 action={this.sortMulti} priority={true} />
                         </MenuActions>
                     </Header>
@@ -257,12 +258,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                             <Column keyColumn="auteurCreat" title={intlMessages.auteur} sortable={true} />
                             <ActionColumn keyColumn="id"
                                 alt={intlMessages.modificationTitle}
-                                srcImg={Picto.blue.editer}
+                                srcImg={<SvgSprites icon="edit" height="2em" width="2em" color="#0579be" />}
                                 action={this.editItem.bind(this)}
                             />
                             <ActionColumn keyColumn="id"
                                 alt={intlMessages.suppressionAlt}
-                                srcImg={Picto.blue.supprimer}
+                                srcImg={<SvgSprites icon="delete" height="2em" width="2em" color="#0579be" />}
                                 action={this.supprimer.bind(this)}
                                 messageAlert={this.i18n("administration.secteurs.confirmationSuppression")}
                                 titleAlert={this.i18n("administration.secteurs.suppressionTitle")}

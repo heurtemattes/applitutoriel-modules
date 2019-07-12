@@ -73,24 +73,22 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Class } from "hornet-js-utils/src/typescript-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { HornetSequelizeEntityAttributes,
     HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
 import { HornetGenericDAO } from "hornet-js-database/src/sequelize/hornet-generic-dao";
 import { inject } from "hornet-js-core/src/inject/inject";
 import { ModelDAO } from "src/dao/model-dao";
 import { injectable } from "hornet-js-core/src/inject/injectable";
-import { HornetSequelizeModel } from "hornet-js-database/src/sequelize/hornet-sequelize-model";
 import { SequelizeUtils } from "hornet-js-database/src/sequelize/sequelize-utils";
+import { QueryTypes } from "sequelize";
 
-const logger: Logger = Utils.getLogger("applitutoriel.src.dao.produit-dao");
+const logger: Logger = Logger.getLogger("applitutoriel.src.dao.produit-dao");
 
 @injectable()
 export class ProduitDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceModel<HornetSequelizeEntityAttributes>> {
@@ -102,6 +100,6 @@ export class ProduitDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstan
         return SequelizeUtils.getQuery().query(
             "SELECT COUNT(*) * 100 /(SELECT COUNT(*) FROM produit) AS \"value\", sec_nom AS \"label\" " +
             "FROM produit INNER JOIN secteur ON produit.id_secteur = secteur.id_secteur GROUP BY sec_nom",
-            { type: SequelizeUtils.getQuery().QueryTypes.SELECT });
+            { type: QueryTypes.SELECT });
     }
 }

@@ -73,18 +73,18 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { HornetSuperAgent, HornetPluginConfig } from "hornet-js-core/src/services/hornet-superagent";
 import { UserInformations } from "hornet-js-utils/src/authentication-utils";
 import * as superAgentPlugins from "hornet-js-core/src/services/superagent-hornet-plugins";
 
-const logger: Logger = Utils.getLogger("applitutoriel-js.services.applitutoriel.applitutoriel-agent");
+const logger: Logger = Logger.getLogger("applitutoriel-js.services.applitutoriel.applitutoriel-agent");
 
 /**
  * Exemple de surcharge de la classe HornetAgent fournie par le framework afin d'ajouter les roles de l'utilisateur

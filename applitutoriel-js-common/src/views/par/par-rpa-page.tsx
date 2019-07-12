@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.3.0
+ * @version v5.4.0
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { Notification } from "hornet-js-react-components/src/widget/notification/notification";
@@ -126,7 +126,6 @@ import { LineAfter } from "hornet-js-react-components/src/widget/table/line/line
 import { Header } from "hornet-js-react-components/src/widget/table/header";
 import { Footer } from "hornet-js-react-components/src/widget/table/footer";
 import { Content } from "hornet-js-react-components/src/widget/table/content";
-import { Picto } from "hornet-js-react-components/src/img/picto";
 import { Pager, PaginationProps } from "hornet-js-react-components/src/widget/pager/pager";
 import { ActionColumn } from "hornet-js-react-components/src/widget/table/column/action-column";
 import { MoreInfoColumn } from "hornet-js-react-components/src/widget/table/column/more-info-column";
@@ -136,11 +135,12 @@ import { PaginateDataSource } from "hornet-js-core/src/component/datasource/pagi
 import { ButtonsArea } from "hornet-js-react-components/src/widget/form/buttons-area";
 import { DefaultSort } from "hornet-js-core/src/component/datasource/options/datasource-option";
 import { SortData } from "hornet-js-core/src/component/sort-data";
+import { SvgSprites } from 'hornet-js-react-components/src/widget/icon/svg-sprites';
 
 import * as schema from "src/views/par/par-rpa-validation.json";
 import { timingSafeEqual } from 'crypto';
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.par.par-rpa-page");
+const logger: Logger = Logger.getLogger("applitutoriel.views.par.par-rpa-page");
 
 /**
  * Page de recherche des partenaires. L'ajout ou la modification d'un partenaire se fait dans une fiche indépendante
@@ -376,33 +376,33 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                         <MenuActions>
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportCsv")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportCsvLabel")}
-                                srcImg={Picto.export.csv}
+                                srcImg={<SvgSprites icon="csv" color="#FFF" />}
                                 action={this.onExport.bind(this, MediaTypes.CSV)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportPdf")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportPdfLabel")}
-                                srcImg={Picto.export.pdf}
+                                srcImg={<SvgSprites icon="pdf" color="#EA4C3A" />}
                                 action={this.onExport.bind(this, MediaTypes.PDF)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOdt")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportOdtLabel")}
-                                srcImg={Picto.export.odt}
+                                srcImg={<SvgSprites icon="odt" />}
                                 action={this.onExport.bind(this, MediaTypes.ODT)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOds")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportOdsLabel")}
-                                srcImg={Picto.export.ods}
+                                srcImg={<SvgSprites icon="ods" />}
                                 action={this.onExport.bind(this, MediaTypes.ODS)} />
                             <ActionButton typeAction={TypeAction.ACTION_UNITAIRE} title={intlTab.colonnes.edition}
                                 label={intlTab.colonnes.edition}
-                                srcImg={Picto.black.editer}
+                                srcImg={<SvgSprites icon="edit" color="#000" />}
                                 visible={() => this.isAdmin()}
                                 action={this.editerPartenaire} />
                             <ActionButton typeAction={TypeAction.ACTION_UNITAIRE} title={intlTab.colonnes.consultation}
                                 label={intlTab.colonnes.consultation}
-                                srcImg={Picto.black.consulter}
+                                srcImg={<SvgSprites icon="consult" />}
                                 action={this.consulterPartenaire} />
                             <ActionButton typeAction={TypeAction.ACTION_MASSE}
                                 priority={true}
                                 label={intlTab.colonnes.suppression}
-                                srcImg={Picto.white.supprimer}
+                                srcImg={<SvgSprites icon="delete" color="#FFF" />}
                                 action={this.supprimerEnMasse}
                                 title={intlTab.massActionTitle}
                                 messageAlert={intlTab.massActionConfirmMessage}
@@ -425,19 +425,19 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                             <DateColumn keyColumn="dateModif" title={intlTab.colonnes.dateModif} sortable={true} />
                             <ActionColumn keyColumn="consulter"
                                 alt={intlTab.colonnes.consultationTitle}
-                                srcImg={Picto.blue.consulter}
+                                srcImg={<SvgSprites icon="consult" color="#0579BE" />}
                                 action={this.consulterPartenaire}
                                 visible={this.isVisible}
                             />
                             <ActionColumn keyColumn="editer"
-                                srcImg={Picto.blue.editer}
+                                srcImg={<SvgSprites icon="edit" color="#0579BE" />}
                                 alt={intlTab.colonnes.editionTitle}
                                 action={this.editerPartenaire}
                                 disabled={() => !this.isAdmin()}
                             />
                             <ActionColumn keyColumn="supprimer"
                                 alt={intlTab.colonnes.suppressionTitle}
-                                srcImg={Picto.blue.supprimer}
+                                srcImg={<SvgSprites icon="delete" color="#0579BE" />}
                                 action={this.supprimer}
                                 messageAlert={intlTab.colonnes.supprimer.message}
                                 titleAlert={intlTab.colonnes.supprimer.title}
@@ -497,19 +497,6 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     private isAdmin(): boolean {
         logger.trace(Roles.ADMIN_STR);
         return AuthUtils.hasRole(this.user, Roles.ADMIN_STR);
-    }
-
-    /**
-     * Surcharge le style CSS de certaines lignes
-     * @param partenaire élément correspondant à une ligne de tableau
-     * @returns la/les classes CSS à appliquer à la ligne correspondant à item
-     */
-    private static customRowsClasses(partenaire: any): ClassDictionary {
-        return {
-            /*"green-background-row": (partenaire.nom == "ALBERT"),
-             "red-background-row": (partenaire.nom == "ALFRED"),
-             "yellow-background-row": (partenaire.nom == "BAZIN")*/
-        };
     }
 
     /**
@@ -819,10 +806,7 @@ const DivExpandable = (props) => {
     return (
         <div className="grid" key={"card-container-" + props.value.nom + "-" + props.value.prenom}>
             <div style={{ float: "left", width: "10%" }} className="one-fifth">
-                <img src={Picto.grey.userCircle}
-                    style={{ width: "200%" }}
-                    alt={HornetPage.getI18n("partenairesListePage.form.titreImage")}
-                />
+                {<SvgSprites icon="account" color="#757575" />}
             </div>
             <div className={props.className}
                 key={"card-content-" + props.value.nom + "-" + props.value.prenom}>
