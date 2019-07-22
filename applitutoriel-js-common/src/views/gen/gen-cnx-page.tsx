@@ -73,17 +73,15 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 import { HornetComponent } from "hornet-js-react-components/src/widget/component/hornet-component";
-import * as _ from "lodash";
 
 import "src/views/layouts/sass/_auth.scss";
 
@@ -173,7 +171,7 @@ export class ConnexionPage extends HornetComponent<ConnexionPageProps, any> {
 
     _renderErrorDiv() {
 
-        if (_.isArray(this.state.errorMessage) && this.state.errorMessage.length >= 1) {
+        if (Array.isArray(this.state.errorMessage) && this.state.errorMessage.length >= 1) {
             return (
                 <div className="errors" id="status">
                     {this.state.errorMessage}

@@ -100,7 +100,7 @@ Module.prototype._compile = function (content, filename) {
 
 // on surcharge la méthode de résolution interne nodejs pour gérer d'autres répertoires
 Module._newNodeModulePaths = function (from) {
-    var paths = [];
+    var paths = Module._oldNodeModulePaths.call(this, from);
     paths.push(path.join(appDirectory));
     paths.push(path.join(appDirectory, NODE_MODULES));
 
@@ -114,7 +114,6 @@ Module._newNodeModulePaths = function (from) {
     return paths;
 };
 Module._nodeModulePaths = Module._newNodeModulePaths;
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gestion du cas particulier du main (car nodejs le considère différent des autres modules ...)  //

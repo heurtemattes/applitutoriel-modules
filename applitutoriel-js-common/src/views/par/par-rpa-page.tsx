@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -104,7 +104,7 @@ import { ParRpaValidateSectorStartDate } from "src/views/par/par-rpa-validate-st
 import { MediaType, MediaTypes } from "hornet-js-core/src/protocol/media-type";
 import { PartenaireResult } from "src/services/type/par/par-types";
 import { Button } from "hornet-js-react-components/src/widget/button/button";
-import * as _ from "lodash";
+import get = require("lodash.get");
 import { RecherchePartenaireService } from "src/services/page/par/par-rpa-service";
 import { AuthUtils } from "hornet-js-utils/src/authentication-utils";
 import { Roles } from "src/utils/roles";
@@ -223,15 +223,15 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         /* Valeurs par défaut du formulaire de recherche */
         this.currentCriteres = {
             partenaire: {
-                vip: _.get(criteres, "partenaire.vip") != null ?
-                    _.get(criteres, "partenaire.vip") : _.get(this.defaultValues, "criteres.partenaire.vip"),
+                vip: get(criteres, "partenaire.vip") != null ?
+                    get(criteres, "partenaire.vip") : get(this.defaultValues, "criteres.partenaire.vip"),
             },
-            idSecteur: (_.get(criteres, "idSecteur") != null) ?
-                _.get(criteres, "idSecteur").toString() : _.get(this.defaultValues, "criteres.idSecteur"),
-            startDate: _.get(criteres, "startDate") ?
-                this.getDateFormatee(_.get(criteres, "startDate")) : _.get(this.defaultValues, "criteres.startDate"),
-            endDate: _.get(criteres, "endDate") ?
-                this.getDateFormatee(_.get(criteres, "endDate")) : _.get(this.defaultValues, "criteres.endDate"),
+            idSecteur: (get(criteres, "idSecteur") != null) ?
+                get(criteres, "idSecteur").toString() : get(this.defaultValues, "criteres.idSecteur"),
+            startDate: get(criteres, "startDate") ?
+                this.getDateFormatee(get(criteres, "startDate")) : get(this.defaultValues, "criteres.startDate"),
+            endDate: get(criteres, "endDate") ?
+                this.getDateFormatee(get(criteres, "endDate")) : get(this.defaultValues, "criteres.endDate"),
         };
         this.dataSourceSecteurs.on("add", () => {
             // Valorisation des champs du formulaire de recherche
@@ -376,33 +376,33 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                         <MenuActions>
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportCsv")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportCsvLabel")}
-                                srcImg={<SvgSprites icon="csv" color="#FFF" />}
+                                srcImg={<SvgSprites icon="csv" color="#FFF" tabIndex={-1} />}
                                 action={this.onExport.bind(this, MediaTypes.CSV)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportPdf")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportPdfLabel")}
-                                srcImg={<SvgSprites icon="pdf" color="#EA4C3A" />}
+                                srcImg={<SvgSprites icon="pdf" color="#EA4C3A" tabIndex={-1}/>}
                                 action={this.onExport.bind(this, MediaTypes.PDF)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOdt")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportOdtLabel")}
-                                srcImg={<SvgSprites icon="odt" />}
+                                srcImg={<SvgSprites icon="odt" tabIndex={-1}/>}
                                 action={this.onExport.bind(this, MediaTypes.ODT)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOds")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportOdsLabel")}
-                                srcImg={<SvgSprites icon="ods" />}
+                                srcImg={<SvgSprites icon="ods" tabIndex={-1}/>}
                                 action={this.onExport.bind(this, MediaTypes.ODS)} />
                             <ActionButton typeAction={TypeAction.ACTION_UNITAIRE} title={intlTab.colonnes.edition}
                                 label={intlTab.colonnes.edition}
-                                srcImg={<SvgSprites icon="edit" color="#000" />}
+                                srcImg={<SvgSprites icon="edit" color="#000" tabIndex={-1}/>}
                                 visible={() => this.isAdmin()}
                                 action={this.editerPartenaire} />
                             <ActionButton typeAction={TypeAction.ACTION_UNITAIRE} title={intlTab.colonnes.consultation}
                                 label={intlTab.colonnes.consultation}
-                                srcImg={<SvgSprites icon="consult" />}
+                                srcImg={<SvgSprites icon="consult" tabIndex={-1}/>}
                                 action={this.consulterPartenaire} />
                             <ActionButton typeAction={TypeAction.ACTION_MASSE}
                                 priority={true}
                                 label={intlTab.colonnes.suppression}
-                                srcImg={<SvgSprites icon="delete" color="#FFF" />}
+                                srcImg={<SvgSprites icon="delete" color="#FFF" tabIndex={-1}/>}
                                 action={this.supprimerEnMasse}
                                 title={intlTab.massActionTitle}
                                 messageAlert={intlTab.massActionConfirmMessage}

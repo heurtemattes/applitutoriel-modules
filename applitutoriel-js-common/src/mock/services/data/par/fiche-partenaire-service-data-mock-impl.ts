@@ -73,14 +73,15 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-logger/src/logger";
-import * as _ from "lodash";
+import assign = require("lodash.assign");
+import find = require("lodash.find");
 import { URL_PAR_PHOTO, URL_PARTENAIRES } from "src/utils/urls";
 import { HornetRequest, SpinnerType } from "hornet-js-core/src/services/hornet-superagent-request";
 import { FichePartenairePageService } from "src/services/page/par/par-fpa-service";
@@ -120,7 +121,7 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
 
         let idPartenaire: number = parseInt((<any>id), 10);
         logger.debug("Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let partenaire: PartenaireResult = _.find((<any>tableauDePartenaires).data.liste, (item: PartenaireResult) => {
+        let partenaire: PartenaireResult = find((<any>tableauDePartenaires).data.liste, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;
@@ -225,8 +226,8 @@ export class FichePartenaireServiceDataMockImpl extends FichePartenairePageServi
      */
     protected convertToRemotePartenaire(webPartenaire: any): any {
 
-        let remotePartenaire: any = _.assign({}, webPartenaire);
-        remotePartenaire.satisfaction = (_.isArray(webPartenaire.satisfaction.ids)) ? webPartenaire.satisfaction.ids.join(",") : "";
+        let remotePartenaire: any = assign({}, webPartenaire);
+        remotePartenaire.satisfaction = (Array.isArray(webPartenaire.satisfaction.ids)) ? webPartenaire.satisfaction.ids.join(",") : "";
 
         if (remotePartenaire.photo && remotePartenaire.photo.contenu) {
             let photo: any = remotePartenaire.photo;

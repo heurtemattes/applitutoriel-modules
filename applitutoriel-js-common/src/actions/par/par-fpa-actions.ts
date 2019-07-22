@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -83,7 +83,7 @@ import { Logger } from "hornet-js-logger/src/logger";
 
 import { RouteAction } from "hornet-js-core/src/routes/abstract-routes";
 import { DataValidator } from "hornet-js-core/src/validation/data-validator";
-import * as _ from "lodash";
+import isString = require("lodash.isstring");
 import { RouteActionService } from "hornet-js-core/src/routes/abstract-routes";
 import { PhotoMetier } from "src/models/photo-mod";
 import { ResultFile } from "hornet-js-core/src/result/result-file";
@@ -152,7 +152,7 @@ export class EcrirePartenaire extends RouteActionService<any, FichePartenaireSer
     getPayload(): any {
         let partenaire = this.req.body;
 
-        if (_.isString(this.req.body.content)) {
+        if (isString(this.req.body.content)) {
             // Le contenu JSON a été posté dans le champ "content" de la requête, on récupère le string qu'on retranscrit en Objet
             partenaire = JSON.parse(this.req.body.content);
         }

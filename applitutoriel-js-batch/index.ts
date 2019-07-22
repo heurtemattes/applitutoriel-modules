@@ -73,7 +73,7 @@
  * applitutoriel-js-batch - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -93,7 +93,7 @@ const NODE_MODULES = "node_modules";
 
 // on surcharge la méthode de résolution interne nodejs pour gérer d'autres répertoires
 Module._newNodeModulePaths = function (from) {
-    var paths = [];
+    var paths = Module._oldNodeModulePaths.call(this, from);
     paths.push(path.join(appDirectory));
     paths.push(path.join(appDirectory, NODE_MODULES));
 

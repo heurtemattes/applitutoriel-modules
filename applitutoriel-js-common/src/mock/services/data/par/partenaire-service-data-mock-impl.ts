@@ -73,12 +73,11 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-logger/src/logger";
 import { MediaType } from "hornet-js-core/src/protocol/media-type";
 import { PartenaireResult } from "src/services/type/par/par-types";
@@ -86,7 +85,8 @@ import { PartenaireRechercheParameter } from "src/services/type/par/par-rpa-prm"
 import { PartenaireService } from "src/services/data/par/partenaire-service";
 import { NotFoundError } from "hornet-js-utils/src/exception/not-found-error";
 import { Promise } from "hornet-js-utils/src/promise-api";
-import * as _ from "lodash";
+import remove = require("lodash.remove");
+import find = require("lodash.find");
 
 import * as tableauDePartenaires from "src/resources/mock/par/par-rpa-data.json";
 import * as villes from "src/resources/mock/par/par-rpa-villes.json";
@@ -113,7 +113,7 @@ export class PartenaireServiceDataMockImpl extends PartenaireService {
     supprimer(id): Promise<any> {
         return Promise.resolve(() => {
             logger.debug("MOCK - Suppression du partenaire, id:", id);
-            _.remove((<any>tableauDePartenaires).data, function (item: any) {
+            remove((<any>tableauDePartenaires).data, function (item: any) {
                 if (item.id === id) {
                     return true;
                 }
@@ -162,7 +162,7 @@ export class PartenaireServiceDataMockImpl extends PartenaireService {
 
         let idPartenaire: number = parseInt(<any>id, 10);
         logger.debug("MOCK - Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let partenaire: PartenaireResult = _.find((<any>tableauDePartenaires).data.liste, (item: PartenaireResult) => {
+        let partenaire: PartenaireResult = find((<any>tableauDePartenaires).data.liste, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;

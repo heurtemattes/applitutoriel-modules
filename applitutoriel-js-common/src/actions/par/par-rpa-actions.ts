@@ -73,15 +73,14 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-logger/src/logger";
 
-import * as _ from "lodash";
+import assign = require("lodash.assign");
 import { PartenaireService } from "src/services/data/par/partenaire-service";
 import { MediaType, MediaTypes } from "hornet-js-core/src/protocol/media-type";
 import { ParRpaValidateIsVipEndDate } from "src/views/par/par-rpa-validate-end-date";
@@ -214,7 +213,7 @@ export class Export extends RouteActionService<{ mediaType: string }, Partenaire
             logger.debug("MIMETYPE :", mediaType.MIME);
 
             // Pour l'export on force à avoir tous les items dans la recherche
-            const payload: any = _.assign({}, {
+            const payload: any = assign({}, {
                 criteres,
                 pagination: { pageIndex: 0, itemsPerPage: ITEMS_PER_PAGE_ALL } as Pagination,
             });

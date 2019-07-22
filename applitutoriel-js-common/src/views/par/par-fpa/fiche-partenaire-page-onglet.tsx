@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -85,7 +85,7 @@ import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widg
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 import { Tabs, TabsProps } from "hornet-js-react-components/src/widget/tab/tabs";
 import { Tab } from "hornet-js-react-components/src/widget/tab/tab";
-import * as _ from "lodash";
+import find = require("lodash.find");
 import { Form } from "hornet-js-react-components/src/widget/form/form";
 import { Row } from "hornet-js-react-components/src/widget/form/row";
 import { InputField } from "hornet-js-react-components/src/widget/form/input-field";
@@ -186,7 +186,7 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
         this.dataSourceVille = new DataSource<VilleMetier>([], { value: "id", text: "libelle", idPays: "pays.id" });
         this.dataSourcePays.addSlave(this.dataSourceVille);
         this.dataSourceVille.on("filter", (filtered) => {
-            if (!_.find(filtered, { text: this.villeAutoComplete.getCurrentText() })) {
+            if (!find(filtered, { text: this.villeAutoComplete.getCurrentText() })) {
                 this.villeAutoComplete.resetField();
             }
         });
@@ -560,7 +560,7 @@ export class FichePartenairePageOnglet extends HornetPage<FichePartenairePageSer
                 <Header title={this.i18n("partenaireFichePage.tableauAutresTel.title")}>
                     <MenuActions>
                         <ActionButton title={this.i18n("partenaireFichePage.tableauAutresTel.addTitle")}
-                            srcImg={<SvgSprites icon="add" color="#FFF" />}
+                            srcImg={<SvgSprites icon="add" color="#FFF" tabIndex={-1}/>}
                             action={this.ajouterAutreTelephone}
                             priority={true}
                             visible={() => !this.isNonContactFieldDisabled()}

@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -81,7 +81,8 @@
 import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
-import * as _ from "lodash";
+import find = require("lodash.find");
+import forEach = require("lodash.foreach");
 import { Form } from "hornet-js-react-components/src/widget/form/form";
 import { Row } from "hornet-js-react-components/src/widget/form/row";
 import { InputField } from "hornet-js-react-components/src/widget/form/input-field";
@@ -219,7 +220,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
         this.dataSourceVille = new DataSource<VilleMetier>([], { value: "id", text: "libelle", idPays: "pays.id" });
         this.dataSourcePays.addSlave(this.dataSourceVille);
         this.dataSourceVille.on("filter", (filtered) => {
-            if (!_.find(filtered, { text: this.villeAutoComplete.getCurrentText() })) {
+            if (!find(filtered, { text: this.villeAutoComplete.getCurrentText() })) {
                 this.villeAutoComplete.resetField();
             }
         });
@@ -456,7 +457,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
     getAccordions(fieldsets): JSX.Element[] {
 
         const accordions: JSX.Element[] = [];
-        _.forEach(fieldsets, (item, index) => {
+        forEach(fieldsets, (item, index) => {
             const accordion: JSX.Element = (
                 <Accordion title={item.title} isOpen={(index === "0") ? true : false} key={"identite-accordion-" + index}>{item.element}</Accordion>
             );
@@ -631,7 +632,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                 <Header title={this.i18n("partenaireFichePage.tableauAutresTel.title")}>
                     <MenuActions>
                         <ActionButton title={this.i18n("partenaireFichePage.tableauAutresTel.addTitle")}
-                            srcImg={<SvgSprites icon="add" color="#FFF" />}
+                            srcImg={<SvgSprites icon="add" color="#FFF" tabIndex={-1}/>}
                             action={this.ajouterAutreTelephone}
                             priority={true}
                             visible={() => !this.isNonContactFieldDisabled()}
@@ -647,7 +648,7 @@ export class IdentiteTab extends TabContent<IdentiteTabProps, any> {
                         />
                         <ActionColumn keyColumn="id"
                             alt={this.formI18n.fields.suppressionAlt}
-                            srcImg={<SvgSprites icon="delete" color="#0579BE" />}
+                            srcImg={<SvgSprites icon="delete" color="#0579BE" tabIndex={-1} />}
                             action={this.supprimerAutreTelephone}
                             messageAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionMessage")}
                             titleAlert={this.i18n("partenaireFichePage.tableauAutresTel.suppressionTitle")}

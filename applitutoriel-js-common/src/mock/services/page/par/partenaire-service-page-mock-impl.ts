@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -85,7 +85,8 @@ import { PartenaireResult } from "src/services/type/par/par-types";
 import { PartenaireRechercheParameter } from "src/services/type/par/par-rpa-prm";
 import { RecherchePartenaireService } from "src/services/page/par/par-rpa-service";
 import { NotFoundError } from "hornet-js-utils/src/exception/not-found-error";
-import * as _ from "lodash";
+import remove = require("lodash.remove");
+import find = require("lodash.find");
 import * as tableauDePartenaires1 from "src/resources/mock/par/par-rpa-data-1.json";
 import * as tableauDePartenaires2 from "src/resources/mock/par/par-rpa-data-2.json";
 import * as tableauDePartenaires3 from "src/resources/mock/par/par-rpa-data-3.json";
@@ -124,7 +125,7 @@ export class PartenaireServicePageMockImpl extends RecherchePartenaireService {
     supprimer(id): Promise<any> {
         return Promise.resolve(() => {
             logger.debug("MOCK - Suppression du partenaire, id:", id);
-            _.remove((<any>tableauDePartenaires1).data, function (item: any) {
+            remove((<any>tableauDePartenaires1).data, function (item: any) {
                 if (item.id === id) {
                     return true;
                 }
@@ -182,7 +183,7 @@ export class PartenaireServicePageMockImpl extends RecherchePartenaireService {
 
         let idPartenaire: number = parseInt(<any>id, 10);
         logger.debug("MOCK - Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let partenaire: PartenaireResult = _.find((<any>tableauDePartenaires1).data.liste, (item: PartenaireResult) => {
+        let partenaire: PartenaireResult = find((<any>tableauDePartenaires1).data.liste, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;

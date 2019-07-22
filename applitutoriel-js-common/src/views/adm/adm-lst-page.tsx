@@ -73,15 +73,14 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
 import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
-import * as _ from "lodash";
+import isEmpty = require("lodash.isempty");
 import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 import { Modal } from "hornet-js-react-components/src/widget/dialog/modal";
@@ -230,12 +229,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                             <ActionButton
                                 className={"secteurs-add-button"}
                                 title={this.i18n("administration.secteurs.table.addTitle")}
-                                srcImg={<SvgSprites icon="add" height="1.5em" width="1.5em" color="#FFF" />}
+                                srcImg={<SvgSprites icon="add" height="1.5em" width="1.5em" color="#FFF" tabIndex={-1} />}
                                 id="addSecteur"
                                 displayedWithoutResult={true}
                                 action={this.ajouterSecteur} priority={true} />
                             <ActionButton title={this.i18n("administration.secteurs.table.sortMultiTitle")}
-                                srcImg={ <SvgSprites icon="sort" height="1.5em" width="1.5em" color="#FFF" /> }
+                                srcImg={ <SvgSprites icon="sort" height="1.5em" width="1.5em" color="#FFF" tabIndex={-1}/> }
                                 action={this.sortMulti} priority={true} />
                         </MenuActions>
                     </Header>
@@ -258,12 +257,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                             <Column keyColumn="auteurCreat" title={intlMessages.auteur} sortable={true} />
                             <ActionColumn keyColumn="id"
                                 alt={intlMessages.modificationTitle}
-                                srcImg={<SvgSprites icon="edit" height="2em" width="2em" color="#0579be" />}
+                                srcImg={<SvgSprites icon="edit" height="2em" width="2em" color="#0579be" tabIndex={-1}/>}
                                 action={this.editItem.bind(this)}
                             />
                             <ActionColumn keyColumn="id"
                                 alt={intlMessages.suppressionAlt}
-                                srcImg={<SvgSprites icon="delete" height="2em" width="2em" color="#0579be" />}
+                                srcImg={<SvgSprites icon="delete" height="2em" width="2em" color="#0579be" tabIndex={-1}/>}
                                 action={this.supprimer.bind(this)}
                                 messageAlert={this.i18n("administration.secteurs.confirmationSuppression")}
                                 titleAlert={this.i18n("administration.secteurs.suppressionTitle")}
@@ -408,7 +407,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         NotificationManager.cleanAll();
 
         const secteur = data;
-        if (!_.isEmpty(secteur.id)) {
+        if (!isEmpty(secteur.id)) {
             this.getService().modifier(secteur.id, secteur).then((result) => {
                 if (!result.errors) {
                     NotificationManager.notify("notif2", "secteurPageForm", null,

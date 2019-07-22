@@ -73,7 +73,7 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.4.0
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -99,8 +99,8 @@ import { NotificationSessionFooter } from "hornet-js-react-components/src/widget
 import { SessionIdpExpireNotification } from "hornet-js-react-components/src/widget/notification/notification-session-idp";
 import { MenuAccessibilite } from "hornet-js-react-components/src/widget/navigation/menu-accessibilite";
 import { SvgSprites } from "hornet-js-react-components/src/widget/icon/svg-sprites";
-
-import * as _ from "lodash";
+import cloneDeep = require("lodash.clonedeep");
+import concat = require("lodash.concat");
 import * as classNames from "classnames";
 import { UPDATE_PAGE_EXPAND } from "hornet-js-react-components/src/widget/screen/layout-switcher";
 
@@ -180,7 +180,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
     render(): JSX.Element {
         logger.trace("VIEW HornetApp render");
 
-        const title = _.concat(this.i18n("header").logoTitle, this.state.applicationTitle).join(" ");
+        const title = concat(this.i18n("header").logoTitle, this.state.applicationTitle).join(" ");
 
         const classes: any = {
             "mode-fullscreen": this.state.modeFullscreen
@@ -355,7 +355,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
         this.navigateTo("accueil", {}, () => {
             this.forceUpdate();
             this.menu.forceUpdate();
-            this.menu.setState({ items: this.menu.props.configMenu ? NavigationUtils.getFilteredConfigNavigation(_.cloneDeep(this.menu.props.configMenu), this.user) : NavigationUtils.getFilteredConfigNavigation(NavigationUtils.getConfigMenu(), Utils.getCls("hornet.user")) });
+            this.menu.setState({ items: this.menu.props.configMenu ? NavigationUtils.getFilteredConfigNavigation(cloneDeep(this.menu.props.configMenu), this.user) : NavigationUtils.getFilteredConfigNavigation(NavigationUtils.getConfigMenu(), Utils.getCls("hornet.user")) });
 
         });
     }

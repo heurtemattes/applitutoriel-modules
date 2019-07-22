@@ -1,6 +1,6 @@
 {
   "name": "applitutoriel-js-batch",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "license": "CECILL-2.1",
   "main": "index.js",
   "description": "Application tutoriel utilisant le Framework hornet",
@@ -12,21 +12,21 @@
     "url": "git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git"
   },
   "dependencies": {
-    "hornet-js-batch": "5.4.0",
-    "hornet-js-bean": "5.4.0",
-    "hornet-js-components": "5.4.0",
-    "hornet-js-core": "5.4.0",
-    "hornet-js-database": "5.4.0",
-    "hornet-js-logger": "5.4.0",
-    "hornet-js-utils": "5.4.0",
+    "hornet-js-batch": "5.4.1",
+    "hornet-js-bean": "5.4.1",
+    "hornet-js-components": "5.4.1",
+    "hornet-js-core": "5.4.1",
+    "hornet-js-database": "5.4.1",
+    "hornet-js-logger": "5.4.1",
+    "hornet-js-utils": "5.4.1",
     "pg": "7.11.0",
     "sequelize": "5.8.9",
     "source-map-support": "0.5.12",
-    "sqlite3": "4.0.8",
     "tslib": "1.9.3"
   },
   "devDependencies": {
-    "hornet-js-test": "5.4.0"
+    "hornet-js-test": "5.4.1",
+    "sqlite3": "4.0.8"
   },
   "scripts": {
     "init-dev": "hb install",

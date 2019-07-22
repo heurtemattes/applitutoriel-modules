@@ -1,3 +1,11 @@
+# applitutoriel-modules 5.4.1
+
+- f8f02e7d ACC[] : Correction navigation clavier sur les svg
+- 0060ec6b PROJ[] : passage sqlite3 en devDependancies
+- 140da0c6 PROJ[] : Update version builder et update version module
+- f1573b7f PROJ[] : passage lodash en module
+- 3cd0d659 PROJ[] : adaptation calcul module path avec la nouvelle gestion dépendance
+
 # applitutoriel-modules 5.4.0
 
 - 9ae0fa67 PROJ[] : Fix erreur de récupération du fichier
