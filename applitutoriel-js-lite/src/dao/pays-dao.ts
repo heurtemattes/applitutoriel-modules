@@ -73,14 +73,12 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Class } from "hornet-js-utils/src/typescript-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
 import { HornetGenericDAO } from "hornet-js-database/src/sequelize/hornet-generic-dao";
 import { inject } from "hornet-js-core/src/inject/inject";
@@ -88,11 +86,11 @@ import { ModelDAO } from "src/dao/model-dao";
 import { injectable } from "hornet-js-core/src/inject/injectable";
 import { PaysAttributes } from "src/models/ref/ref-pay-mod";
 import { PaysMetier } from "applitutoriel-js-common/src/models/ref/ref-pay-mod";
-import Map from "hornet-js-bean/src/decorators/Map";
+import { Promise } from "hornet-js-utils/src/promise-api";
 
 const Op = require("sequelize/lib/operators");
 
-const logger: Logger = Utils.getLogger("applitutoriel.src.dao.pays-dao");
+const logger: Logger = Logger.getLogger("applitutoriel.src.dao.pays-dao");
 
 @injectable()
 export class PaysDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceModel<PaysAttributes>> {
@@ -110,7 +108,9 @@ export class PaysDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceM
         return this.entity.findAll({
             where: {
                 nationalite: {
-                    [ Op.like ]: "%" + nationalite + "%"}}});
+                    [ Op.like ]: "%" + nationalite + "%"}},
+            order: [["nationalite", "ASC"]]
+        });
     }
 
     selectNationaliteByPays(id: number): Promise<PaysMetier> {

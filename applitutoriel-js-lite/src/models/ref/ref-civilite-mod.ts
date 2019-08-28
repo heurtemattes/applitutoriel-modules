@@ -73,7 +73,7 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
@@ -86,7 +86,7 @@ export interface CiviliteAttributes extends HornetSequelizeAttributes {
     libelle: string;
 }
 
-export let CiviliteModel: Sequelize.DefineAttributes = {
+export let CiviliteModel: Sequelize.ModelAttributes = {
     id: {
         type: Sequelize.INTEGER,
         field: "id_civilite",

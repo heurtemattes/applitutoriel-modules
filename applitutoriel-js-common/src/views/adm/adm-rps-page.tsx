@@ -73,14 +73,14 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import * as React from "react";
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 import { Button } from "hornet-js-react-components/src/widget/button/button";
@@ -88,10 +88,11 @@ import { FicheProduitService } from "src/services/page/adm/adm-fpo-service-page"
 import { ButtonsArea } from "hornet-js-react-components/src/widget/form/buttons-area";
 import * as Chart from "chart.js";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.adm.adm-rps-page");
+const logger: Logger = Logger.getLogger("applitutoriel.views.adm.adm-rps-page");
 
 export class RepartitionPage extends HornetPage<FicheProduitService, HornetComponentProps, any> {
 
+    private ddInfographie: HTMLElement;
     private chart = null;
     private element = null;
     private data = null;
@@ -102,13 +103,13 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
         options: {
             title: {
                 display: true,
-                text: ""
+                text: "",
             },
             legend: {
-                position: "bottom"
-            }
+                position: "bottom",
+            },
         },
-        type: "polarArea"
+        type: "polarArea",
     };
 
     constructor(props?, context?) {
@@ -127,7 +128,7 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
                             ctx.textAlign = "center";
                             ctx.textBaseline = "middle";
                             let position = element.tooltipPosition();
-                            ctx.fillText(dataset.data[ index ].toString(), position.x, position.y - 5);
+                            ctx.fillText(dataset.data[index].toString(), position.x, position.y - 5);
                         });
                     }
                 });
@@ -137,20 +138,19 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
 
     prepareClient() {
         this.data = {
-            datasets: [ {
+            datasets: [{
                 data: [],
                 backgroundColor: [],
-                label: RepartitionPage.getI18n("repartitionPage.title")
-            } ],
-            labels: []
+                label: RepartitionPage.getI18n("repartitionPage.title"),
+            }],
+            labels: [],
         };
 
         this.getService().repartition().then((data) => {
-            //this.Donut.drawDonutWithData(data);
             for (let i = 0; i < data.length; i++) {
-                this.data.datasets[ 0 ].data.push(data[ i ].value);
-                this.data.datasets[ 0 ].backgroundColor.push(this.color(data[ i ].color).alpha(0.5).rgbString());
-                this.data.labels.push(data[ i ].label);
+                this.data.datasets[0].data.push(data[i].value);
+                this.data.datasets[0].backgroundColor.push(this.color(data[i].color).alpha(0.5).rgbString());
+                this.data.labels.push(data[i].label);
             }
             this.setState({ data: this.data });
         });
@@ -162,9 +162,9 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
     render(): JSX.Element {
         logger.trace("VIEW RepartitionPage render");
 
-        let maxWidth = 550;
-        let maxHeight = 550;
-        let style = { maxWidth, maxHeight, padding: "20px" };
+        const maxWidth = 550;
+        const maxHeight = 550;
+        const style = { maxWidth, maxHeight, padding: "20px" };
 
         return (
             <div>
@@ -172,9 +172,11 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
                 <div style={style} className="center">
 
                     <div id="chartdiv" style={style}>
-                        <canvas ref={(element) => {
-                            this.element = element;
-                        }} width={500} height={500} style={style} />
+                        <canvas
+                            aria-hidden="true"
+                            ref={(element) => {
+                                this.element = element;
+                            }} width={500} height={500} style={style} />
                     </div>
                 </div>
                 <ButtonsArea>
@@ -188,17 +190,82 @@ export class RepartitionPage extends HornetPage<FicheProduitService, HornetCompo
                         this.setState({ type: "polarArea" });
                     }} label={this.i18n("repartitionPage.type.polarArea")} />
                 </ButtonsArea>
+
+                {this.renderBlocDescriptionTextuelle()}
             </div>
         );
     }
 
-    componentDidUpdate() {
-        if (this.chart) this.chart.destroy();
-        this.chart = new Chart(this.element as any, {
-            type: this.state.type,
-            data: this.state.data,
-            options: this.state.options
-        }); // polarArea doughnut
+    /**
+     * Render du bloc description textuelle
+     * @returns {JSX.Element} le bloc description textuelle
+     */
+    protected renderBlocDescriptionTextuelle(): JSX.Element {
+        return (
+            <div>
+                <button id="dd" aria-expanded="false" className="hornet-button"
+                    aria-controls="dd-infographie" onClick={this.toggleDescriptionArea}>
+                    {this.i18n("repartitionPage.descriptionButton")}
+                </button>
+                <div className="hidden" id="dd-infographie" ref={(div) => { this.ddInfographie = div; }}>
+                    {this.state.data ? <ul>
+                        {this.buildRepartitionListItems()}
+                    </ul> : null}
+                </div>
+            </div>);
     }
 
+    /**
+     * Construit la liste des items
+     * @returns {Array} tableau d'items list
+     */
+    buildRepartitionListItems() : any[] {
+        const rows = [];
+        if (this.state.data && this.state.data.labels) {
+            this.state.data.labels.forEach((label, index) => {
+                rows.push(this.buildRepartitionItem(label, index));
+            });
+        }
+        return rows;
+    }
+
+    /**
+     * Construit la list item du label se trouvant à l'index passé en paramètre
+     * @param {string} - label : le label
+     * @param {number} - index : l'index du label dans les données du tableau
+     * @returns {JSX.Element} - list item
+     */
+    buildRepartitionItem(label, index) : JSX.Element {
+        let data = "";
+        if (this.state.data && this.state.data.datasets && this.state.data.datasets[0] && this.state.data.datasets[0].data) {
+            data = this.state.data.datasets[0].data[index];
+        }
+        return <li key={`${index}-${label}-${data}`}>{label}: {data}</li>;
+    }
+
+    /**
+     * Affiche/cache la description textuelle
+     */
+    toggleDescriptionArea() {
+        const button = document.getElementById("dd");
+        if (button && this.ddInfographie && this.ddInfographie.classList && !this.ddInfographie.classList.contains("hidden")) {
+            this.ddInfographie.classList.add("hidden");
+            button.setAttribute("aria-expanded", "false");
+        } else if (button && this.ddInfographie.classList) {
+            this.ddInfographie.classList.remove("hidden");
+            button.setAttribute("aria-expanded", "true");
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    componentDidUpdate() {
+        if (this.chart) this.chart.destroy();
+        this.chart = new Chart(this.element, {
+            type: this.state.type,
+            data: this.state.data,
+            options: this.state.options,
+        });
+    }
 }

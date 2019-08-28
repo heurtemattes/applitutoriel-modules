@@ -73,18 +73,18 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.gen.gen-acb-ddc");
+const logger: Logger = Logger.getLogger("applitutoriel.views.gen.gen-acb-ddc");
 
 export class DeclarationconformitePage extends HornetPage<any, HornetComponentProps, any> {
 
@@ -159,19 +159,19 @@ export class DeclarationconformitePage extends HornetPage<any, HornetComponentPr
                             </tr>
                             <tr>
                                 <th scope="row">Firefox</th>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
+                                <td><img alt="conforme" src={this.genUrlStatic("/img/conforme.svg")} /></td>
+                                <td><img alt="conforme" src={this.genUrlStatic("/img/conforme.svg")} /></td>
 
                             </tr>
                             <tr>
                                 <th scope="row">Chrome</th>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
-                                <td><img alt="conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_enregistrer.svg")} /></td>
+                                <td><img alt="conforme" src={this.genUrlStatic("/img/conforme.svg")} /></td>
+                                <td><img alt="conforme" src={this.genUrlStatic("/img/conforme.svg")} /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Internet Explorer</th>
-                                <td><img alt="non conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_annuler.svg")} /></td>
-                                <td><img alt="non conforme" src={DeclarationconformitePage.genUrlTheme("/img/tableau/ico_annuler.svg")} /></td>
+                                <td><img alt="non conforme" src={this.genUrlStatic("/img/non_conforme.svg")} /></td>
+                                <td><img alt="non conforme" src={this.genUrlStatic("/img/non_conforme.svg")} /></td>
 
                             </tr>
                         </table>

@@ -73,19 +73,19 @@
  * applitutoriel-js-batch - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { SecteurService } from "src/services/data/sec/secteur-service";
 import { SecteurDAO } from "src/dao/secteur-dao";
 import { SecteurMetier } from "src/models/adm/sec-mod";
 import { BusinessError } from "hornet-js-utils/src/exception/business-error";
+import { Promise } from "hornet-js-utils/src/promise-api";
 
-const logger: Logger = Utils.getLogger("applitutoriel.services.adm.secteur-service-data-impl");
+const logger: Logger = Logger.getLogger("applitutoriel.services.adm.secteur-service-data-impl");
 
 /**
  * Implementation des services pour les secteurs
@@ -150,8 +150,8 @@ export class SecteurServiceImpl extends SecteurService {
     }
 
     modifierSecteurs(): Promise<any> {
-        return this.secteursDAO.getEntity().bulkCreate([]).then(() => {
-            return this.secteursDAO.getEntity().update({
+        return this.secteursDAO.entity.bulkCreate([]).then(() => {
+            return this.secteursDAO.entity.update({
                 desc: "secteur batch 2.0"
             }, {
                     where: {

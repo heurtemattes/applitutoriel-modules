@@ -23,8 +23,8 @@ A noter :
 
 ## Prérequis #
 
-* NodeJS 8.X
-* hornet-js-builder 1.X installé en global:
+* NodeJS 10.X
+* hornet-js-builder 2.X.X installé en global:
 
 ```shell
 npm install -g hornet-js-builder

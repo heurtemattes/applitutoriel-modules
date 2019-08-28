@@ -73,20 +73,21 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { ServiceRequest } from "hornet-js-core/src/services/service-request";
 import { Mailer, NodeMailerMessage } from "hornet-js-core/src/mail/mailer";
 import { ContactService } from "applitutoriel-js-common/src/services/page/cnt/contact-service-page";
 import { Template } from "hornet-js-utils/src/template";
 import { HornetComponent } from "hornet-js-react-components/src/widget/component/hornet-component";
+import { Promise } from "hornet-js-utils/src/promise-api";
 
-const logger: Logger = Utils.getLogger("applitutoriel.services.gen.contact-service-data-impl");
+const logger: Logger = Logger.getLogger("applitutoriel.services.gen.contact-service-data-impl");
 
 /**
  * Implementation des services pour les contacts

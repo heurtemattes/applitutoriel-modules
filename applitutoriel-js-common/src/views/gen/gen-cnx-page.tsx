@@ -73,19 +73,19 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 import { HornetComponent } from "hornet-js-react-components/src/widget/component/hornet-component";
-import * as _ from "lodash";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.gen.gen-cnx-page");
+import "src/views/layouts/sass/_auth.scss";
+
+const logger: Logger = Logger.getLogger("applitutoriel.views.gen.gen-cnx-page");
 
 export interface ConnexionPageProps extends HornetComponentProps {
     errorMessage?: any;
@@ -112,16 +112,13 @@ export class ConnexionPage extends HornetComponent<ConnexionPageProps, any> {
     render(): JSX.Element {
         logger.trace("VIEW ConnexionPage render");
 
-        const fwkTheme: string = process.env.NODE_ENV === "production" ? "/css/theme-min.css" : "/css/theme.css";
-
         return (
             <html lang="fr">
                 <head>
                     <title>{"Authentification centrale | "  + this.i18n("applicationTitle") }</title>
                     <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
                     <link rel="icon" type="image/png" href={this.genUrlStatic("/img/logoHornet.png")} />
-                    <link rel="stylesheet" type="text/css" href={ConnexionPage.genUrlTheme(fwkTheme)} />
-                    <link rel="stylesheet" type="text/css" href={this.genUrlStatic("/css/auth.css")} />
+                    <link rel="stylesheet" type="text/css" href={this.genUrlStatic("/css/appli.min.css")} />
                 </head>
                 <body id="auth">
                     <div id="site">
@@ -174,7 +171,7 @@ export class ConnexionPage extends HornetComponent<ConnexionPageProps, any> {
 
     _renderErrorDiv() {
 
-        if (_.isArray(this.state.errorMessage) && this.state.errorMessage.length >= 1) {
+        if (Array.isArray(this.state.errorMessage) && this.state.errorMessage.length >= 1) {
             return (
                 <div className="errors" id="status">
                     {this.state.errorMessage}

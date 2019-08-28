@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
@@ -101,8 +101,12 @@ import { ProduitsTab } from "src/views/par/par-fpa/produits-tab";
 import { IdentiteTab, IdentiteTabDatasourcesService } from "src/views/par/par-fpa/identite-tab";
 import { FichePartenaireTitrePage } from "src/views/par/par-fpa/fiche-partenaire-titre-page";
 import { PartenaireMetier } from "src/models/par/par-mod";
+import { Promise } from "hornet-js-utils/src/promise-api";
+import { DefaultSort, CompareMethod } from 'hornet-js-core/src/component/datasource/options/datasource-option';
+import { SortData, SortDirection } from 'hornet-js-core/src/component/sort-data';
+import { DatasourceSortOption } from "hornet-js-core/src/component/datasource/options/datasource-sort-option"
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.par.par-fpa.fiche-partenaire-page");
+const logger: Logger = Logger.getLogger("applitutoriel.views.par.par-fpa.fiche-partenaire-page");
 
 export const PAR_MODE_CONSULTER: string = "consulter";
 export const PAR_MODE_EDITER: string = "editer";
@@ -127,10 +131,12 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
     constructor(props?: HornetComponentProps, context?: any) {
         super(props, context);
 
+        const sortDatas = [new SortData("text", SortDirection.ASC)];
+        const defaultSort: DefaultSort = new DefaultSort(sortDatas, CompareMethod.WITHOUT_CASE_AND_ACCENT);
         this.dataSourceNationalite = new DataSource<PaysMetier>(new DataSourceConfigPage(this, this.getService().rechercherNationalites), {
             value: "id",
             text: "nationalite"
-        });
+        }, [ defaultSort ]);
 
         this.dataSourceProduits = new PaginateDataSource<any>([], {
             pageIndex: 0,
@@ -223,6 +229,7 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
      */
     render(): JSX.Element {
         logger.trace("FichePartenairePage render");
+
         return (
             <div>
                 <FichePartenaireTitrePage ref={(page) => {
@@ -241,7 +248,7 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
                 >
                     <Tab id="tab1" onSelect={this.onSelect}
                         title={this.i18n("partenaireFichePage.ongletIdentiteTitre")}
-                    >
+                    >   
                         <IdentiteTab
                             ref={(tab) => {
                                 this.identiteTab = tab
@@ -309,6 +316,10 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
             const tabInserted = this.tabs.getTabById(index);
             if (tabInserted && tabInserted.props && tabInserted.props.index) {
                 this.tabs.showPanel(tabInserted.props.index);
+                const elem = document.querySelector(`#tabsPartenaire-tabList-item-${tabInserted.props.index}`) as any;
+                if (elem) {
+                    elem.focus();
+                }
             }
         };
 
@@ -404,15 +415,22 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
                 let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : null;
                 if (dataSource != null) {
                     this.navigateTo(URL_PARTENAIRES, {
-                        criteres: criteres,
-                        dataSource: dataSource,
-                        forceReload: true
+                        criteres,
+                        dataSource,
+                        forceReload: true,
+                        create: true,
                     }, () => {
                         NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
                     });
                 } else {
-                    this.navigateTo(URL_PARTENAIRES, { criteres: criteres }, () => {
-                        NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText));
+                    this.navigateTo(URL_PARTENAIRES, { criteres, create: true}, () => {
+                        NotificationManager.notify(null, "main-form", null, Notifications.makeSingleNotification("PARTENAIRE_SAVED", notifText), null, null, null, ()=>{
+                            const elem = document.querySelector(".messageBox .info-button") as any;
+                            if (elem) {
+                                elem.focus();
+                            }
+                        });
+                        
                     });
                 }
 
@@ -424,11 +442,20 @@ export class FichePartenairePage extends HornetPage<FichePartenairePageService, 
      * méthode de Navigation exécutée lors du clic sur le bouton Annuler Tab1
      */
     private onCancel(): void {
-        let criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
-        let dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : {};
+        const criteres = (this.props.navigateData && this.props.navigateData.criteres) ? this.props.navigateData.criteres : {};
+        const dataSource = (this.props.navigateData && this.props.navigateData.dataSource) ? this.props.navigateData.dataSource : {};
+        const previous = this.props.navigateData && this.props.navigateData.previous ? this.props.navigateData.previous : null;
 
-        let url = "/partenaires";
-        this.navigateTo(url, { criteres: criteres, dataSource: dataSource }, null);
+        const url = "/partenaires";
+        this.navigateTo(url, { criteres, dataSource, previous }, null);
+    }
+
+    componentDidMount(){
+        super.componentDidMount();
+        const elem = document.getElementById("tabsPartenaire-tabList-item-0");
+        if (elem) {
+            elem.focus();
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 {
   // Commentaires autorisés !!
   "applicationTitle": "TUTORIAL Application",
+  "applicationTitleAlt": "Hornet TUTORIAL Application",
   "labelLanguage": "English",
   "errorsTitle": "An error has occurred",
   "applicationLoading": "Loading, please wait ...",

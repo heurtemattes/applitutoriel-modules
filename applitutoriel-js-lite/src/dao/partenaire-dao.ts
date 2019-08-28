@@ -73,28 +73,26 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Class } from "hornet-js-utils/src/typescript-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { PartenaireMetier } from "applitutoriel-js-common/src/models/par/par-mod";
 import Map from "hornet-js-bean/src/decorators/Map";
 import { PartenaireDTO, PartenaireAttributes } from "src/models/par/seq-par-mod";
-import { HornetSequelizeEntityAttributes,
-    HornetSequelizeInstanceModel }  from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
+import { HornetSequelizeInstanceModel }  from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
 import { HornetGenericDAO } from "hornet-js-database/src/sequelize/hornet-generic-dao";
 import { inject } from "hornet-js-core/src/inject/inject";
 import { ModelDAO } from "src/dao/model-dao";
 import { injectable } from "hornet-js-core/src/inject/injectable";
-import { HornetSequelizeModel } from "hornet-js-database/src/sequelize/hornet-sequelize-model";
 import { SequelizeUtils } from "hornet-js-database/src/sequelize/sequelize-utils";
+import { Promise } from "hornet-js-utils/src/promise-api";
+import { QueryTypes } from "sequelize";
 
-var Op = require("sequelize/lib/operators");
-const logger: Logger = Utils.getLogger("applitutoriel.src.dao.partenaire-dao");
+const Op = require("sequelize/lib/operators");
+const logger: Logger = Logger.getLogger("applitutoriel.src.dao.partenaire-dao");
 
 @injectable()
 export class PartenaireDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeInstanceModel<PartenaireAttributes>> {
@@ -195,7 +193,7 @@ export class PartenaireDAO extends HornetGenericDAO<ModelDAO, HornetSequelizeIns
                     identifiant: id
                 },
                 model: this.entity,
-                type: SequelizeUtils.getQuery().QueryTypes.SELECT,
+                type: QueryTypes.SELECT,
             },
         );
     }

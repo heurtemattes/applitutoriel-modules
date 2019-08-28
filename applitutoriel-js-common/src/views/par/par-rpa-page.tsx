@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { Notification } from "hornet-js-react-components/src/widget/notification/notification";
@@ -104,7 +104,7 @@ import { ParRpaValidateSectorStartDate } from "src/views/par/par-rpa-validate-st
 import { MediaType, MediaTypes } from "hornet-js-core/src/protocol/media-type";
 import { PartenaireResult } from "src/services/type/par/par-types";
 import { Button } from "hornet-js-react-components/src/widget/button/button";
-import * as _ from "lodash";
+import get = require("lodash.get");
 import { RecherchePartenaireService } from "src/services/page/par/par-rpa-service";
 import { AuthUtils } from "hornet-js-utils/src/authentication-utils";
 import { Roles } from "src/utils/roles";
@@ -126,7 +126,6 @@ import { LineAfter } from "hornet-js-react-components/src/widget/table/line/line
 import { Header } from "hornet-js-react-components/src/widget/table/header";
 import { Footer } from "hornet-js-react-components/src/widget/table/footer";
 import { Content } from "hornet-js-react-components/src/widget/table/content";
-import { Picto } from "hornet-js-react-components/src/img/picto";
 import { Pager, PaginationProps } from "hornet-js-react-components/src/widget/pager/pager";
 import { ActionColumn } from "hornet-js-react-components/src/widget/table/column/action-column";
 import { MoreInfoColumn } from "hornet-js-react-components/src/widget/table/column/more-info-column";
@@ -136,11 +135,12 @@ import { PaginateDataSource } from "hornet-js-core/src/component/datasource/pagi
 import { ButtonsArea } from "hornet-js-react-components/src/widget/form/buttons-area";
 import { DefaultSort } from "hornet-js-core/src/component/datasource/options/datasource-option";
 import { SortData } from "hornet-js-core/src/component/sort-data";
+import { SvgSprites } from 'hornet-js-react-components/src/widget/icon/svg-sprites';
 
 import * as schema from "src/views/par/par-rpa-validation.json";
 import { timingSafeEqual } from 'crypto';
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.par.par-rpa-page");
+const logger: Logger = Logger.getLogger("applitutoriel.views.par.par-rpa-page");
 
 /**
  * Page de recherche des partenaires. L'ajout ou la modification d'un partenaire se fait dans une fiche indépendante
@@ -152,6 +152,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
 
     private isTableVisible: boolean = false;
 
+    private fromCreate;
     // Composants
     /** Tableau de liste de partenaires */
     private maTable: Table;
@@ -222,31 +223,20 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
         /* Valeurs par défaut du formulaire de recherche */
         this.currentCriteres = {
             partenaire: {
-                vip: _.get(criteres, "partenaire.vip") != null ?
-                    _.get(criteres, "partenaire.vip") : _.get(this.defaultValues, "criteres.partenaire.vip"),
+                vip: get(criteres, "partenaire.vip") != null ?
+                    get(criteres, "partenaire.vip") : get(this.defaultValues, "criteres.partenaire.vip"),
             },
-            idSecteur: (_.get(criteres, "idSecteur") != null) ?
-                _.get(criteres, "idSecteur").toString() : _.get(this.defaultValues, "criteres.idSecteur"),
-            startDate: _.get(criteres, "startDate") ?
-                this.getDateFormatee(_.get(criteres, "startDate")) : _.get(this.defaultValues, "criteres.startDate"),
-            endDate: _.get(criteres, "endDate") ?
-                this.getDateFormatee(_.get(criteres, "endDate")) : _.get(this.defaultValues, "criteres.endDate"),
+            idSecteur: (get(criteres, "idSecteur") != null) ?
+                get(criteres, "idSecteur").toString() : get(this.defaultValues, "criteres.idSecteur"),
+            startDate: get(criteres, "startDate") ?
+                this.getDateFormatee(get(criteres, "startDate")) : get(this.defaultValues, "criteres.startDate"),
+            endDate: get(criteres, "endDate") ?
+                this.getDateFormatee(get(criteres, "endDate")) : get(this.defaultValues, "criteres.endDate"),
         };
         this.dataSourceSecteurs.on("add", () => {
             // Valorisation des champs du formulaire de recherche
             this.secteurSelect.setCurrentValue(this.currentCriteres.idSecteur);
         });
-
-
-        // this.paginateDataSource.on("fetch", (results) => {
-        //     const selected = [];
-        //     results.map((result) => {
-        //         if(result.vip) {
-        //             selected.push(result);
-        //         }
-        //     });
-        //     this.paginateDataSource.select(selected);
-        // });
     }
 
     /**
@@ -268,10 +258,94 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
 
         const formData: PartenaireRechercheParameter = { criteres: this.props.navigateData && this.props.navigateData.criteres };
         const forceReload: boolean = this.props.navigateData && this.props.navigateData.forceReload;
-        if (formData.criteres) {
+        if (formData.criteres && Object.keys(formData.criteres).length > 0) {
             this.maTable.setState({ isVisible: true }, () => {
                 this.paginateDataSource.reload(true, forceReload);
             });
+        }
+        if (this.props.navigateData) {
+            if (this.props.navigateData.create) {
+                this.fromCreate = { create: this.props.navigateData.create };
+            } else if (this.props.navigateData.previous) {
+                this.fromCreate = { previous: this.props.navigateData.previous };
+            }
+        }
+
+        this.paginateDataSource.on("loadingData", this.handleFocusOnLoading.bind(this));
+    }
+
+    handleFocusOnLoading(arg) {
+        if (arg === false) {
+            if (this.fromCreate) {
+                if (this.fromCreate.create) {
+                    this.fromCreate = null;
+                    this.focusOnInfoNotificationButton();
+                } else if (this.fromCreate.delete) {
+                    this.handleFocusOnDelete();
+                }
+            } else {
+                this.focusOnTableTitle();
+            }
+        }
+    }
+
+    focusPreviousButton() {
+        if (this.fromCreate && this.fromCreate.previous) {
+            const elem = document.getElementById(this.fromCreate.previous);
+            if (elem && elem.focus) {
+                elem.focus();
+            } else {
+                this.focusOnTableTitle();
+            }
+            this.fromCreate = null;
+        }
+    }
+
+    focusOnInfoNotificationButton() {
+        const elem = document.querySelector(".messageBox .info-button") as any;
+        if (elem && elem.focus) {
+            elem.focus();
+        }
+    }
+
+    focusOnTableTitle() {
+        const elem = document.querySelector(".datatable-title-span") as any;
+        if (elem && elem.focus) {
+            elem.focus();
+        }
+    }
+
+    focusOnTableInfo() {
+        const elem = document.getElementsByClassName("button-info-accessibilite-button button-action") as any;
+        if (elem && elem[0].focus) {
+            elem[0].focus();
+        }
+    }
+
+    handleFocusOnDelete() {
+        if (this.fromCreate && this.fromCreate.delete && this.fromCreate.delete.page !== 1) {
+            this.focusOnTableTitle();
+        } else if (this.fromCreate && this.fromCreate.delete && this.fromCreate.delete.id) {
+            const elem = document.getElementById(this.fromCreate.delete.id) as any;
+            if (elem) {
+                elem.focus();
+            } else {
+                // Il y a moins de ligne qu'avant
+                const split = this.fromCreate.delete.id.split("-");
+                const line = split[4];
+                const lineNumber = parseInt(line, 10);
+                const precId = `liste-partenaires-0-colBody-${lineNumber - 1}-9`;
+                const precElem = document.getElementById(precId) as any;
+                if (precElem) {
+                    precElem.focus();
+                } else {
+                    //il n'y a plus de ligne
+                    this.focusOnTableTitle();
+                }
+            }
+            this.fromCreate = null;
+        } else {
+            this.focusOnTableTitle();
         }
     }
 
@@ -294,51 +368,51 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                 <h2>{this.i18n("partenairesListePage.form.titreFormulaire")}</h2>
                 <Notification id="notifRpaPage" />
                 {this.renderFormCriteres()}
-                <Table ref={(table) => { this.maTable = table; }} id="liste-partenaires" isVisible={this.isTableVisible}>
+                <Table ref={(table) => { this.maTable = table; }} id="liste-partenaires" isVisible={this.isTableVisible}
+                >
                     <Header id={"monHeaderRPA"} title={this.i18n("partenairesListePage.tableau.tableTitle")}
                         showIconInfo={true}>
                         <ToggleColumnsButton hiddenColumns={{ organisme: true, prenom: true }} />
                         <MenuActions>
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportCsv")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportCsvLabel")}
-                                srcImg={Picto.export.csv}
+                                srcImg={<SvgSprites icon="csv" color="#FFF" tabIndex={-1} />}
                                 action={this.onExport.bind(this, MediaTypes.CSV)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportPdf")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportPdfLabel")}
-                                srcImg={Picto.export.pdf}
+                                srcImg={<SvgSprites icon="pdf" color="#EA4C3A" tabIndex={-1}/>}
                                 action={this.onExport.bind(this, MediaTypes.PDF)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOdt")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportOdtLabel")}
-                                srcImg={Picto.export.odt}
+                                srcImg={<SvgSprites icon="odt" tabIndex={-1}/>}
                                 action={this.onExport.bind(this, MediaTypes.ODT)} />
                             <ActionButton title={this.i18n("partenairesListePage.tableau.colonnes.exportOds")}
                                 label={this.i18n("partenairesListePage.tableau.colonnes.exportOdsLabel")}
-                                srcImg={Picto.export.ods}
+                                srcImg={<SvgSprites icon="ods" tabIndex={-1}/>}
                                 action={this.onExport.bind(this, MediaTypes.ODS)} />
                             <ActionButton typeAction={TypeAction.ACTION_UNITAIRE} title={intlTab.colonnes.edition}
                                 label={intlTab.colonnes.edition}
-                                srcImg={Picto.black.editer}
+                                srcImg={<SvgSprites icon="edit" color="#000" tabIndex={-1}/>}
                                 visible={() => this.isAdmin()}
                                 action={this.editerPartenaire} />
                             <ActionButton typeAction={TypeAction.ACTION_UNITAIRE} title={intlTab.colonnes.consultation}
                                 label={intlTab.colonnes.consultation}
-                                srcImg={Picto.black.consulter}
+                                srcImg={<SvgSprites icon="consult" tabIndex={-1}/>}
                                 action={this.consulterPartenaire} />
                             <ActionButton typeAction={TypeAction.ACTION_MASSE}
                                 priority={true}
                                 label={intlTab.colonnes.suppression}
-                                srcImg={Picto.white.supprimer}
+                                srcImg={<SvgSprites icon="delete" color="#FFF" tabIndex={-1}/>}
                                 action={this.supprimerEnMasse}
                                 title={intlTab.massActionTitle}
                                 messageAlert={intlTab.massActionConfirmMessage}
                                 titleAlert={intlTab.massActionConfirmTitle}
                                 visible={() => this.isAdmin()}
-                                hasPopUp={true}
                                 type="button" />
 
                         </MenuActions>
                     </Header>
-                    <Content dataSource={this.paginateDataSource} summary={intlTab.summary}>
+                    <Content dataSource={this.paginateDataSource} summary={intlTab.summary} onRerender={this.focusPreviousButton}>
                         <Columns>
 
                             {checkColumn}
@@ -351,24 +425,23 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                             <DateColumn keyColumn="dateModif" title={intlTab.colonnes.dateModif} sortable={true} />
                             <ActionColumn keyColumn="consulter"
                                 alt={intlTab.colonnes.consultationTitle}
-                                srcImg={Picto.blue.consulter}
+                                srcImg={<SvgSprites icon="consult" color="#0579BE" />}
                                 action={this.consulterPartenaire}
                                 visible={this.isVisible}
                             />
                             <ActionColumn keyColumn="editer"
-                                srcImg={Picto.blue.editer}
+                                srcImg={<SvgSprites icon="edit" color="#0579BE" />}
                                 alt={intlTab.colonnes.editionTitle}
                                 action={this.editerPartenaire}
                                 disabled={() => !this.isAdmin()}
                             />
                             <ActionColumn keyColumn="supprimer"
                                 alt={intlTab.colonnes.suppressionTitle}
-                                srcImg={Picto.blue.supprimer}
+                                srcImg={<SvgSprites icon="delete" color="#0579BE" />}
                                 action={this.supprimer}
                                 messageAlert={intlTab.colonnes.supprimer.message}
                                 titleAlert={intlTab.colonnes.supprimer.title}
                                 disabled={() => !this.isAdmin()}
-                                hasPopUp={true}
                             />
                             <MoreInfoColumn keyColumn="idMore" visible={(value) => value.vip === true}
                                 alt={intlTab.colonnes.moreInfoTitle}
@@ -427,25 +500,10 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     }
 
     /**
-     * Surcharge le style CSS de certaines lignes
-     * @param partenaire élément correspondant à une ligne de tableau
-     * @returns la/les classes CSS à appliquer à la ligne correspondant à item
-     */
-    private static customRowsClasses(partenaire: any): ClassDictionary {
-        return {
-            /*"green-background-row": (partenaire.nom == "ALBERT"),
-             "red-background-row": (partenaire.nom == "ALFRED"),
-             "yellow-background-row": (partenaire.nom == "BAZIN")*/
-        };
-    }
-
-    /**
      * Génère le formulaire de sélection de critères de recherche
      */
     private renderFormCriteres(): JSX.Element {
         logger.trace("RecherchePartenairesPage render");
-
-        const context = Utils.getCls("hornet.internationalization");
 
         const intlMessages = this.i18n("partenairesListePage.form");
         return (
@@ -590,7 +648,7 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
      * Méthode de suppression d'un partenaire
      * @param partenaire élément correspondant à une ligne du tableau de partenaires
      */
-    private supprimer(partenaire: PartenaireResult): void {
+    private supprimer(partenaire: PartenaireResult, e: any): void {
         logger.trace("Utilisateur est OK pour supprimer l item id:", partenaire.id);
 
         const notifSuccessText: string = this.i18n("info.message.IN-PA-RPA-01", {
@@ -621,6 +679,12 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
                     confirmations.addNotification(notif);
                 }
                 NotificationManager.notify("notifRpaPage", "rpaForm", errors, confirmations);
+                const id = this.getIdFromEventTarget(e);
+                let page = 1;
+                if (this.paginateDataSource && this.paginateDataSource.pagination) {
+                    page = this.paginateDataSource.pagination.pageIndex;
+                }
+                this.fromCreate = { delete: { id, page } };
                 this.refresh();
             });
         }
@@ -675,17 +739,43 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
     }
 
     /**
-     * appel a la page d'édition d'un partenaire
-     * on lui passe si le partenaire est vip ou non en donnée
-     * @param partenaire
+     * Forme l'URL pour accéder à la page de consultation ou d'édition d'un partenaire
+     * @param {"consulter" | "editer"} action mode dans lequel on veut accéder à la page partenaire
+     * @param {number} idPartenaire identifiant du partenaire
      */
-    private editerPartenaire(partenaire: PartenaireResult) {
-        const url = "/partenaires/editer/" + partenaire.id;
+    private getPartenaireURLForSpecificAction(action: "consulter" | "editer", idPartenaire: number): string {
+        return `/partenaires/${action}/${idPartenaire}`;
+    }
+
+    private doNavigateToPartenairePage(action: "consulter" | "editer", partenaire: PartenaireResult, target: any): void {
+        const url = this.getPartenaireURLForSpecificAction(action, partenaire.id);
         this.navigateTo(url, {
             vip: partenaire.vip,
             criteres: this.criteresRecherche,
             dataSource: this.paginateDataSource,
+            previous: target
         }, null);
+    }
+
+    protected getIdFromEventTarget(e) {
+        let td = null;
+        if (e) {
+            const elem = e.target.parentElement.parentElement;
+            if (elem) {
+                td = elem.getAttribute("id");
+            }
+        }
+        return td;
+    }
+
+    /**
+     * appel a la page d'édition d'un partenaire
+     * on lui passe si le partenaire est vip ou non en donnée
+     * @param partenaire
+     */
+    private editerPartenaire(partenaire: PartenaireResult, e: any) {
+        const id = this.getIdFromEventTarget(e);
+        this.doNavigateToPartenairePage("editer", partenaire, id);
     }
 
     /**
@@ -693,13 +783,9 @@ export class RecherchePartenairesPage extends HornetPage<RecherchePartenaireServ
      * on lui passe si le partenaire est vip ou non en donnée
      * @param partenaire
      */
-    private consulterPartenaire(partenaire: PartenaireResult) {
-        const url = "/partenaires/consulter/" + partenaire.id;
-        this.navigateTo(url, {
-            vip: partenaire.vip,
-            criteres: this.criteresRecherche,
-            dataSource: this.paginateDataSource,
-        }, null);
+    private consulterPartenaire(partenaire: PartenaireResult, e: any) {
+        const id = this.getIdFromEventTarget(e);
+        this.doNavigateToPartenairePage("consulter", partenaire, id);
     }
 
     /**
@@ -720,10 +806,7 @@ const DivExpandable = (props) => {
     return (
         <div className="grid" key={"card-container-" + props.value.nom + "-" + props.value.prenom}>
             <div style={{ float: "left", width: "10%" }} className="one-fifth">
-                <img src={Picto.grey.userCircle}
-                    style={{ width: "200%" }}
-                    alt={HornetPage.getI18n("partenairesListePage.form.titreImage")}
-                />
+                {<SvgSprites icon="account" color="#757575" />}
             </div>
             <div className={props.className}
                 key={"card-content-" + props.value.nom + "-" + props.value.prenom}>

@@ -57,8 +57,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    bash hbw.sh dependency:set-snapshot --dependencyVersionFix=hornet-js --module=hornet-js-core
-                    bash hbw.sh dependency:set-snapshot --dependencyVersionFix=hornet-themes-intranet --module=hornet-themes-intranet
+                    bash hbw.sh dependency:set-snapshot --dependencyVersionFix=hornet-js --module=hornet-js-core --spid -E
                 '''
             }
             post {
@@ -100,6 +99,8 @@ pipeline {
 
 						if ( BRANCH_NAME.equals("develop") ) {
 							mapEnv["BUILD_VERSION"] = mapEnv["MODULE_VERSION"] + "-" + mapEnv["BUILD_TIMESTAMP"] + "-" + env.BUILD_NUMBER
+						} else if ( BRANCH_NAME.equals("release_candidate") ) {
+							mapEnv["BUILD_VERSION"] = "RC"
 						} else if ( BRANCH_NAME.equals("master") ){
 							mapEnv["BUILD_VERSION"] = mapEnv["MODULE_VERSION"]
 						}
@@ -107,7 +108,7 @@ pipeline {
 						// Publication
 						mapEnv["REPOSITORY_BASENAME"] = mapEnv["PROJECT_ID"]
 
-						if ( BRANCH_NAME.equals("develop") ) {
+						if ( BRANCH_NAME.equals("develop") || BRANCH_NAME.equals("release_candidate") ) {
 							mapEnv["PUBLISH_VERSION"] = mapEnv["MODULE_VERSION"] + "-SNAPSHOT"
                             mapEnv["PUBLISH_REPOSITORY"] = mapEnv["REPOSITORY_BASENAME"] + "-snapshot"
 							mapEnv["PUBLISH_REPOSITORY_NPM"] = mapEnv["REPOSITORY_BASENAME"] + "-npm-snapshot"
@@ -134,7 +135,7 @@ pipeline {
 			                echo sh(script: "env|sort", returnStdout: true)
 
 				            sh '''
-				                bash hbw.sh versions:set --versionFix=${BUILD_VERSION}
+				                bash hbw.sh versions:set --versionFix=${BUILD_VERSION} --spid -E
 				            '''
 						}
 					}
@@ -156,7 +157,12 @@ pipeline {
 					script {
 						def propEnv = mapEnv.collect { key, value -> return key+'='+value }
 						withEnv(propEnv) {
-			                sh "bash hbw.sh publish --publish-registry ${ARTIFACTORY_URL}/api/npm/${PUBLISH_REPOSITORY_NPM} --skipTests"
+                            withNPM(npmrcConfig: "npmrc_hornet") {
+			                    sh '''
+			                        npm config list
+			                        bash hbw.sh publish --publish-registry ${ARTIFACTORY_URL}/api/npm/${PUBLISH_REPOSITORY_NPM} --skipTests -E
+			                       '''
+                            }
 						}
 					}
 				}
@@ -260,7 +266,9 @@ pipeline {
                         mapEnv["NODE_ENV"] = "integration"
                         def propEnv = mapEnv.collect { key, value -> return key+'='+value }
                         withEnv(propEnv) {
-                            sh "bash hbw.sh test"
+                            withNPM(npmrcConfig: "npmrc_hornet") {
+                                sh "xvfb-run bash hbw.sh test"
+                            }
                         }
                     }
                 }

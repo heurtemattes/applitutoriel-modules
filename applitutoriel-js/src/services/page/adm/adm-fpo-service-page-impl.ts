@@ -73,18 +73,19 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { ServiceRequest } from "hornet-js-core/src/services/service-request";
 import { URL_PRODUITS, URL_REPARTITIONS } from "applitutoriel-js-common/src/utils/urls";
 import { FicheProduitService } from "applitutoriel-js-common/src/services/page/adm/adm-fpo-service-page";
+import { Promise } from "hornet-js-utils/src/promise-api";
 
-const logger: Logger = Utils.getLogger("applitutoriel.services.adm.adm-fpo-service-page-impl");
+const logger: Logger = Logger.getLogger("applitutoriel.services.adm.adm-fpo-service-page-impl");
 
 /**
  * Implementation des services pour les produits

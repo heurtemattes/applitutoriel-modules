@@ -72,3 +72,19 @@ span.file-info {
     color: grey;
     padding-left: 1em;
 }
+
+button#dd[aria-expanded="false"]::after {
+    content: "+";
+    float: left;
+    width: 1rem;
+    margin-right: .5rem;
+    font-weight: 700;
+}
+
+button#dd[aria-expanded="true"]::after {
+    content: "-";
+    float: left;
+    width: 1rem;
+    margin-right: .5rem;
+    font-weight: 700;
+}

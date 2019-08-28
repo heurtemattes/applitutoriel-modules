@@ -73,17 +73,18 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { ReferentielPaysService } from "src/services/page/ref/ref-pays-service";
 import { RouteActionService } from "hornet-js-core/src/routes/abstract-routes";
+import { Promise } from "hornet-js-utils/src/promise-api";
 
-const logger: Logger = Utils.getLogger("applitutoriel.actions.ref.ref-actions");
+const logger: Logger = Logger.getLogger("applitutoriel.actions.ref.ref-actions");
 
 export class ListerPays extends RouteActionService<any, ReferentielPaysService> {
     execute(): Promise<any> {

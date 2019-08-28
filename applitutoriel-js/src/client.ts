@@ -73,13 +73,13 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { Client } from "hornet-js-core/src/client";
 import { Routes } from "src/routes/routes";
 import { HornetApp } from "applitutoriel-js-common/src/views/layouts/hornet-app";
@@ -87,8 +87,12 @@ import { ErrorPage } from "hornet-js-react-components/src/widget/component/error
 import { ReactClientInitializer } from "hornet-js-react-components/src/react/react-client";
 import "src/injector-context-services-page";
 
+import "hornet-js-react-components/src/widget/component/fonts/NotoSans-Bold.ttf";
+let context = require["context"]("hornet-js-react-components/src/widget/component/fonts", true, /\.ttf$/);
+context.keys().forEach(context);
+
 (function startClient() {
-    const logger: Logger = Utils.getLogger("applitutoriel.client");
+    const logger: Logger = Logger.getLogger("applitutoriel.client");
 
     function routeLoader(name: string, callback: any) {
         logger.trace("routeLoaderClient(" + name + ")");
@@ -100,7 +104,7 @@ import "src/injector-context-services-page";
     try {
         (<any>Error).stackTraceLimit = Infinity;
 
-        let configClient = {
+        const configClient = {
             appComponent: HornetApp,
             errorComponent: ErrorPage,
             routesLoaderfn: routeLoader,
@@ -116,7 +120,7 @@ import "src/injector-context-services-page";
             },
             onbeforeunload: function () {
                 logger.trace(Utils.getCls("hornet.navigateData"));
-                if (Utils.getCls("hornet.navigateData") && !_.isUndefined(Utils.getCls("hornet.navigateData"))) {
+                if (Utils.getCls("hornet.navigateData")) {
                     window.localStorage.setItem("hornet.navigateData", JSON.stringify(Utils.getCls("hornet.navigateData")));
                 }
             },
@@ -130,14 +134,14 @@ import "src/injector-context-services-page";
 
         // On supprime le spinner de chargement de l'application
         // Cela ne gêne pas React car il est en dehors de sa div "app"
-        let readyCallback = function () {
-            var appLoading = document.getElementById("firstLoadingSpinner");
+        const readyCallback = function () {
+            let appLoading = document.getElementById("firstLoadingSpinner");
             if (appLoading) {
                 appLoading.parentNode.removeChild(appLoading);
             }
         };
 
-        let clientInit: ReactClientInitializer = new ReactClientInitializer(configClient.appComponent, readyCallback);
+        const clientInit: ReactClientInitializer = new ReactClientInitializer(configClient.appComponent, readyCallback);
 
         Client.initAndStart(configClient, clientInit);
     } catch (exc) {

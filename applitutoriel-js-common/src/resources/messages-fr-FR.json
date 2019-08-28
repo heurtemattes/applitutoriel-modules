@@ -1,6 +1,7 @@
 {
   // Commentaires autorisés !!
   "applicationTitle": "Application TUTORIEL",
+  "applicationTitleAlt": "Application TUTORIEL Hornet",
   "labelLanguage": "Français",
   "errorsTitle": "Une erreur est survenue",
   "applicationLoading": "Chargement de l'application, veuillez patienter ...",

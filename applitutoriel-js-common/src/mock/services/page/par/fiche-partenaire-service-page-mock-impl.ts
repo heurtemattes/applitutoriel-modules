@@ -73,30 +73,30 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
-import * as _ from "lodash";
-import { URL_PAR_PHOTO, URL_PARTENAIRES } from "applitutoriel-js-common/src/utils/urls";
+import { Logger } from "hornet-js-logger/src/logger";
+import assign = require("lodash.assign");
+import find = require("lodash.find");
+import { URL_PAR_PHOTO, URL_PARTENAIRES } from "src/utils/urls";
 import { HornetRequest, SpinnerType } from "hornet-js-core/src/services/hornet-superagent-request";
-import { FichePartenairePageService } from "applitutoriel-js-common/src/services/page/par/par-fpa-service";
+import { FichePartenairePageService } from "src/services/page/par/par-fpa-service";
 import { Promise } from "hornet-js-utils/src/promise-api";
-import { ReferentielPaysServicePageMockImpl } from "applitutoriel-js-common/src/mock/services/page/ref/ref-pays-service-page-mock-impl";
-import { PartenaireResult } from "applitutoriel-js-common/src/services/type/par/par-types";
-import * as secteurs from "applitutoriel-js-common/src/resources/mock/adm/adm-lst-data.json";
-import * as tableauDePartenaires1 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-1.json";
-import * as tableauDePartenaires2 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-2.json";
-import * as tableauDePartenaires3 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-3.json";
-import * as tableauDePartenaires4 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-4.json";
-import * as villes from "applitutoriel-js-common/src/resources/mock/par/par-rpa-villes.json";
-import * as pays from "applitutoriel-js-common/src/resources/mock/par/par-pays-data.json";
+import { ReferentielPaysServicePageMockImpl } from "src/mock/services/page/ref/ref-pays-service-page-mock-impl";
+import { PartenaireResult } from "src/services/type/par/par-types";
+import * as secteurs from "src/resources/mock/adm/adm-lst-data.json";
+import * as tableauDePartenaires1 from "src/resources/mock/par/par-rpa-data-1.json";
+import * as tableauDePartenaires2 from "src/resources/mock/par/par-rpa-data-2.json";
+import * as tableauDePartenaires3 from "src/resources/mock/par/par-rpa-data-3.json";
+import * as tableauDePartenaires4 from "src/resources/mock/par/par-rpa-data-4.json";
+import * as villes from "src/resources/mock/par/par-rpa-villes.json";
+import * as pays from "src/resources/mock/par/par-pays-data.json";
 import { ReferentielPaysService } from "src/services/data/ref/ref-pays-service";
 
-const logger: Logger = Utils.getLogger("applitutoriel-js-common.mock.services.data.par.fiche-partenaire-service-mock-impl");
+const logger: Logger = Logger.getLogger("applitutoriel-js-common.mock.services.data.par.fiche-partenaire-service-mock-impl");
 
 /**
  * Implementation des services pour les partenaires 
@@ -123,7 +123,7 @@ export class FichePartenaireServicePageMockImpl extends FichePartenairePageServi
         result = result.concat((<any>tableauDePartenaires3).data.liste);
         result = result.concat((<any>tableauDePartenaires4).data.liste);
         logger.debug("Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let partenaire: PartenaireResult = _.find(result, (item: PartenaireResult) => {
+        let partenaire: PartenaireResult = find(result, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;
@@ -175,7 +175,7 @@ export class FichePartenaireServicePageMockImpl extends FichePartenairePageServi
         result = result.concat((<any>tableauDePartenaires3).data.liste);
         result = result.concat((<any>tableauDePartenaires4).data.liste);
         logger.debug("Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let rpartenaire: PartenaireResult = _.find(result, (item: PartenaireResult) => {
+        let rpartenaire: PartenaireResult = find(result, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;
@@ -217,8 +217,8 @@ export class FichePartenaireServicePageMockImpl extends FichePartenairePageServi
      */
     protected convertToRemotePartenaire(webPartenaire: any): any {
 
-        let remotePartenaire: any = _.assign({}, webPartenaire);
-        remotePartenaire.satisfaction = (_.isArray(webPartenaire.satisfaction.ids)) ? webPartenaire.satisfaction.ids.join(",") : "";
+        let remotePartenaire: any = assign({}, webPartenaire);
+        remotePartenaire.satisfaction = (Array.isArray(webPartenaire.satisfaction.ids)) ? webPartenaire.satisfaction.ids.join(",") : "";
 
         if (remotePartenaire.photo && remotePartenaire.photo.contenu) {
             let photo: any = remotePartenaire.photo;

@@ -73,14 +73,14 @@
  * applitutoriel-js - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 // L'import de hornet-js-utils doit être fait le plus tôt possible
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as fs from "fs";
 import { AppliI18nLoader } from "applitutoriel-js-common/src/i18n/app-i18n-loader";
 import { ServerConfiguration } from "hornet-js-core/src/server-conf";
@@ -104,7 +104,7 @@ import { SamlStrategy } from "hornet-js-passport/src/strategy/saml/saml-strategy
 
 import { HornetMiddlewareList } from "hornet-js-core/src/middleware/middlewares";
 
-import * as Menu from "applitutoriel-js-common/src/resources/navigation.json";
+const Menu = require("applitutoriel-js-common/src/resources/navigation.json");
 import "src/injector-context-services-data";
 import "src/injector-context-services-page";
 import { FeaturePageRenderingMiddleware } from "applitutoriel-js-common/src/middleware/featuresflipping";
@@ -120,7 +120,7 @@ async function initContext() {
 
 let AuthenticationAPIMiddleware;
 
-const logger: Logger = Utils.getLogger("applitutoriel.server");
+const logger: Logger = Logger.getLogger("applitutoriel.server");
 
 export class Server {
 
@@ -161,8 +161,9 @@ export class Server {
 
     static middleware(): HornetMiddlewareList {
         let hornetMiddlewareList = new HornetMiddlewares.HornetMiddlewareList()
-            .addAfter(PageRenderingMiddleware, HornetMiddlewares.UserAccessSecurityMiddleware)
-            .addAfter(FeaturePageRenderingMiddleware, HornetMiddlewares.MenuConfigMiddleware);
+            .addAfter(PageRenderingMiddleware, HornetMiddlewares.UserAccessSecurityMiddleware);
+            // exemple de mise en place de Feature Flipping
+            //.addAfter(FeaturePageRenderingMiddleware, HornetMiddlewares.MenuConfigMiddleware);
 
 
         if (Utils.config.getOrDefault("authentication.saml.enabled", false)) {

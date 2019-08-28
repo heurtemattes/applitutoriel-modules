@@ -112,7 +112,7 @@ export class PhotoDTO {
     contenu: Buffer;
 }
 
-export let PhotoModel: Sequelize.DefineAttributes = {
+export let PhotoModel: Sequelize.ModelAttributes = {
     id: {
         type: Sequelize.INTEGER,
         field: "id_photo",

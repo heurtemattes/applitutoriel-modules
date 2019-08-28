@@ -73,13 +73,12 @@
  * applitutoriel-js-lite - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { BusinessError } from "hornet-js-utils/src/exception/business-error";
 import { PartenaireService } from "applitutoriel-js-common/src/services/data/par/partenaire-service";
 import { FormRecherchePartenaire, PartenaireResult } from "applitutoriel-js-common/src/services/type/par/par-types";
@@ -97,15 +96,9 @@ import { PartenaireRechercheParameter } from "applitutoriel-js-common/src/servic
 import { Pagination } from "hornet-js-core/src/component/datasource/paginate-datasource";
 import { Injector } from "hornet-js-core/src/inject/injector";
 import { Promise } from "hornet-js-utils/src/promise-api";
-import { HornetSequelizeInstanceModel } from "hornet-js-database/src/sequelize/hornet-sequelize-attributes";
-import { PartenaireAttributes } from "src/models/par/seq-par-mod";
-import { ModelDAO } from "src/dao/model-dao";
-import { VilleAttributes } from "src/models/ref/ref-ville-mod";
-import { PaysAttributes } from "src/models/ref/ref-pay-mod";
-import { BeanUtils } from "hornet-js-bean/src/bean-utils";
 import { PaysMetier } from "applitutoriel-js-common/src/models/ref/ref-pay-mod";
 
-const logger: Logger = Utils.getLogger("applitutoriel.src.services.data.par.partenaire-service-impl");
+const logger: Logger = Logger.getLogger("applitutoriel.src.services.data.par.partenaire-service-impl");
 
 class TablePartenaireImpl {
     listeCriteres: FormRecherchePartenaire;

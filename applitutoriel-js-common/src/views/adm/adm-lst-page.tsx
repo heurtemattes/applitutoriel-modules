@@ -73,14 +73,14 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
+import isEmpty = require("lodash.isempty");
 import { HornetPage } from "hornet-js-react-components/src/widget/component/hornet-page";
 import { HornetComponentProps } from "hornet-js-components/src/component/ihornet-component";
 import { Modal } from "hornet-js-react-components/src/widget/dialog/modal";
@@ -100,7 +100,6 @@ import { MenuActions } from "hornet-js-react-components/src/widget/table/menu-ac
 import { ActionButton } from "hornet-js-react-components/src/widget/table/action-button";
 import { Header } from "hornet-js-react-components/src/widget/table/header";
 import { Content } from "hornet-js-react-components/src/widget/table/content";
-import { Picto } from "hornet-js-react-components/src/img/picto";
 import { ActionColumn } from "hornet-js-react-components/src/widget/table/column/action-column";
 import { ToggleColumnsButton } from "hornet-js-react-components/src/widget/table/toggle-columns-button";
 import { DataSource } from "hornet-js-core/src/component/datasource/datasource";
@@ -109,10 +108,11 @@ import { DefaultSort } from "hornet-js-core/src/component/datasource/options/dat
 import { EditionActionColumn } from "hornet-js-react-components/src/widget/table/column/edition-action-column";
 import { SortData } from "hornet-js-core/src/component/sort-data";
 import { SortDirection } from "hornet-js-core/src/component/sort-data";
+import { SvgSprites } from 'hornet-js-react-components/src/widget/icon/svg-sprites';
 import * as schema from "src/views/adm/adm-lst-page-validation.json";
 import * as schemaEditionTable from "src/views/adm/adm-lst-table-validation.json";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.adm.adm-lst-page");
+const logger: Logger = Logger.getLogger("applitutoriel.views.adm.adm-lst-page");
 
 /**
  * Page d'administration des secteurs. L'ajout ou l'édition d'un secteur se fait dans une fenêtre modale.
@@ -133,6 +133,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
 
     protected item: SecteurMetier;
 
+    protected focusOnEdition : boolean = false;
+    protected itemEdited: any;
+    protected focusAdd: boolean = false;
+    protected secondRender: boolean = false;
+
+    protected table: Content;
 
     constructor(props?, context?) {
 
@@ -144,12 +150,43 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         this.dataSource = new DataSource<SecteurMetier>([], {}, [ sort ]);
     }
 
+    focusEdition() {
+        if (this.focusOnEdition && this.itemEdited) {
+            const buttonEdition = document.querySelector(`a.edition-button-action-before[aria-label~="${this.itemEdited.nom}"]`);
+            if (buttonEdition && (buttonEdition as HTMLElement).focus) {
+                (buttonEdition as HTMLElement).focus();
+                this.focusOnEdition = false;
+                this.itemEdited = null;
+            }
+        }
+
+        if (this.focusAdd) {
+            if (this.secondRender) {
+                const addButton = document.getElementsByClassName("secteurs-add-button");
+                if (addButton && addButton[0]) {
+                    (addButton[0] as HTMLElement).focus();
+                    this.focusAdd = false;
+                    this.secondRender = false;
+                }
+            }else {
+                this.secondRender = true;
+            }
+        }
+    }
+
     /**
      * Alimente le tableau de liste des secteurs.
      * @override
      */
     public prepareClient(): void {
         this.refreshSecteurs();
+
+        this.dataSource.on("add", () => {
+            const elem = document.getElementById("addSecteur");
+            if (elem && elem.focus) {
+                elem.focus();
+            }
+        });
     }
 
     /**
@@ -183,23 +220,31 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                 <h2>{this.i18n("administration.secteurs.titreSecteur")}</h2>
                 <Notification id="notif2" />
 
-                <Table id="liste-secteurs">
+                <Table id="liste-secteurs" >
                     <Header title={this.i18n("administration.secteurs").table.tableTitle} ref={this.refHeaderTable}>
                         <ToggleColumnsButton hiddenColumns={{ desc: true, nom: false }}
                             onChange={this.onChangeToggleColumns}
                             selectAllItem={false} />
                         <MenuActions>
-                            <ActionButton title={this.i18n("administration.secteurs.table.addTitle")}
-                                srcImg={Picto.white.add}
+                            <ActionButton
+                                className={"secteurs-add-button"}
+                                title={this.i18n("administration.secteurs.table.addTitle")}
+                                srcImg={<SvgSprites icon="add" height="1.5em" width="1.5em" color="#FFF" tabIndex={-1} />}
+                                id="addSecteur"
                                 displayedWithoutResult={true}
                                 action={this.ajouterSecteur} priority={true} />
                             <ActionButton title={this.i18n("administration.secteurs.table.sortMultiTitle")}
-                                srcImg={this.genUrlStatic("/img/sort-down.svg")}
+                                srcImg={ <SvgSprites icon="sort" height="1.5em" width="1.5em" color="#FFF" tabIndex={-1}/> }
                                 action={this.sortMulti} priority={true} />
                         </MenuActions>
                     </Header>
-                    <Content dataSource={this.dataSource} onSubmit={this.submitLineForm} schema={schemaEditionTable} idForm={"secteurPageForm"}
-                        notifId="notif2">
+                    <Content ref={
+                        (ref) =>{
+                            this.table =ref
+                        }
+                    } dataSource={this.dataSource} onSubmit={this.submitLineForm} schema={schemaEditionTable} idForm={"secteurPageForm"}
+                        notifId="notif2"
+                        onRerender={this.focusEdition}>
                         <Columns>
                             <Column keyColumn="nom"
                                 title={intlMessages.nom}
@@ -212,12 +257,12 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                             <Column keyColumn="auteurCreat" title={intlMessages.auteur} sortable={true} />
                             <ActionColumn keyColumn="id"
                                 alt={intlMessages.modificationTitle}
-                                srcImg={Picto.blue.editer}
+                                srcImg={<SvgSprites icon="edit" height="2em" width="2em" color="#0579be" tabIndex={-1}/>}
                                 action={this.editItem.bind(this)}
                             />
                             <ActionColumn keyColumn="id"
                                 alt={intlMessages.suppressionAlt}
-                                srcImg={Picto.blue.supprimer}
+                                srcImg={<SvgSprites icon="delete" height="2em" width="2em" color="#0579be" tabIndex={-1}/>}
                                 action={this.supprimer.bind(this)}
                                 messageAlert={this.i18n("administration.secteurs.confirmationSuppression")}
                                 titleAlert={this.i18n("administration.secteurs.suppressionTitle")}
@@ -291,6 +336,8 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
             NotificationManager.notify(null, "secteurPageForm", null,
                                        Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-01"));
             this.refreshSecteurs();
+            this.focusOnEdition = true;
+            this.itemEdited = item;
         });
 
     }
@@ -309,6 +356,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
                 NotificationManager.notify(null, null, null,
                                            Notifications.makeSingleNotification("SECTEUR_DELETED", "info.message.IN-AD-LST-02"));
                 this.refreshSecteurs();
+                this.focusAdd = true;
             }
 
         }).catch((result) => {
@@ -359,7 +407,7 @@ export class SecteursPage extends HornetPage<AdministrationSecteurService, Horne
         NotificationManager.cleanAll();
 
         const secteur = data;
-        if (!_.isEmpty(secteur.id)) {
+        if (!isEmpty(secteur.id)) {
             this.getService().modifier(secteur.id, secteur).then((result) => {
                 if (!result.errors) {
                     NotificationManager.notify("notif2", "secteurPageForm", null,

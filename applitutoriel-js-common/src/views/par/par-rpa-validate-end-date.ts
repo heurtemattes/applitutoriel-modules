@@ -73,12 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { IValidationResult, ICustomValidation } from "hornet-js-core/src/validation/data-validator";
+import * as ajv from "ajv";
 import ErrorObject = ajv.ErrorObject;
 
 /**

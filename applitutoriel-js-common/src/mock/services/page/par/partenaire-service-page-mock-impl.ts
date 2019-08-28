@@ -73,29 +73,30 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import { MediaType } from "hornet-js-core/src/protocol/media-type";
-import { PartenaireResult } from "applitutoriel-js-common/src/services/type/par/par-types";
-import { PartenaireRechercheParameter } from "applitutoriel-js-common/src/services/type/par/par-rpa-prm";
-import { RecherchePartenaireService } from "applitutoriel-js-common/src/services/page/par/par-rpa-service";
+import { PartenaireResult } from "src/services/type/par/par-types";
+import { PartenaireRechercheParameter } from "src/services/type/par/par-rpa-prm";
+import { RecherchePartenaireService } from "src/services/page/par/par-rpa-service";
 import { NotFoundError } from "hornet-js-utils/src/exception/not-found-error";
-import * as _ from "lodash";
-import * as tableauDePartenaires1 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-1.json";
-import * as tableauDePartenaires2 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-2.json";
-import * as tableauDePartenaires3 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-3.json";
-import * as tableauDePartenaires4 from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-4.json";
-import * as consulterPartenaire from "applitutoriel-js-common/src/resources/mock/par/par-rpa-data-consulter.json";
-import * as villes from "applitutoriel-js-common/src/resources/mock/par/par-rpa-villes.json";
-import * as pays from "applitutoriel-js-common/src/resources/mock/par/par-pays-data.json";
-import * as secteurs from "applitutoriel-js-common/src/resources/mock/adm/adm-lst-data.json";
+import remove = require("lodash.remove");
+import find = require("lodash.find");
+import * as tableauDePartenaires1 from "src/resources/mock/par/par-rpa-data-1.json";
+import * as tableauDePartenaires2 from "src/resources/mock/par/par-rpa-data-2.json";
+import * as tableauDePartenaires3 from "src/resources/mock/par/par-rpa-data-3.json";
+import * as tableauDePartenaires4 from "src/resources/mock/par/par-rpa-data-4.json";
+import * as consulterPartenaire from "src/resources/mock/par/par-rpa-data-consulter.json";
+import * as villes from "src/resources/mock/par/par-rpa-villes.json";
+import * as pays from "src/resources/mock/par/par-pays-data.json";
+import * as secteurs from "src/resources/mock/adm/adm-lst-data.json";
 import { Promise } from "hornet-js-utils/src/promise-api";
-const logger: Logger = Utils.getLogger("applitutoriel-js-common.mock.services.data.par.partenaire-service-mock-impl");
+const logger: Logger = Logger.getLogger("applitutoriel-js-common.mock.services.data.par.partenaire-service-mock-impl");
 
 /**
  * Implementation des services pour les partenaires 
@@ -124,7 +125,7 @@ export class PartenaireServicePageMockImpl extends RecherchePartenaireService {
     supprimer(id): Promise<any> {
         return Promise.resolve(() => {
             logger.debug("MOCK - Suppression du partenaire, id:", id);
-            _.remove((<any>tableauDePartenaires1).data, function (item: any) {
+            remove((<any>tableauDePartenaires1).data, function (item: any) {
                 if (item.id === id) {
                     return true;
                 }
@@ -182,7 +183,7 @@ export class PartenaireServicePageMockImpl extends RecherchePartenaireService {
 
         let idPartenaire: number = parseInt(<any>id, 10);
         logger.debug("MOCK - Recupèrer le partenaire bouchonné qui à l\"id:", idPartenaire);
-        let partenaire: PartenaireResult = _.find((<any>tableauDePartenaires1).data.liste, (item: PartenaireResult) => {
+        let partenaire: PartenaireResult = find((<any>tableauDePartenaires1).data.liste, (item: PartenaireResult) => {
             logger.debug(item);
             if (item.id === idPartenaire) {
                 return true;

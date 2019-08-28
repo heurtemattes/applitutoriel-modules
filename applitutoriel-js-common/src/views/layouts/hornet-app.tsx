@@ -73,13 +73,13 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 import * as React from "react";
 import { Class } from "hornet-js-utils/src/typescript-utils";
 import { HornetPage, HornetPageProps } from "hornet-js-react-components/src/widget/component/hornet-page";
@@ -98,13 +98,17 @@ import { NavigationUtils } from "hornet-js-components/src/utils/navigation-utils
 import { NotificationSessionFooter } from "hornet-js-react-components/src/widget/notification/notification-session-footer";
 import { SessionIdpExpireNotification } from "hornet-js-react-components/src/widget/notification/notification-session-idp";
 import { MenuAccessibilite } from "hornet-js-react-components/src/widget/navigation/menu-accessibilite";
-
-
-import * as _ from "lodash";
+import { SvgSprites } from "hornet-js-react-components/src/widget/icon/svg-sprites";
+import cloneDeep = require("lodash.clonedeep");
+import concat = require("lodash.concat");
 import * as classNames from "classnames";
 import { UPDATE_PAGE_EXPAND } from "hornet-js-react-components/src/widget/screen/layout-switcher";
 
-const logger: Logger = Utils.getLogger("applitutoriel.views.layouts.hornet-app");
+import "hornet-js-react-components/src/widget/sass/gen.scss";
+import "src/views/layouts/sass/_auth.scss";
+//import "src/views/layouts/sass/_header.scss";
+
+const logger: Logger = Logger.getLogger("applitutoriel.views.layouts.hornet-app");
 
 const users = {
     "user":
@@ -176,7 +180,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
     render(): JSX.Element {
         logger.trace("VIEW HornetApp render");
 
-        const title = _.concat(this.i18n("header").logoTitle, this.state.applicationTitle).join(" ");
+        const title = concat(this.i18n("header").logoTitle, this.state.applicationTitle).join(" ");
 
         const classes: any = {
             "mode-fullscreen": this.state.modeFullscreen
@@ -194,7 +198,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
             { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
-            icon="picto-user"
+            srcImg={<SvgSprites icon="account" />}
             className="profil-content"
             id={"dropdown-user-mock" + "-drop"}
             label={(Utils.getCls("hornet.user") && Utils.getCls("hornet.user").name) ? Utils.getCls("hornet.user").name : "Connexion"}
@@ -206,7 +210,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
             items={[ { label: "as Admin", action: this.changeUserTo, valueCurrent: "admin", className: "link" },
             { label: "As User", action: this.changeUserTo, valueCurrent: "user", className: "link" } ]}
             title={"mock users"}
-            icon="picto-user"
+            srcImg={<SvgSprites icon="account" />}
             className="profil-content"
             id={"dropdown-user-banner-mock" + "-drop"}
             label={"Users"}
@@ -264,7 +268,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
                                 <a className="sub-header-link"
                                     href={this.genUrl(Utils.config.getOrDefault("welcomePage", "/"))} title={title}
                                     id="img-logo">
-                                    <img src={this.state.logoUrl} alt={this.i18n("applicationTitle")} />
+                                    <img src={this.state.logoUrl} alt={this.i18n("applicationTitleAlt")} />
                                 </a>
                             </div>
                             <div className="fl mls">
@@ -351,7 +355,7 @@ export class HornetApp extends HornetPage<any, HornetAppProps, any> {
         this.navigateTo("accueil", {}, () => {
             this.forceUpdate();
             this.menu.forceUpdate();
-            this.menu.setState({ items: this.menu.props.configMenu ? NavigationUtils.getFilteredConfigNavigation(_.cloneDeep(this.menu.props.configMenu), this.user) : NavigationUtils.getFilteredConfigNavigation(NavigationUtils.getConfigMenu(), Utils.getCls("hornet.user")) });
+            this.menu.setState({ items: this.menu.props.configMenu ? NavigationUtils.getFilteredConfigNavigation(cloneDeep(this.menu.props.configMenu), this.user) : NavigationUtils.getFilteredConfigNavigation(NavigationUtils.getConfigMenu(), Utils.getCls("hornet.user")) });
 
         });
     }

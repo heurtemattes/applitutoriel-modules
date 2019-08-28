@@ -73,25 +73,25 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 
 import { RouteAction } from "hornet-js-core/src/routes/abstract-routes";
 import { DataValidator } from "hornet-js-core/src/validation/data-validator";
-import * as _ from "lodash";
+import isString = require("lodash.isstring");
 import { RouteActionService } from "hornet-js-core/src/routes/abstract-routes";
 import { PhotoMetier } from "src/models/photo-mod";
 import { ResultFile } from "hornet-js-core/src/result/result-file";
 import { MediaTypes } from "hornet-js-core/src/protocol/media-type";
-import { FichePartenaireService } from "applitutoriel-js-common/src/services/data/par/fiche-partenaire-service";
-import { PartenaireService } from "applitutoriel-js-common/src/services/data/par/partenaire-service";
-
-const logger: Logger = Utils.getLogger("applitutoriel.actions.par.par-fpa-actions");
+import { FichePartenaireService } from "src/services/data/par/fiche-partenaire-service";
+import { PartenaireService } from "src/services/data/par/partenaire-service";
+import { Promise } from "hornet-js-utils/src/promise-api";
+const logger: Logger = Logger.getLogger("applitutoriel.actions.par.par-fpa-actions");
 import * as parValidationSchema from "src/views/par/par-fpa/validation.json";
 import { DispositionType } from "hornet-js-core/src/result/disposition-type";
 
@@ -120,7 +120,7 @@ export class LirePhoto extends RouteActionService<{ idPartenaire: number }, Fich
             // change disposition to DispositionType.ATTACHMENT for download
             return new ResultFile((Object as any).assign({dispositionType: DispositionType.INLINE, filename: (retourApi as any).fileName }, retourApi),
                                   MediaTypes.fromMime(retourApi.mimetype));
-        });
+        }) as Promise<ResultFile>;
     }
 }
 
@@ -152,7 +152,7 @@ export class EcrirePartenaire extends RouteActionService<any, FichePartenaireSer
     getPayload(): any {
         let partenaire = this.req.body;
 
-        if (_.isString(this.req.body.content)) {
+        if (isString(this.req.body.content)) {
             // Le contenu JSON a été posté dans le champ "content" de la requête, on récupère le string qu'on retranscrit en Objet
             partenaire = JSON.parse(this.req.body.content);
         }
@@ -177,7 +177,7 @@ export class EcrirePartenaire extends RouteActionService<any, FichePartenaireSer
 
         logger.trace("Action: EcrirePartenaire", partenaire);
 
-        return this.getService().modifier(this.attributes.id, partenaire);
+        return this.getService().modifier(this.attributes.id, partenaire) as Promise<any>;
 
     }
 }

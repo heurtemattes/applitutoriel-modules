@@ -73,29 +73,28 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
-
 import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 
 const sha1 = require("sha1");
 const flash = require("connect-flash");
 
 import {Request, Application } from "express";
 import * as ReactDOMServer from "react-dom/server";
-import * as passport from "passport";
+import passport = require("passport");
 import { Strategy } from "passport-local";
-import * as _ from "lodash";
+import startsWith = require("lodash.startswith");
 import { ConnexionPage } from "src/views/gen/gen-cnx-page";
 import { AbstractHornetMiddleware } from "hornet-js-core/src/middleware/middlewares";
 import { AuthService } from "src/services/data/auth/auth-service";
 
 export class AuthenticationMiddleware extends AbstractHornetMiddleware {
 
-    private static logger: Logger = Utils.getLogger("applitutoriel.middleware.authentication");
+    private static logger: Logger = Logger.getLogger("applitutoriel.middleware.authentication");
 
     protected api: AuthService;
 
@@ -144,7 +143,7 @@ export class AuthenticationMiddleware extends AbstractHornetMiddleware {
         let welcomePageUrl = Utils.appSharedProps.get("welcomePageUrl");
 
         function ensureAuthenticated(req: Request, res, next) {
-            if (req.isAuthenticated() || _.startsWith(req.originalUrl, loginUrl)) {
+            if (req.isAuthenticated() || startsWith(req.originalUrl, loginUrl)) {
                 return next();
             }
             req.getSession().setAttribute("previousUrl", Utils.buildContextPath(req.originalUrl));
@@ -163,7 +162,7 @@ export class AuthenticationMiddleware extends AbstractHornetMiddleware {
                 res.redirect(previousUrl);
             }
         );
-        app.all(loginUrl, function (req, res) {
+        app.all(loginUrl, function (req:Request, res) {
             let errors = req[ "flash" ]("error");
             if (errors.length > 0 && errors[ 0 ] === "Missing credentials") {
                 errors = [ "Votre identifiant ou votre mot de passe est incorrect" ];

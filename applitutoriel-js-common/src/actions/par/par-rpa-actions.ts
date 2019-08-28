@@ -73,15 +73,14 @@
  * applitutoriel-js-common - Application tutoriel utilisant le Framework hornet
  *
  * @author MEAE - Ministère de l'Europe et des Affaires étrangères
- * @version v5.2.4
+ * @version v5.4.1
  * @link git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git
  * @license CECILL-2.1
  */
 
-import { Utils } from "hornet-js-utils";
-import { Logger } from "hornet-js-utils/src/logger";
+import { Logger } from "hornet-js-logger/src/logger";
 
-import * as _ from "lodash";
+import assign = require("lodash.assign");
 import { PartenaireService } from "src/services/data/par/partenaire-service";
 import { MediaType, MediaTypes } from "hornet-js-core/src/protocol/media-type";
 import { ParRpaValidateIsVipEndDate } from "src/views/par/par-rpa-validate-end-date";
@@ -101,11 +100,11 @@ import { OptionsCSV, OptionsOpenDocument, OptionsPDF } from "hornet-js-core/src/
 import { DateUtils } from "hornet-js-utils/src/date-utils";
 import { ResultODT } from "hornet-js-core/src/result/result-odt";
 import { ResultODS } from "hornet-js-core/src/result/result-ods";
-
+import { Promise } from "hornet-js-utils/src/promise-api";
 import * as path from "path";
 
 import * as rpaValidationSchema from "src/views/par/par-rpa-validation.json";
-const logger: Logger = Utils.getLogger("applitutoriel.actions.par.par-rpa-actions");
+const logger: Logger = Logger.getLogger("applitutoriel.actions.par.par-rpa-actions");
 
 /**
  * Action de recherche de partenaires répondant aux critères indiqués
@@ -214,7 +213,7 @@ export class Export extends RouteActionService<{ mediaType: string }, Partenaire
             logger.debug("MIMETYPE :", mediaType.MIME);
 
             // Pour l'export on force à avoir tous les items dans la recherche
-            const payload: any = _.assign({}, {
+            const payload: any = assign({}, {
                 criteres,
                 pagination: { pageIndex: 0, itemsPerPage: ITEMS_PER_PAGE_ALL } as Pagination,
             });
