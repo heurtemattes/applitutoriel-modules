@@ -21,7 +21,8 @@
     "hornet-js-utils": "5.4.1",
     "jsonwebtoken": "8.4.0",
     "source-map-support": "0.5.12",
-    "tslib": "1.9.3"
+    "tslib": "1.9.3",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@types/mocha": "5.2.7",
@@ -34,7 +35,10 @@
   },
   "scripts": {
     "init-dev": "hb install",
-    "start": "node index.js"
+    "start": "node index.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
-  "author": "MEAE - Ministère de l'Europe et des Affaires étrangères"
+  "author": "MEAE - Ministère de l'Europe et des Affaires étrangères",
+  "snyk": true
 }
