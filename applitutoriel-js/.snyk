@@ -1,0 +1,244 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > xml-encryption > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-bean > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-bean > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-bean > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-bean > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-bean > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-bean > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-bean > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-bean > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - applitutoriel-js-common > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
+    - hornet-js-passport > hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:11:55.975Z'
