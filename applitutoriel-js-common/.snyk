@@ -1,0 +1,90 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hpp > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-bean > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-bean > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-bean > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-bean > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
+    - hornet-js-react-components > hornet-js-core > hornet-js-components > hornet-js-utils > hornet-js-logger > log4js > streamroller > async > lodash:
+        patched: '2020-05-01T07:05:31.805Z'
