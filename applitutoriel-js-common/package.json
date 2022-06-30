@@ -32,7 +32,7 @@
     "lodash.isstring": "4.0.1",
     "lodash.startswith": "4.2.1",
     "lodash.remove": "4.7.0",
-    "passport": "0.2.2",
+    "passport": "0.6.0",
     "passport-local": "1.0.0",
     "react": "16.6.3",
     "react-dom": "16.6.3",
