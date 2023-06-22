@@ -19,8 +19,8 @@
     "hornet-js-database": "5.4.1",
     "hornet-js-logger": "5.4.1",
     "hornet-js-utils": "5.4.1",
-    "pg": "7.11.0",
-    "sequelize": "5.8.9",
+    "pg": "8.4.0",
+    "sequelize": "6.1.0",
     "source-map-support": "0.5.12",
     "tslib": "1.9.3"
   },
