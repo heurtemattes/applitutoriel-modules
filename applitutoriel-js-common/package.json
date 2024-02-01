@@ -18,7 +18,7 @@
     "express": "4.16.4",
     "hornet-js-bean": "5.4.1",
     "hornet-js-components": "5.4.1",
-    "hornet-js-core": "5.4.1",
+    "hornet-js-core": "5.5.0",
     "hornet-js-logger": "5.4.1",
     "hornet-js-react-components": "5.4.1",
     "hornet-js-utils": "5.4.1",
