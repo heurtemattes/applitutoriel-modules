@@ -14,7 +14,7 @@
   "dependencies": {
     "applitutoriel-js-common": "5.4.1",
     "hornet-js-bean": "5.4.1",
-    "hornet-js-core": "5.4.1",
+    "hornet-js-core": "5.5.0",
     "hornet-js-logger": "5.4.1",
     "hornet-js-passport": "5.4.1",
     "hornet-js-react-components": "5.4.1",
