@@ -12,7 +12,7 @@
     "url": "git+https://github.com/diplomatiegouvfr/applitutoriel-modules.git"
   },
   "dependencies": {
-    "hornet-js-batch": "5.4.1",
+    "hornet-js-batch": "5.5.0",
     "hornet-js-bean": "5.4.1",
     "hornet-js-components": "5.4.1",
     "hornet-js-core": "5.4.1",
